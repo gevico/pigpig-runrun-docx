@@ -2,7 +2,7 @@
 title: ai 软件栈分层概述
 description: ai 软件栈分层概述
 published: true
-date: 2026-09-15T13:44:15.459Z
+date: 2026-09-15T13:44:25.361Z
 tags: 
 editor: markdown
 dateCreated: 2026-09-15T08:51:29.121Z
@@ -15,9 +15,9 @@ dateCreated: 2026-09-15T08:51:29.121Z
 ```
 L1 推理引擎
 L2 编译器
-L3 高性能算子层
-L3 runtime
-L4 umd与kmd
-L5 物理硬件
+L3 高性能算子
+L4 runtime
+L5 umd与kmd
+L6 物理硬件
 ```
 
