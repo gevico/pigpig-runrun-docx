@@ -2,7 +2,7 @@
 title: ai 软件栈分层概述
 description: ai 软件栈分层概述
 published: true
-date: 2026-09-16T01:33:40.621Z
+date: 2026-09-16T01:50:37.459Z
 tags: 
 editor: markdown
 dateCreated: 2026-09-15T08:51:29.121Z
@@ -11,6 +11,7 @@ dateCreated: 2026-09-15T08:51:29.121Z
 # ai软件栈分层概述
 
 这里的分层指的是llm推理部分的分层，不包括训练。
+此处以cuda软件栈为例。
 
 ```
 L1 推理引擎
