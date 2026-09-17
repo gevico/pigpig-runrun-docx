@@ -1,6 +1,6 @@
 ---
-title: test_latex_2
-description: 测试在长文章下的显示效果
+title: Layout polynomials
+description: 之前在思考 CUTLASS 和 Layout 代数时 vibe 的一个副产品
 published: true
 date: 2026-09-15T13:18:13.280Z
 tags: 
