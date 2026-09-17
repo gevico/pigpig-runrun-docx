@@ -12,7 +12,7 @@ dateCreated: 2026-09-16T09:55:06.886Z
 
 **题面** 设 $A \in \mathbb{R}^{M \times K}$，$B \in \mathbb{R}^{K \times N}$，$C \in \mathbb{R}^{M \times N}$，计算 $C = A \times B$。除特别说明外，取 $M=N=K=4096$，输入 FP32，累加 FP32。目标硬件：NVIDIA A100（SM80），FP32 峰值约 19.5 TFLOPS，HBM 带宽约 1.5 TB/s，每 SM shared memory 上限 164 KB，L2 约 40 MB。只允许使用 CUDA C++ 与 inline PTX，不得调用 cuBLAS 或 CUTLASS 库函数。
 
-**说明** 本大题共 20 问，分三部分。每一问的结论将用于后续问题，建议按顺序作答。部分小问需要定量计算或写出可编译的伪代码。
+**说明** 本大题共 25 问，分三部分。每一问的结论将用于后续问题，建议按顺序作答。部分小问需要定量计算或写出可编译的伪代码。
 
 ---
 

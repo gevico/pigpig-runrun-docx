@@ -1,6 +1,6 @@
 ---
-title: LLM ACIS 文档站
-description: LLM ACIS 文档站
+title: LLM ASIC 文档站
+description: LLM ASIC 文档站
 published: true
 date: 2026-09-15T03:31:31.731Z
 tags: 

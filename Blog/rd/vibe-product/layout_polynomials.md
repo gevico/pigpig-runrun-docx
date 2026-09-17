@@ -755,7 +755,7 @@ and $f_C(5)=6$ whereas $(\hat f_A\circ f_B)(5)=\hat f_A(3)=1$.
 
 ## 8. The linear picture
 
-**6.1.** Let $L$ be a layout with shape $M=(M_i)$, prefix-product vector $w=w(L)$ and stride vector $d$. Both $w$ and $d$ are vectors in $\mathbb Z^{\alpha+1}$ and we may form the linear map
+**8.1.** Let $L$ be a layout with shape $M=(M_i)$, prefix-product vector $w=w(L)$ and stride vector $d$. Both $w$ and $d$ are vectors in $\mathbb Z^{\alpha+1}$ and we may form the linear map
 
 $$\Phi_L:\mathbb Z^{\alpha+1}\longrightarrow\mathbb Z^2,\qquad \xi\longmapsto\bigl(\langle w,\xi\rangle,\ \langle d,\xi\rangle\bigr).$$
 
