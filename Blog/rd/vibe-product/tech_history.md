@@ -1,3 +1,13 @@
+---
+title: tech_history
+description: 
+published: true
+date: 2026-09-20T15:30:35.593Z
+tags: 
+editor: markdown
+dateCreated: 2026-09-20T15:29:58.735Z
+---
+
 # 技术史 —— 学 AI Infra 的横切注释层
 
 > 这份文档不属于任何一层：它是**注释**，回答的是"为什么长成现在这样"。
