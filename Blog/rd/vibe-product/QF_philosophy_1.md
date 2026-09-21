@@ -1,5 +1,5 @@
 ---
-title: QuizForge 的业务想法
+title: QuizForge 的业务想法 01
 description: 
 published: true
 date: 2026-09-16T09:52:35.293Z
