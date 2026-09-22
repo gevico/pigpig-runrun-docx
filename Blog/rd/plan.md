@@ -14,9 +14,9 @@
 
 2.软件栈。前期学一个 CUDA 就可以了，换句话说一个 CUDA 可以学很久很久了。先把基本的并行计算的概念建立起来，找点网上的教材或者技术教程，比如 CUDA Programming Guide 之类的，随便找一找就行。这里推荐一个在线的刷题平台：LeetGPU。
 
-往下的话可以结合微架构把 ISA 的东西弄清楚。重点是 PTX，PTX 作为一种 portable 的并行 ir 具有很强的移植潜力，学界已经有不少千奇百怪的研究，比如把ptx lift称llvm ir（就是zluda），把ptx放在浏览器里运行，甚至是把ptx当hdl烧录进fpga里（后两样都是易为老师做的）。SASS 没有那么重要，而且全是坑：nvcc 编译出来的 sass 和 nvdisasm 输出的字符串和硬件的实际执行简直是三样东西，老黄换一代显卡就换一次 isa，也难怪社区没有像样的 sass isa，实在是研究不起。这个方向的主要价值是微码移植和微架构分析。如果你能够与 agent 合作在 NVIDIA 出新卡的第一时间就完成新架构的逆向工作，那么就差不多算是学成了，NVIDIA 可能请你到他们的 GTC 大会上演讲。
+往下的话可以结合微架构把 ISA 的东西弄清楚。重点是 PTX，PTX 作为一种 portable 的并行 ir 具有很强的移植潜力，学界已经有不少千奇百怪的研究，比如把ptx lift成llvm ir（就是zluda），把ptx放在浏览器里运行，甚至是把ptx当hdl烧录进fpga里（后两样都是易为老师做的）。SASS 没有那么重要，而且全是坑：nvcc 编译出来的 sass 和 nvdisasm 输出的字符串和硬件的实际执行简直是三样东西，老黄换一代显卡就换一次 isa，也难怪社区没有像样的 sass isa，实在是研究不起。这个方向的主要价值是微码移植和微架构分析。如果你能够与 agent 合作在 NVIDIA 出新卡的第一时间就完成新架构的逆向工作，那么就差不多算是学成了，NVIDIA 可能请你到他们的 GTC 大会上演讲。
 
-停在这个层次可以了解 CUDA 的工具链，比如 cuda runtime，还有编译和链接之类的一些东西——比较无聊。要切入的话就问一个问题：我写的 cuda 程序是怎么变成二进制的？一句“`nvcc --keep`”命令就可以看到里面的全部魔法。然后了解一些 CUDA 的常见库，比如 cuBLAS 等一众 cu 开头的库，还有 thrust 之类的东西。如果你觉得cuBLAS的gemm太慢可以进一步学习kernel编写——在ai infra或者HPC业界cuBLAS甚至连baseline都不配，在agent毁灭算子行业之前学生们一般会把手写一个达到cuBLAS性能的kernel当作入门作业。为了更好地压榨硬件的性能，你需要了解硬件微架构，把nv的whitepaper和gtc讲话全部灌进agent的向量数据库。cutlass是很好的入门材料，从2.x高度特化的api再到3.x的cute layout algebra和cutedsl，一切模板元编程和代数上的完备都是为了在编译期彻底锁死一切可能的变化，以便让软件尽可能贴合硬件的性能极限。学一点数论和抽象代数在这里会如鱼得水，cute的几个核心贡献者都是数学方向出身，入门algebra infra他们的论文应该是不错的材料。而这也只是刚刚开始，成熟的算子工程师会手写ptx甚至手动修改sass的指令调度码（比如deepgemm），甚至在硬件里发现nv尚未发布的新指令————当然这些都是商业上极限内卷的黑魔法，我们看看就好。
+停在这个层次可以了解 CUDA 的工具链，比如 cuda runtime，还有编译和链接之类的一些东西——比较无聊。要切入的话就问一个问题：我写的 cuda 程序是怎么变成二进制的？一句“`nvcc --keep`”命令就可以看到里面的全部魔法。然后了解一些 CUDA 的常见库，比如 cuBLAS 等一众 cu 开头的库，还有 thrust 之类的东西。如果你觉得cuBLAS的gemm太慢可以进一步学习kernel编写——在ai infra或者HPC业界cuBLAS甚至连baseline都不配，在agent毁灭算子行业之前学生们一般会把手写一个达到cuBLAS性能的gemm kernel当作入门作业。为了更好地压榨硬件的性能，你需要了解硬件微架构，把nv的whitepaper和gtc讲话全部灌进agent的向量数据库。cutlass是很好的入门材料，从2.x高度特化的api再到3.x的cute layout algebra和cutedsl，一切模板元编程和代数上的完备都是为了在编译期彻底锁死一切可能的变化，以便让软件尽可能贴合硬件的性能极限。学一点数论和抽象代数在这里会如鱼得水，cute的几个核心贡献者都是数学方向出身，入门algebra infra看他们的论文应该是不错的材料。而这也只是刚刚开始，成熟的算子工程师会手写ptx甚至手动修改sass的指令调度码（比如deepgemm），甚至在硬件里发现nv尚未发布的新指令————当然这些都是商业上极限内卷的黑魔法，我们看看就好。
 
 学完cutlass之后，再看triton之类的可能会有点索然无味————如果是nv的硬件，那么一个性能合格的triton kernel不比cutlass的模板元编程难读。如果学有余力可以再看看thunder kitten和tilelang。另一个值得推荐的方向是agent写kernel的一些学术研究，这一块我也还在探索，暂时就不说了。
 
