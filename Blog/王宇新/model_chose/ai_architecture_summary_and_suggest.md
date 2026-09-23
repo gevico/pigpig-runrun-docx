@@ -480,18 +480,6 @@ Orca 提出的 iteration-level scheduling 就是围绕生成式模型的这种�
 
 
 
-
-
----------------
-以下部分由 ai 生成还未经人工审阅和修正
-
------------------
-
-
-
-
-
-
 ### 4. FlashAttention-style IO-aware Attention
 
 Attention 并不一定需要把中间的：
@@ -506,11 +494,13 @@ P
 PV
 ```
 
-全部写回片外存储。
+全部写回片外存储。在传统的 attension 中将数据写会 hbm 是因为qkv 产生的 source 和p 过于巨大在 sram 中难以塞下
 
-FlashAttention 的核心就是利用 tiling 和片上 SRAM 减少 HBM 与片上存储之间的数据搬运。
+FlashAttention 的核心就是利用 tiling 和片上 SRAM 减少 HBM 与片上存储之间的数据搬运，将巨大的 kqv 拆解成小的，在 sram 中完成所有计算完成之后立刻作用于 softmax
 
-对于 ASIC 来说，这个思想非常适合直接转化成硬件数据流：
+这里产生的一个问题是这种片段性的书写会导致 softmax 运算时会不能确定全局的最大值，针对这种问题的优化只需要乘以特定的缩放因子，同时更新当前最大值
+
+对于 ASIC 来说，这个优化非常适合直接转化成硬件数据流：
 
 ```text
 Q tile
@@ -542,153 +532,14 @@ HBM / DRAM
 SRAM
 ```
 
-因此我们真正要证明的不是“实现了 Softmax”，而是：
-
-> **Compiler 能否识别 Attention 计算区域，并将 QK^T + Softmax + PV 映射成片上流式数据通路。**
+所以这个核心优化点在于Compiler 能否识别 Attention 计算区域，并将 QK^T + Softmax + PV 映射成片上流式数据通路。因此这个优化方向同样需要多个层间的协同工作。
 
 ---
 
-### 5. Operator Fusion + Memory Planning
-
-对于 Dense Transformer，很多算子本身计算量并不大，但是会带来大量 Tensor movement。
-
-例如：
-
-```text
-RMSNorm
- ↓
-QKV Projection
- ↓
-RoPE
- ↓
-Attention
-```
-
-以及：
-
-```text
-RMSNorm
- ↓
-Gate Projection
- ↓
-SiLU
- ↓
-× Up Projection
- ↓
-Down Projection
-```
-
-如果全部按照独立 operator 执行：
-
-```text
-HBM
- ↓
-RMSNorm
- ↓
-HBM
- ↓
-QKV
- ↓
-HBM
- ↓
-RoPE
- ↓
-HBM
- ↓
-Attention
-```
-
-片外访存会非常多。
-
-因此 Compiler 的重要职责之一应该是：
-
-```text
-Graph
- ↓
-Pattern Match
- ↓
-Fusion
- ↓
-Tiling
- ↓
-Memory Planning
- ↓
-Codegen
-```
-
-最终尽量形成：
-
-```text
-RMSNorm → QKV → RoPE → Attention
-```
-
-和：
-
-```text
-Gate → SiLU → Mul → Down
-```
-
-这样的硬件执行 region。
-
-这也正是本项目 Compiler 部分真正能够发挥价值的地方：不是简单把 ONNX operator 一个个翻译给硬件，而是根据硬件 SRAM、DMA、MAC array 和数据布局重新组织计算。
-
-## 因此，本项目真正要证明的核心能力
-
-综合起来，第一代 ASIC 可以把目标浓缩为：
-
-```text
-Dense-GQA Transformer Inference
-
-        ↓
-
-Compiler
-├── Graph Fusion
-├── Tiling
-├── Layout Transformation
-├── Memory Planning
-└── Hardware Codegen
-
-        ↓
-
-Dataflow Accelerator
-├── GEMM / MAC Array
-├── SRAM Reuse
-├── DMA
-├── Streaming Attention
-└── GQA-aware KV Access
-
-        ↓
-
-Runtime
-├── Continuous Batching
-├── Prefill / Decode Scheduling
-├── Paged KV Cache
-└── Request / Token Metadata
-```
-
-因此，项目的核心优势可以概括成一句话：
-
-> **面向 Dense-GQA Transformer 推理的编译器驱动数据流加速器，通过联合优化 Token-level Decode Batching、GQA-aware KV Cache、片上数据复用和 Attention Streaming，降低 Memory Traffic 并提升计算单元利用率。**
-
----
 
 # 模型选择
 
-按照上面的 Target Workload Contract，模型就不应该单纯按照参数量排序，而应该看：
-
-```text
-Architecture Coverage
-        +
-Structural Simplicity
-        +
-Ecosystem
-        +
-ONNX Availability
-        +
-Hardware Feasibility
-```
-
-因此建议不要只使用一个模型，而是建立一个**三层模型矩阵**：
+针对项目的不同阶段，应该有不同的模型的选择
 
 ```text
 Tier 1：Clean Baseline
@@ -702,20 +553,10 @@ Tier 3：Modern / Scale Validation
 → Mistral 7B
 ```
 
-同时增加：
 
-```text
-Control Group
-→ Llama 2 7B
-```
 
-用于专门比较 MHA 与 GQA。
+## 1. Qwen2.5-0.5B 
 
----
-
-## 1. Qwen2.5-0.5B —— 主 POC 模型
-
-这是我认为最适合作为**第一主力验证模型**的模型。
 
 其官方模型资料给出的结构为：
 
@@ -734,7 +575,7 @@ Tied Embedding    Yes
 
 Qwen 官方模型卡明确给出了上述结构，并说明 Qwen2.5-0.5B 使用 GQA、QKV bias 和 tied embeddings。 Hugging Face 当前 Transformers 实现中，Qwen2 的 `q_proj/k_proj/v_proj` 也明确使用 bias=True，而 MLP projection 使用无 bias 的 Linear。
 
-它最大的价值不是“只有 0.5B”，而是它非常适合作为 Compiler 的第一道真正测试：
+0.5b 是非常大的优势，但是另一个优势是它非常适合作为 Compiler 的第一道真正测试，避免 complier 固定在一些特化数据中，
 
 ```text
 hidden_size = 896
@@ -743,31 +584,12 @@ KV heads = 2
 FFN = 4864
 ```
 
-这些 shape 并不是为了适配某一个常见的 1024/2048/4096 固定模板而设计的，因此可以迫使 Compiler 真正处理：
+这些 shape 并不是为了适配某一个常见的 1024/2048/4096 固定模板而设计的，因此可以迫使 Compiler 真正处理：，动态 Tile Size，非标准矩阵 Shape，GQA Group Mapping，Memory Layout，Padding / Tail Handling
 
-```text
-动态 Tile Size
-非标准矩阵 Shape
-GQA Group Mapping
-Memory Layout
-Padding / Tail Handling
-```
+同时它又没有一些moe 这种动态化过于复杂的额外结构。
 
-同时它又没有：
+因此它非常适合承担：**主 POC + Compiler Qualification + GQA/KV Cache 验证** 的角色，适合作为真正阶段性完成的模型验证
 
-```text
-MoE
-MLA
-Hybrid Attention
-SSM
-Dynamic Routing
-```
-
-这样的额外结构。
-
-因此它非常适合承担：
-
-> **主 POC + Compiler Qualification + GQA/KV Cache 验证**
 
 ### ONNX
 
@@ -811,34 +633,8 @@ Tied Embedding    No
 Context 仅 2048
 ```
 
-所以它特别适合验证最基础的一条路径：
-
-```text
-ONNX
- ↓
-Graph IR
- ↓
-Dense Transformer
- ↓
-GQA Attention
- ↓
-KV Cache
- ↓
-Accelerator
-```
-
-也就是说：
-
-> 如果 TinyLlama 都不能完整跑通，就说明问题应该首先在基础 Compiler / Runtime / Hardware，而不是复杂模型特性。
-
-因此 TinyLlama 不一定是最终 benchmark，但非常适合作为：
-
-```text
-Bring-up Model
-Regression Model
-Compiler Debug Model
-Reference Implementation
-```
+所以它特别适合验证最基础的model 数据流途径的通畅性。
+因此 TinyLlama 不一定是最终 benchmark，但非常适合作为，我们最开始的一个demo 级别的一个基线模型，比较适合一个初始阶段的基础功能完成的验证
 
 ### ONNX
 
@@ -849,11 +645,6 @@ Reference Implementation
 ---
 
 ## 3. Llama 3.2 1B —— Modern Llama Qualification
-
-Llama 3.2 1B 用于回答另一个问题：
-
-> **我们的 Compiler / Runtime 是不是只对 TinyLlama/Qwen2.5 的结构写了特判？**
-
 它的主要结构为：
 
 ```text
@@ -881,30 +672,9 @@ Long Context
 Tied Embedding
 RoPE Scaling
 ```
+large vocabulary 和 long context rope sacaling更多的是参数上的扩大，比较核心的机制上的添加是 tied embedding以及 rope 这两个在现代模型上大量使用的机制，验证我们的项目能否在一个更通用更现代化的模型上是否可行。
 
-其中最值得注意的是 **RoPE scaling**。
-
-所以它不适合作为“最简单 POC”，但非常适合作为：
-
-```text
-Second-stage qualification
-Compiler generalization test
-Long-context / KV Cache test
-```
-
-也就是说：
-
-```text
-TinyLlama
-→ 能不能跑
-
-Qwen2.5
-→ 能不能正确处理 GQA + 非标准 shape
-
-Llama3.2
-→ Compiler 有没有写死
-```
-
+同时 llama3.2 属于代表性的开源模型，代表大量实际部署模型的负载情况。
 ### ONNX
 
 [Llama 3.2 1B ONNX Repository](https://huggingface.co/onnx-community/Llama-3.2-1B?utm_source=chatgpt.com)
@@ -967,9 +737,7 @@ KV Cache Capacity
 MAC Array Utilization
 ```
 
-换句话说：
-
-> 小模型验证正确性，大模型验证架构设计是否真的具有性能价值。
+用大模型来验证证构设计是否真的具有性能价值。
 
 ### ONNX
 
@@ -977,83 +745,20 @@ MAC Array Utilization
 
 目前公开的 ONNX Community 版本是 `Mistral-7B-Instruct-v0.3`，其 ONNX 配置同样明确包含 32 Q heads、8 KV heads、32 layers、4096 hidden 和 32768 context。
 
----
 
-## 5. Llama 2 7B —— MHA Control Group，而不是主 POC
 
-Llama 2 7B 值得保留，但定位应该和前面几个模型不同。
+# 总结
 
-它的价值不是覆盖 GQA，而是提供：
 
-```text
-MHA
-vs
-GQA
-```
-
-的直接对照。
-
-Meta 官方模型卡明确指出：
-
-```text
-Llama 2 7B    → GQA ✗
-Llama 2 13B   → GQA ✗
-Llama 2 70B   → GQA ✓
-```
-
-因此 Llama 2 7B 是非常好的 **MHA baseline/control group**。
-
-可以设计一个很直接的实验：
-
-```text
-Llama 2 7B
-MHA
-32 Q / 32 KV
-
-        vs
-
-Mistral 7B
-GQA
-32 Q / 8 KV
-```
-
-比较：
-
-```text
-KV Cache Size
-KV HBM Traffic
-Attention Latency
-Memory Bandwidth
-Decode Throughput
-```
-
-这样就可以把项目中的：
-
-> **GQA-aware KV Cache optimization**
-
-从“设计理念”变成一个可以量化的实验。
-
-### ONNX
-
-[Llama 2 7B ONNX Repository](https://huggingface.co/alpindale/Llama-2-7b-ONNX?utm_source=chatgpt.com)
-
-该仓库提供 Llama 2 7B 的 ONNX 版本以及 FP16/FP32 等目录，但整体体积很大，因此更适合后期作为对照实验使用，而不建议拿来做第一阶段 bring-up。
-
----
-
-# 最终建议：不要只选一个模型
-
-综合结构、复杂度、生态和硬件验证价值，我更建议项目使用下面这个模型矩阵：
 
 | 模型                  |   参数量 | Layers | Q / KV Heads | Hidden |   FFN | Context | 定位                                 |
 | ------------------- | ----: | -----: | -----------: | -----: | ----: | ------: | ---------------------------------- |
-| **Qwen2.5-0.5B**    | 0.49B |     24 |       14 / 2 |    896 |  4864 |     32K | **主 POC / Compiler Qualification** |
-| **TinyLlama-1.1B**  |  1.1B |     22 |       32 / 4 |   2048 |  5632 |      2K | **Clean Baseline / Bring-up**      |
-| **Llama 3.2-1B**    |   ~1B |     16 |       32 / 8 |   2048 |  8192 |    128K | **Modern Llama Qualification**     |
+| **Qwen2.5-0.5B**    | 0.49B |     24 |       14 / 2 |    896 |  4864 |     32K | **Compiler Qualification** |
+| **TinyLlama-1.1B**  |  1.1B |     22 |       32 / 4 |   2048 |  5632 |      2K | **前期验证模型/Clean Baseline / Bring-up**      |
+| **Llama 3.2-1B**    |   ~1B |     16 |       32 / 8 |   2048 |  8192 |    128K | **Modern Llama Qualification/代表性现代开源模型验证**     |
 | **Mistral 7B v0.3** |   ~7B |     32 |       32 / 8 |   4096 | 14336 |     32K | **Scale-up Benchmark**             |
-| **Llama 2 7B**      |    7B |     32 |      32 / 32 |   4096 | 11008 |      4K | **MHA vs GQA Control**             |
+|        |
 
-从这个矩阵可以看到，它们并不是五个“互相竞争”的模型，而是在分别回答五个问题：
 
 ```text
 TinyLlama
@@ -1063,21 +768,12 @@ Qwen2.5
 → Compiler 能否处理真实的非标准 shape + GQA + KV Cache？
 
 Llama3.2
-→ Compiler 是否真正抽象了模型，而不是针对某个模型写死？
+→ Compiler 是否真正抽象了模型，而不是针对某个模型写死？是否能针对开源标杆模型起到验证标准
 
 Mistral7B
 → 当模型规模扩大以后，Dataflow / SRAM / DMA / KV Cache 优化是否仍然有效？
 
-Llama2-7B
-→ GQA 相比 MHA 对 KV Cache / Memory Traffic 到底带来了多少收益？
 ```
 
-所以最终不应该把 POC 定义成：
 
-> “跑通某一个 LLM。”
 
-而应该定义成：
-
-> **在一个稳定的 Dense-GQA Transformer 架构族上，完整打通 ONNX → Compiler IR → Graph Optimization → Tiling / Memory Planning → Hardware Codegen → Runtime → Accelerator，并通过 TinyLlama、Qwen2.5、Llama3.2 和 Mistral 等不同规模与 shape 的模型验证架构泛化能力，再使用 Llama2-7B 作为 MHA 对照组量化 GQA-aware KV Cache 优化收益。**
-
-这个定义其实已经比较接近你们整个项目真正的技术主线了：**模型不是项目本身，模型只是用来证明 Compiler、Runtime 和 Dataflow Accelerator 是否抓住了主流 Dense Transformer 推理中最重要的规律。**
