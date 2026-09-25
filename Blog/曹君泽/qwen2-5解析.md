@@ -2,7 +2,7 @@
 title: qwen2-5解析
 description: qwen2-5解析
 published: true
-date: 2026-09-25T08:20:58.448Z
+date: 2026-09-25T14:17:43.240Z
 tags: 
 editor: markdown
 dateCreated: 2026-09-25T06:38:42.808Z
@@ -548,10 +548,39 @@ $$
 • 相对位置编码
 
 ## RMSNorm
-对每一个 token 的 896 维向量做均方根归一化，
+对每一个 token 的 896 维向量做均方根归一化，需要注意的是，RMSNorm 这一层并不会对 Position ID、Attention Mask、Position Embedding 以及 Input Layer Norm 进行操作，它只对 Hidden States 做归一化。
+
 
 RMSNorm 的计算公式是：
 
 $$
 \text{RMSNorm}(x) = \frac{x}{\sqrt{\text{mean}(x^2) + \epsilon}} \cdot w
+$$
+
+继续以“我讨厌调研”为例逐个 token 计算，以下的 weight 它是归一化当中在训练过程当中可学习的参数，其中包括 token 对应的向量。这里为了方便说明，简化为 1234
+
+token 0："我" `[1, 2, 3, 4]`
+
+**归一化前：**
+
+$$
+x_0 = [1, 2, 3, 4]
+$$
+
+**均方：**
+
+$$
+\text{mean}(x_0^2) = \frac{1^2 + 2^2 + 3^2 + 4^2}{4} = \frac{1 + 4 + 9 + 16}{4} = \frac{30}{4} = 7.5
+$$
+
+**均方根：**
+
+$$
+\text{RMS}(x_0) = \sqrt{7.5} \approx 2.7386
+$$
+
+**归一化后：**
+
+$$
+\text{RMSNorm}(x_0) = \left[\frac{1}{2.7386}, \frac{2}{2.7386}, \frac{3}{2.7386}, \frac{4}{2.7386}\right] \approx [0.3651, 0.7303, 1.0954, 1.4606]
 $$
