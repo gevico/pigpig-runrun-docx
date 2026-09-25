@@ -2,7 +2,7 @@
 title: ai编辑器解析-以tensetorrent为例
 description: ai编辑器解析-以tensetorrent为例
 published: true
-date: 2026-09-25T05:57:01.084Z
+date: 2026-09-25T06:00:32.641Z
 tags: 
 editor: markdown
 dateCreated: 2026-09-25T05:51:40.729Z
@@ -51,7 +51,7 @@ Your Model (PyTorch / JAX / ONNX)
 ## 逐阶段分析
 
 ### pytorch输入
-这里以 Qwen2.5 简略结构 为例
+这里以 Qwen2.5-0.5B-Instruct 简略结构 为例
 ```
 class QwenDecoderLayer(nn.Module):
     def __init__(self, cfg):
