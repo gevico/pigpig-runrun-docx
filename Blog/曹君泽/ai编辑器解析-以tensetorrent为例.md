@@ -2,7 +2,7 @@
 title: ai编辑器解析-以tensetorrent为例
 description: ai编辑器解析-以tensetorrent为例
 published: true
-date: 2026-09-25T05:51:40.729Z
+date: 2026-09-25T05:57:01.084Z
 tags: 
 editor: markdown
 dateCreated: 2026-09-25T05:51:40.729Z
@@ -46,4 +46,25 @@ Your Model (PyTorch / JAX / ONNX)
            ▼
    Wormhole / Blackhole
        (your card)
+```
+
+## 逐阶段分析
+
+### pytorch输入
+这里以 Qwen2.5 简略结构 为例
+```
+class QwenDecoderLayer(nn.Module):
+    def __init__(self, cfg):
+        self.input_layernorm = nn.RMSNorm(cfg.hidden_size, eps=1e-6)
+        self.q_proj = nn.Linear(896, 896, bias=True)
+        self.k_proj = nn.Linear(896, 128, bias=True)   # GQA: 2 个 KV head
+        self.v_proj = nn.Linear(896, 128, bias=True)
+        self.o_proj = nn.Linear(896, 896, bias=False)
+        self.gate_proj = nn.Linear(896, 4864, bias=False)
+        self.up_proj   = nn.Linear(896, 4864, bias=False)
+        self.down_proj = nn.Linear(4864, 896, bias=False)
+
+    def forward(self, x):
+        h = x + self.attn(self.input_layernorm(x))
+        return h + self.mlp(self.post_attention_layernorm(h))
 ```
