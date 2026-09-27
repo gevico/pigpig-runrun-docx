@@ -2,10 +2,10 @@
 title: 06 — tinygrad 深度剖析（可选）
 description: 06 — tinygrad 深度剖析（可选）
 published: true
-date: 2026-09-27T11:30:45.000Z
+date: 2026-09-27T12:30:05.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:45.000Z
+dateCreated: 2026-09-27T12:30:05.000Z
 ---
 
 # 06 — tinygrad 深度剖析（可选）

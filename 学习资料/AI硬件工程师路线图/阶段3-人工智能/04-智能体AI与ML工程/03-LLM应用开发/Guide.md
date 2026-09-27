@@ -2,10 +2,10 @@
 title: Module 5B — LLM Application Development
 description: Module 5B — LLM Application Development
 published: true
-date: 2026-09-27T11:30:42.000Z
+date: 2026-09-27T12:30:02.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:42.000Z
+dateCreated: 2026-09-27T12:30:02.000Z
 ---
 
 # Module 5B — LLM Application Development

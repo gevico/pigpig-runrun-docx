@@ -2,10 +2,10 @@
 title: 面向 AI 智能体的 MCP —— 深入解析 Model Context Protocol
 description: 面向 AI 智能体的 MCP —— 深入解析 Model Context Protocol
 published: true
-date: 2026-09-27T11:30:42.000Z
+date: 2026-09-27T12:30:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:42.000Z
+dateCreated: 2026-09-27T12:30:01.000Z
 ---
 
 # 面向 AI 智能体的 MCP —— 深入解析 Model Context Protocol

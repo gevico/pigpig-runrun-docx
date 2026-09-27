@@ -2,10 +2,10 @@
 title: 模块 08 —— 结合长上下文与 MoE
 description: 模块 08 —— 结合长上下文与 MoE
 published: true
-date: 2026-09-27T11:30:48.000Z
+date: 2026-09-27T12:30:08.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:48.000Z
+dateCreated: 2026-09-27T12:30:08.000Z
 ---
 
 # 模块 08 —— 结合长上下文与 MoE

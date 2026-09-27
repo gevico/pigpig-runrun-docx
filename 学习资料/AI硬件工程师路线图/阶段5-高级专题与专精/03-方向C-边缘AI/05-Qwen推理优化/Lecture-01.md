@@ -2,10 +2,10 @@
 title: 第 1 讲：Qwen 架构深度剖析 — Qwen3-4B 与 Qwen2.5-72B 并排对比
 description: 第 1 讲：Qwen 架构深度剖析 — Qwen3-4B 与 Qwen2.5-72B 并排对比
 published: true
-date: 2026-09-27T11:30:49.000Z
+date: 2026-09-27T12:30:09.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:49.000Z
+dateCreated: 2026-09-27T12:30:09.000Z
 ---
 
 # 第 1 讲：Qwen 架构深度剖析 — Qwen3-4B 与 Qwen2.5-72B 并排对比

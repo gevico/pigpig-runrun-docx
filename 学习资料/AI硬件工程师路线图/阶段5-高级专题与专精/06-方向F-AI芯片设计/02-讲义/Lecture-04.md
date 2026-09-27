@@ -2,10 +2,10 @@
 title: 第 4 讲：面向 ML 编译器的 MLIR —— Linalg、Tensor、Affine 与 Vector 方言
 description: 第 4 讲：面向 ML 编译器的 MLIR —— Linalg、Tensor、Affine 与 Vector 方言
 published: true
-date: 2026-09-27T11:30:50.000Z
+date: 2026-09-27T12:30:10.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:50.000Z
+dateCreated: 2026-09-27T12:30:10.000Z
 ---
 
 # 第 4 讲：面向 ML 编译器的 MLIR —— Linalg、Tensor、Affine 与 Vector 方言

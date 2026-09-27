@@ -2,10 +2,10 @@
 title: L40S x12 — 推理深度解析
 description: L40S x12 — 推理深度解析
 published: true
-date: 2026-09-27T11:30:48.000Z
+date: 2026-09-27T12:30:07.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:48.000Z
+dateCreated: 2026-09-27T12:30:07.000Z
 ---
 
 # L40S x12 — 推理深度解析

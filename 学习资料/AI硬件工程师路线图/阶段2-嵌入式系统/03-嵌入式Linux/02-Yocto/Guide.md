@@ -2,10 +2,10 @@
 title: Yocto Project — 嵌入式 Linux 发行版工程
 description: Yocto Project — 嵌入式 Linux 发行版工程
 published: true
-date: 2026-09-27T11:30:40.000Z
+date: 2026-09-27T12:29:59.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:40.000Z
+dateCreated: 2026-09-27T12:29:59.000Z
 ---
 
 # Yocto Project — 嵌入式 Linux 发行版工程

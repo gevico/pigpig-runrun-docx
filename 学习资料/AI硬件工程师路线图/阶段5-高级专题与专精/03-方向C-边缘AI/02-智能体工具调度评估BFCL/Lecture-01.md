@@ -2,10 +2,10 @@
 title: 讲座：用 BFCL 评估 Agent 工具调用派发
 description: 讲座：用 BFCL 评估 Agent 工具调用派发
 published: true
-date: 2026-09-27T11:30:49.000Z
+date: 2026-09-27T12:30:08.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:49.000Z
+dateCreated: 2026-09-27T12:30:08.000Z
 ---
 
 # 讲座：用 BFCL 评估 Agent 工具调用派发

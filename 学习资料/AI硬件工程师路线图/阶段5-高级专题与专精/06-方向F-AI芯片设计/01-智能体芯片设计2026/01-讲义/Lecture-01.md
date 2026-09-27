@@ -2,10 +2,10 @@
 title: Lecture 01 - 为什么用 agent 做芯片设计：2026 年的格局
 description: Lecture 01 - 为什么用 agent 做芯片设计：2026 年的格局
 published: true
-date: 2026-09-27T11:30:50.000Z
+date: 2026-09-27T12:30:10.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:50.000Z
+dateCreated: 2026-09-27T12:30:10.000Z
 ---
 
 # Lecture 01 - 为什么用 agent 做芯片设计：2026 年的格局

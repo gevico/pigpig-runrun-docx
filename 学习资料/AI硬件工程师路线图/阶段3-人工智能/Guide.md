@@ -2,10 +2,10 @@
 title: 阶段 3：人工智能 —— 你的硬件必须运行的工作负载
 description: 阶段 3：人工智能 —— 你的硬件必须运行的工作负载
 published: true
-date: 2026-09-27T11:30:40.000Z
+date: 2026-09-27T12:30:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:40.000Z
+dateCreated: 2026-09-27T12:30:00.000Z
 ---
 
 # 阶段 3：人工智能 —— 你的硬件必须运行的工作负载

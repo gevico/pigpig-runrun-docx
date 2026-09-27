@@ -2,10 +2,10 @@
 title: Jetson Linux 上的 ODMDATA、pinmux 与 GPIO
 description: Jetson Linux 上的 ODMDATA、pinmux 与 GPIO
 published: true
-date: 2026-09-27T11:30:43.000Z
+date: 2026-09-27T12:30:03.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:43.000Z
+dateCreated: 2026-09-27T12:30:03.000Z
 ---
 
 # Jetson Linux 上的 ODMDATA、pinmux 与 GPIO

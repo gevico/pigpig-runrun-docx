@@ -2,10 +2,10 @@
 title: Orin Nano 8GB — Real-Time Linux (PREEMPTRT) Deep Dive
 description: Orin Nano 8GB — Real-Time Linux (PREEMPTRT) Deep Dive
 published: true
-date: 2026-09-27T11:30:43.000Z
+date: 2026-09-27T12:30:03.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:43.000Z
+dateCreated: 2026-09-27T12:30:03.000Z
 ---
 
 # Orin Nano 8GB — Real-Time Linux (PREEMPT_RT) Deep Dive

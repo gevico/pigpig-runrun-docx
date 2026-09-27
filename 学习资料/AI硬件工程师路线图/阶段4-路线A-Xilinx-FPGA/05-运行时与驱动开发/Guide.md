@@ -2,10 +2,10 @@
 title: 方向 A §5 — FPGA 加速器的 runtime 与驱动开发
 description: 方向 A §5 — FPGA 加速器的 runtime 与驱动开发
 published: true
-date: 2026-09-27T11:30:42.000Z
+date: 2026-09-27T12:30:02.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:42.000Z
+dateCreated: 2026-09-27T12:30:02.000Z
 ---
 
 # 方向 A §5 — FPGA 加速器的 runtime 与驱动开发

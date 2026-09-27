@@ -2,10 +2,10 @@
 title: 边缘 GPU 上的 VLA（视觉-语言-动作模型）部署 — 栈选型、压缩与 profile 驱动的优化
 description: 边缘 GPU 上的 VLA（视觉-语言-动作模型）部署 — 栈选型、压缩与 profile 驱动的优化
 published: true
-date: 2026-09-27T11:30:44.000Z
+date: 2026-09-27T12:30:04.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:44.000Z
+dateCreated: 2026-09-27T12:30:04.000Z
 ---
 
 # 边缘 GPU 上的 VLA（视觉-语言-动作模型）部署 — 栈选型、压缩与 profile 驱动的优化

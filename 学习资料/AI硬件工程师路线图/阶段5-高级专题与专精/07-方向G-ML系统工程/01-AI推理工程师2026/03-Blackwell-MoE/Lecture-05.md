@@ -2,10 +2,10 @@
 title: Part 3 · Lecture 05 —— 生产环境 MoE 推理服务：MTP 推测、受限 decode、成本模型
 description: Part 3 · Lecture 05 —— 生产环境 MoE 推理服务：MTP 推测、受限 decode、成本模型
 published: true
-date: 2026-09-27T11:30:51.000Z
+date: 2026-09-27T12:30:11.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:51.000Z
+dateCreated: 2026-09-27T12:30:11.000Z
 ---
 
 # Part 3 · Lecture 05 —— 生产环境 MoE 推理服务：MTP 推测、受限 decode、成本模型

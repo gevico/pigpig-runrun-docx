@@ -2,10 +2,10 @@
 title: Module 02 — MoE：容量、计算量与访存流量
 description: Module 02 — MoE：容量、计算量与访存流量
 published: true
-date: 2026-09-27T11:30:52.000Z
+date: 2026-09-27T12:30:12.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:52.000Z
+dateCreated: 2026-09-27T12:30:12.000Z
 ---
 
 # Module 02 — MoE：容量、计算量与访存流量
@@ -259,7 +259,7 @@ router 为每个 token 从 288 个专家中挑 8 个，但模型要服务任意 
    VRAM required to serve ONE token's compute  ≈  ~18B-parameters' worth of arithmetic
 
    These are different budgets. Only the FIRST one determines whether the
-   model fits on your hardware at all. [Module 09](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/02-GLM-5-3-Flash架构精通/Lecture-09) builds the
+   model fits on your hardware at all. [Module 09](Lecture-09.md) builds the
    full per-GPU budget from this starting point.
 ```
 
@@ -353,7 +353,7 @@ That leaves roughly `320B − 305.5B ≈ 14.5B` for everything else in the model
    VRAM required to serve ONE token's compute  ≈  ~18B-parameters' worth of arithmetic
 
    These are different budgets. Only the FIRST one determines whether the
-   model fits on your hardware at all. [Module 09](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/02-GLM-5-3-Flash架构精通/Lecture-09) builds the
+   model fits on your hardware at all. [Module 09](Lecture-09.md) builds the
    full per-GPU budget from this starting point.
 ```
 

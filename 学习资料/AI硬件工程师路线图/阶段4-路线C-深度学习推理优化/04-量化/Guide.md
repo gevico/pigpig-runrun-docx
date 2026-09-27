@@ -2,10 +2,10 @@
 title: 04 — 量化与低精度推理
 description: 04 — 量化与低精度推理
 published: true
-date: 2026-09-27T11:30:45.000Z
+date: 2026-09-27T12:30:05.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:45.000Z
+dateCreated: 2026-09-27T12:30:05.000Z
 ---
 
 # 04 — 量化与低精度推理

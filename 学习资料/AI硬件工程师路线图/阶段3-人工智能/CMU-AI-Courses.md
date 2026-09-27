@@ -2,10 +2,10 @@
 title: 卡内基梅隆大学：AI 与视觉课程参考
 description: 卡内基梅隆大学：AI 与视觉课程参考
 published: true
-date: 2026-09-27T11:30:40.000Z
+date: 2026-09-27T12:30:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:40.000Z
+dateCreated: 2026-09-27T12:30:00.000Z
 ---
 
 # 卡内基梅隆大学：AI 与视觉课程参考

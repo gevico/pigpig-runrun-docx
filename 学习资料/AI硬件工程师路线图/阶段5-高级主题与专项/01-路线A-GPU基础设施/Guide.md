@@ -2,10 +2,10 @@
 title: 阶段 5 — 方向 A：GPU 基础设施
 description: 阶段 5 — 方向 A：GPU 基础设施
 published: true
-date: 2026-09-27T11:30:46.000Z
+date: 2026-09-27T12:30:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:46.000Z
+dateCreated: 2026-09-27T12:30:06.000Z
 ---
 
 # 阶段 5 — 方向 A：GPU 基础设施

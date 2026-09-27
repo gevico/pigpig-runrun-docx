@@ -2,10 +2,10 @@
 title: Jetson 音频设置与开发 - 项目指南
 description: Jetson 音频设置与开发 - 项目指南
 published: true
-date: 2026-09-27T11:30:44.000Z
+date: 2026-09-27T12:30:04.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:44.000Z
+dateCreated: 2026-09-27T12:30:04.000Z
 ---
 
 # Jetson 音频设置与开发 - 项目指南

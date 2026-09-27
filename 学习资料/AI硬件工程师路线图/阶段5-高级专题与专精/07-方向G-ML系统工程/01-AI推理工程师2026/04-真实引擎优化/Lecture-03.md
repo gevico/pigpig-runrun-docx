@@ -2,10 +2,10 @@
 title: Part 4 · Lecture 03 — 诊断：受 launch 限制、受带宽限制，还是受通信限制？
 description: Part 4 · Lecture 03 — 诊断：受 launch 限制、受带宽限制，还是受通信限制？
 published: true
-date: 2026-09-27T11:30:52.000Z
+date: 2026-09-27T12:30:12.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:52.000Z
+dateCreated: 2026-09-27T12:30:12.000Z
 ---
 
 # Part 4 · Lecture 03 — 诊断：受 launch 限制、受带宽限制，还是受通信限制？

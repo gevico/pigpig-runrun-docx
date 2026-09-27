@@ -2,10 +2,10 @@
 title: Part 1 · Lecture 03 — Roofline（性能上界模型）、带宽与存储层次
 description: Part 1 · Lecture 03 — Roofline（性能上界模型）、带宽与存储层次
 published: true
-date: 2026-09-27T11:30:51.000Z
+date: 2026-09-27T12:30:11.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:51.000Z
+dateCreated: 2026-09-27T12:30:11.000Z
 ---
 
 # Part 1 · Lecture 03 — Roofline（性能上界模型）、带宽与存储层次

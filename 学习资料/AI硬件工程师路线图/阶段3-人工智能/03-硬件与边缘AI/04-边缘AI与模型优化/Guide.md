@@ -2,10 +2,10 @@
 title: 边缘 AI
 description: 边缘 AI
 published: true
-date: 2026-09-27T11:30:41.000Z
+date: 2026-09-27T12:30:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:41.000Z
+dateCreated: 2026-09-27T12:30:01.000Z
 ---
 
 # 边缘 AI

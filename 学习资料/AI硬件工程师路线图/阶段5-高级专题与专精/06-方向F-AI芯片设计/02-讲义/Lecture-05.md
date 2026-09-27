@@ -2,10 +2,10 @@
 title: 第 5 讲：ML 到硬件的编译流水线 — TVM、基于 MLIR 的编译器与 tinygrad
 description: 第 5 讲：ML 到硬件的编译流水线 — TVM、基于 MLIR 的编译器与 tinygrad
 published: true
-date: 2026-09-27T11:30:50.000Z
+date: 2026-09-27T12:30:10.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:50.000Z
+dateCreated: 2026-09-27T12:30:10.000Z
 ---
 
 # 第 5 讲：ML 到硬件的编译流水线 — TVM、基于 MLIR 的编译器与 tinygrad

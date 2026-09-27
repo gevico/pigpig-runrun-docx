@@ -2,10 +2,10 @@
 title: 第 4 部分 · 第 02 讲 — 记分板：一个无法被操纵的 benchmark
 description: 第 4 部分 · 第 02 讲 — 记分板：一个无法被操纵的 benchmark
 published: true
-date: 2026-09-27T11:30:52.000Z
+date: 2026-09-27T12:30:11.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:52.000Z
+dateCreated: 2026-09-27T12:30:11.000Z
 ---
 
 # 第 4 部分 · 第 02 讲 — 记分板：一个无法被操纵的 benchmark

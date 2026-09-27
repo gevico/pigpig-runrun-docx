@@ -2,10 +2,10 @@
 title: Jetson Orin Nano 8GB —— 电源管理、热设计与能耗优化
 description: Jetson Orin Nano 8GB —— 电源管理、热设计与能耗优化
 published: true
-date: 2026-09-27T11:30:43.000Z
+date: 2026-09-27T12:30:02.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:43.000Z
+dateCreated: 2026-09-27T12:30:02.000Z
 ---
 
 # Jetson Orin Nano 8GB —— 电源管理、热设计与能耗优化

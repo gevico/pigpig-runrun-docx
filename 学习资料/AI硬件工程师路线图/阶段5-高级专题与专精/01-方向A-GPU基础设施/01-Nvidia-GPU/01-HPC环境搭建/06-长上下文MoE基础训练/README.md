@@ -2,10 +2,10 @@
 title: 长上下文 MoE（混合专家模型）基础模型训练
 description: 长上下文 MoE（混合专家模型）基础模型训练
 published: true
-date: 2026-09-27T11:30:48.000Z
+date: 2026-09-27T12:30:08.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:48.000Z
+dateCreated: 2026-09-27T12:30:08.000Z
 ---
 
 # 长上下文 MoE（混合专家模型）基础模型训练

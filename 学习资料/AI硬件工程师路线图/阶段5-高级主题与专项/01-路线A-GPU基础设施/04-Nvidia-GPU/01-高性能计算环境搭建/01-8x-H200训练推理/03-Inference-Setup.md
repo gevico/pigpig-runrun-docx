@@ -2,10 +2,10 @@
 title: 03 — 8x H200 推理环境搭建
 description: 03 — 8x H200 推理环境搭建
 published: true
-date: 2026-09-27T11:30:46.000Z
+date: 2026-09-27T12:30:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:46.000Z
+dateCreated: 2026-09-27T12:30:06.000Z
 ---
 
 # 03 — 8x H200 推理环境搭建

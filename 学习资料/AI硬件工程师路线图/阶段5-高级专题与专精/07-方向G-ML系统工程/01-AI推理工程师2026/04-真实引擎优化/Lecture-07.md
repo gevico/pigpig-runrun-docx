@@ -2,10 +2,10 @@
 title: 第 4 部分 · 第 07 讲 —— 分片 896 个专家，以及随之而来的 Amdahl 陷阱
 description: 第 4 部分 · 第 07 讲 —— 分片 896 个专家，以及随之而来的 Amdahl 陷阱
 published: true
-date: 2026-09-27T11:30:52.000Z
+date: 2026-09-27T12:30:12.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:52.000Z
+dateCreated: 2026-09-27T12:30:12.000Z
 ---
 
 # 第 4 部分 · 第 07 讲 —— 分片 896 个专家，以及随之而来的 Amdahl 陷阱

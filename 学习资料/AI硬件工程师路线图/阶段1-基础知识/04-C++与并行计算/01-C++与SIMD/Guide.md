@@ -2,10 +2,10 @@
 title: C++ 与 SIMD（阶段 1 §4 —— Sub-Track 1）
 description: C++ 与 SIMD（阶段 1 §4 —— Sub-Track 1）
 published: true
-date: 2026-09-27T11:30:39.000Z
+date: 2026-09-27T12:29:58.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:39.000Z
+dateCreated: 2026-09-27T12:29:58.000Z
 ---
 
 # C++ 与 SIMD（阶段 1 §4 —— Sub-Track 1）

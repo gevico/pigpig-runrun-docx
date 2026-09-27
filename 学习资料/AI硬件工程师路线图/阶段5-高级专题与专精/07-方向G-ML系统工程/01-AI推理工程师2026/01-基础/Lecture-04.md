@@ -2,10 +2,10 @@
 title: Part 1 · Lecture 04 — 精度栈：FP16 → FP8 → FP4 → INT4
 description: Part 1 · Lecture 04 — 精度栈：FP16 → FP8 → FP4 → INT4
 published: true
-date: 2026-09-27T11:30:51.000Z
+date: 2026-09-27T12:30:11.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:51.000Z
+dateCreated: 2026-09-27T12:30:11.000Z
 ---
 
 # Part 1 · Lecture 04 — 精度栈：FP16 → FP8 → FP4 → INT4

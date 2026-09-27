@@ -2,10 +2,10 @@
 title: VLA 优化与动作精度一致性 harness —— 专题课程
 description: VLA 优化与动作精度一致性 harness —— 专题课程
 published: true
-date: 2026-09-27T11:30:49.000Z
+date: 2026-09-27T12:30:09.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:49.000Z
+dateCreated: 2026-09-27T12:30:09.000Z
 ---
 
 # VLA 优化与动作精度一致性 harness —— 专题课程

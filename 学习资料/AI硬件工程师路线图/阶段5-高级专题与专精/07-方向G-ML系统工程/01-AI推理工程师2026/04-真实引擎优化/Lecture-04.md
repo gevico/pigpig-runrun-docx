@@ -2,10 +2,10 @@
 title: Part 4 · Lecture 04 — 启动几何：Grid、Occupancy 与每 token 327 次 Norm
 description: Part 4 · Lecture 04 — 启动几何：Grid、Occupancy 与每 token 327 次 Norm
 published: true
-date: 2026-09-27T11:30:52.000Z
+date: 2026-09-27T12:30:12.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:52.000Z
+dateCreated: 2026-09-27T12:30:12.000Z
 ---
 
 # Part 4 · Lecture 04 — 启动几何：Grid、Occupancy 与每 token 327 次 Norm

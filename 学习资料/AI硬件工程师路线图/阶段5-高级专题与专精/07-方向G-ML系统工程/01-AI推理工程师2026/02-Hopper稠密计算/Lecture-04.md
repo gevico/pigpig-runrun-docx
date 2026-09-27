@@ -2,10 +2,10 @@
 title: Part 2 · 第 04 讲 — 单节点多 GPU 推理服务：8× H100/H200 上的张量并行
 description: Part 2 · 第 04 讲 — 单节点多 GPU 推理服务：8× H100/H200 上的张量并行
 published: true
-date: 2026-09-27T11:30:51.000Z
+date: 2026-09-27T12:30:11.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:51.000Z
+dateCreated: 2026-09-27T12:30:11.000Z
 ---
 
 # Part 2 · 第 04 讲 — 单节点多 GPU 推理服务：8× H100/H200 上的张量并行

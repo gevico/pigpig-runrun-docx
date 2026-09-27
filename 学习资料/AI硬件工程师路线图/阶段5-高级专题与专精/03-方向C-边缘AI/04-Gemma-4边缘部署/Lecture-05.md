@@ -2,10 +2,10 @@
 title: 第 05 讲 —— 物理 AI 与多模态 Gemma 4：SigLIP、VLM 流水线与 Jetson 上的机器人感知
 description: 第 05 讲 —— 物理 AI 与多模态 Gemma 4：SigLIP、VLM 流水线与 Jetson 上的机器人感知
 published: true
-date: 2026-09-27T11:30:49.000Z
+date: 2026-09-27T12:30:09.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:49.000Z
+dateCreated: 2026-09-27T12:30:09.000Z
 ---
 
 # 第 05 讲 —— 物理 AI 与多模态 Gemma 4：SigLIP、VLM 流水线与 Jetson 上的机器人感知

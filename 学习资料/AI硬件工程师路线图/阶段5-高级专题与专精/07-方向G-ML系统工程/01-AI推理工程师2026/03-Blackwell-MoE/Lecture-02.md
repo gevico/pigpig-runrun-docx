@@ -2,10 +2,10 @@
 title: 第 3 部分 · 第 02 讲 — Blackwell 硬件故事：B200、B300、GB200 NVL72、Transformer Engine 2、FP4
 description: 第 3 部分 · 第 02 讲 — Blackwell 硬件故事：B200、B300、GB200 NVL72、Transformer Engine 2、FP4
 published: true
-date: 2026-09-27T11:30:51.000Z
+date: 2026-09-27T12:30:11.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:51.000Z
+dateCreated: 2026-09-27T12:30:11.000Z
 ---
 
 # 第 3 部分 · 第 02 讲 — Blackwell 硬件故事：B200、B300、GB200 NVL72、Transformer Engine 2、FP4

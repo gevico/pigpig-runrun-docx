@@ -2,10 +2,10 @@
 title: 第 4 部分 · 第 05 讲 — 融合与激活值量化纪律
 description: 第 4 部分 · 第 05 讲 — 融合与激活值量化纪律
 published: true
-date: 2026-09-27T11:30:52.000Z
+date: 2026-09-27T12:30:12.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:52.000Z
+dateCreated: 2026-09-27T12:30:12.000Z
 ---
 
 # 第 4 部分 · 第 05 讲 — 融合与激活值量化纪律

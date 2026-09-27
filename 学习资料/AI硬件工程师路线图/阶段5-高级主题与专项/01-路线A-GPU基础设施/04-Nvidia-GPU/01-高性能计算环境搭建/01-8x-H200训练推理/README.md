@@ -2,10 +2,10 @@
 title: 8x H200 GPU — 训练与推理深度剖析
 description: 8x H200 GPU — 训练与推理深度剖析
 published: true
-date: 2026-09-27T11:30:46.000Z
+date: 2026-09-27T12:30:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:46.000Z
+dateCreated: 2026-09-27T12:30:06.000Z
 ---
 
 # 8x H200 GPU — 训练与推理深度剖析

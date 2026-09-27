@@ -2,10 +2,10 @@
 title: Lecture 1 — Attention 瓶颈与 roofline（性能上界模型）
 description: Lecture 1 — Attention 瓶颈与 roofline（性能上界模型）
 published: true
-date: 2026-09-27T11:30:45.000Z
+date: 2026-09-27T12:30:05.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:45.000Z
+dateCreated: 2026-09-27T12:30:05.000Z
 ---
 
 # Lecture 1 — Attention 瓶颈与 roofline（性能上界模型）

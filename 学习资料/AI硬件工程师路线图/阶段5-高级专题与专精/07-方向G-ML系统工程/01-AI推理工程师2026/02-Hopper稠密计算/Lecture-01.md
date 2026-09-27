@@ -2,10 +2,10 @@
 title: 第 2 部分 · 第 01 讲 — 70B 级稠密模型剖析：Llama 3.3 70B vs Qwen 2.5 72B
 description: 第 2 部分 · 第 01 讲 — 70B 级稠密模型剖析：Llama 3.3 70B vs Qwen 2.5 72B
 published: true
-date: 2026-09-27T11:30:51.000Z
+date: 2026-09-27T12:30:11.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:51.000Z
+dateCreated: 2026-09-27T12:30:11.000Z
 ---
 
 # 第 2 部分 · 第 01 讲 — 70B 级稠密模型剖析：Llama 3.3 70B vs Qwen 2.5 72B

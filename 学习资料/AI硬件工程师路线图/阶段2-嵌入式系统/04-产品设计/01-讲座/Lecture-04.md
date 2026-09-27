@@ -2,10 +2,10 @@
 title: 第 4 讲 - AI 智能音箱设计工作坊
 description: 第 4 讲 - AI 智能音箱设计工作坊
 published: true
-date: 2026-09-27T11:30:40.000Z
+date: 2026-09-27T12:30:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:40.000Z
+dateCreated: 2026-09-27T12:30:00.000Z
 ---
 
 # 第 4 讲 - AI 智能音箱设计工作坊

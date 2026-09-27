@@ -2,10 +2,10 @@
 title: OpenCL 与 SYCL（阶段 1 §4 — Sub-Track 5）
 description: OpenCL 与 SYCL（阶段 1 §4 — Sub-Track 5）
 published: true
-date: 2026-09-27T11:30:39.000Z
+date: 2026-09-27T12:29:59.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:39.000Z
+dateCreated: 2026-09-27T12:29:59.000Z
 ---
 
 # OpenCL 与 SYCL（阶段 1 §4 — Sub-Track 5）

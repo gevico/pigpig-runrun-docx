@@ -2,10 +2,10 @@
 title: OpenMP 与 oneTBB
 description: OpenMP 与 oneTBB
 published: true
-date: 2026-09-27T11:30:39.000Z
+date: 2026-09-27T12:29:59.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:39.000Z
+dateCreated: 2026-09-27T12:29:59.000Z
 ---
 
 # OpenMP 与 oneTBB

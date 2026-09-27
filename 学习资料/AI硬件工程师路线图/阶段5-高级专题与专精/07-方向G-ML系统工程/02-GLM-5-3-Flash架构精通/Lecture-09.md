@@ -2,10 +2,10 @@
 title: 模块 09 — 8 GPU 内存模型
 description: 模块 09 — 8 GPU 内存模型
 published: true
-date: 2026-09-27T11:30:53.000Z
+date: 2026-09-27T12:30:12.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:53.000Z
+dateCreated: 2026-09-27T12:30:12.000Z
 ---
 
 # 模块 09 — 8 GPU 内存模型

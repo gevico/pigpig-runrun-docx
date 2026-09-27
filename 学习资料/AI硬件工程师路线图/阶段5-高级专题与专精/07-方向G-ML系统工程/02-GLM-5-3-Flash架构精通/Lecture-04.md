@@ -2,10 +2,10 @@
 title: Module 04 — KDA II：分块并行与完整子层
 description: Module 04 — KDA II：分块并行与完整子层
 published: true
-date: 2026-09-27T11:30:52.000Z
+date: 2026-09-27T12:30:12.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:52.000Z
+dateCreated: 2026-09-27T12:30:12.000Z
 ---
 
 # Module 04 — KDA II：分块并行与完整子层

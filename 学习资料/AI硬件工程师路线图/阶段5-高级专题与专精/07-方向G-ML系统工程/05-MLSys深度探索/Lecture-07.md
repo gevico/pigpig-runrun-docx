@@ -2,10 +2,10 @@
 title: 第 07 讲 - 边缘与物理 AI 前沿：1000-TOPS 硬件、端侧模型与 capstone
 description: 第 07 讲 - 边缘与物理 AI 前沿：1000-TOPS 硬件、端侧模型与 capstone
 published: true
-date: 2026-09-27T11:30:54.000Z
+date: 2026-09-27T12:30:14.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:54.000Z
+dateCreated: 2026-09-27T12:30:14.000Z
 ---
 
 # 第 07 讲 - 边缘与物理 AI 前沿：1000-TOPS 硬件、端侧模型与 capstone

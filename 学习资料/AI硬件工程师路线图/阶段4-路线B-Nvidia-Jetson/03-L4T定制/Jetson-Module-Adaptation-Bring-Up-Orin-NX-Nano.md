@@ -2,10 +2,10 @@
 title: Jetson 模块适配与 bring-up（上电点亮/调通）（Orin NX / Orin Nano）
 description: Jetson 模块适配与 bring-up（上电点亮/调通）（Orin NX / Orin Nano）
 published: true
-date: 2026-09-27T11:30:43.000Z
+date: 2026-09-27T12:30:03.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:43.000Z
+dateCreated: 2026-09-27T12:30:03.000Z
 ---
 
 # Jetson 模块适配与 bring-up（上电点亮/调通）（Orin NX / Orin Nano）

@@ -2,10 +2,10 @@
 title: 对数概率、困惑度与 KL 散度 — LLM 推理的信息论
 description: 对数概率、困惑度与 KL 散度 — LLM 推理的信息论
 published: true
-date: 2026-09-27T11:30:54.000Z
+date: 2026-09-27T12:30:14.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:54.000Z
+dateCreated: 2026-09-27T12:30:14.000Z
 ---
 
 # 对数概率、困惑度与 KL 散度 — LLM 推理的信息论

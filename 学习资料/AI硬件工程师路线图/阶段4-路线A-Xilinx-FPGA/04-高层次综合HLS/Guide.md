@@ -2,10 +2,10 @@
 title: 4. 高层综合（HLS）
 description: 4. 高层综合（HLS）
 published: true
-date: 2026-09-27T11:30:42.000Z
+date: 2026-09-27T12:30:02.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:42.000Z
+dateCreated: 2026-09-27T12:30:02.000Z
 ---
 
 # 4. 高层综合（HLS）

@@ -2,10 +2,10 @@
 title: Part 4 · Lecture 06 — 128k 下的 attention：按上下文拆分，按 head 拆分
 description: Part 4 · Lecture 06 — 128k 下的 attention：按上下文拆分，按 head 拆分
 published: true
-date: 2026-09-27T11:30:52.000Z
+date: 2026-09-27T12:30:12.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:52.000Z
+dateCreated: 2026-09-27T12:30:12.000Z
 ---
 
 # Part 4 · Lecture 06 — 128k 下的 attention：按上下文拆分，按 head 拆分

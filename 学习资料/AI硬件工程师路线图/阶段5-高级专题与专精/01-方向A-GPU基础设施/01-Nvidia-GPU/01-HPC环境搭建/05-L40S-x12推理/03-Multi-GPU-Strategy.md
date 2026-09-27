@@ -2,10 +2,10 @@
 title: 03 — L40S x12 的多 GPU 策略
 description: 03 — L40S x12 的多 GPU 策略
 published: true
-date: 2026-09-27T11:30:47.000Z
+date: 2026-09-27T12:30:07.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T11:30:47.000Z
+dateCreated: 2026-09-27T12:30:07.000Z
 ---
 
 # 03 — L40S x12 的多 GPU 策略
