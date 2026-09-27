@@ -1,11 +1,11 @@
 ---
-title: README
-description: README
+title: AI 硬件工程。 从模型到机器。
+description: AI 硬件工程。 从模型到机器。
 published: true
-date: 2026-09-27T09:12:30.000Z
+date: 2026-09-27T09:17:34.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:12:30.000Z
+dateCreated: 2026-09-27T09:17:34.000Z
 ---
 
 <div class="home-hero">
@@ -15,7 +15,7 @@ dateCreated: 2026-09-27T09:12:30.000Z
 <p class="home-hero__lede">一套动手实践的课程，用于理解、优化并在真实硬件上部署 AI —— GPU kernel、agent runtime、嵌入式系统与 Jetson —— 并通向设计其底层的加速器。从一个能跑通的实验开始；以别人能复现的结果收尾。</p>
 </div>
 <div class="home-hero__art">
-  <img src="Assets/images/physical-ai-chip.png" alt="AI Hardware Engineering — from models to machines" />
+  <img src="/学习资料/AI硬件工程师路线图/Assets/images/physical-ai-chip.png" alt="AI Hardware Engineering — from models to machines" />
 </div>
 </div>
 
@@ -67,7 +67,7 @@ dateCreated: 2026-09-27T09:12:30.000Z
 <p class="home-hero__lede">A hands-on curriculum for understanding, optimizing, and deploying AI on real hardware — GPU kernels, agent runtimes, embedded systems, and Jetson — with a path toward designing the accelerator underneath. Start with one working experiment; finish with results someone else can reproduce.</p>
 </div>
 <div class="home-hero__art">
-  <img src="Assets/images/physical-ai-chip.png" alt="AI Hardware Engineering — from models to machines" />
+  <img src="/学习资料/AI硬件工程师路线图/Assets/images/physical-ai-chip.png" alt="AI Hardware Engineering — from models to machines" />
 </div>
 </div>
 

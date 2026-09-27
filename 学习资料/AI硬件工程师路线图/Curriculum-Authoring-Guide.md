@@ -2,10 +2,10 @@
 title: 课程编写指南
 description: 课程编写指南
 published: true
-date: 2026-09-27T09:12:30.000Z
+date: 2026-09-27T09:17:33.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:12:30.000Z
+dateCreated: 2026-09-27T09:17:33.000Z
 ---
 
 # 课程编写指南

@@ -2,10 +2,10 @@
 title: Qwen 推理优化 — 5 讲系列
 description: Qwen 推理优化 — 5 讲系列
 published: true
-date: 2026-09-27T09:12:30.000Z
+date: 2026-09-27T09:17:34.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:12:30.000Z
+dateCreated: 2026-09-27T09:17:34.000Z
 ---
 
 # Qwen 推理优化 — 5 讲系列

@@ -2,10 +2,10 @@
 title: 第 3 讲：Jetson Orin Nano 上 Qwen3-4B 的 decode（逐 token 生成阶段）优化
 description: 第 3 讲：Jetson Orin Nano 上 Qwen3-4B 的 decode（逐 token 生成阶段）优化
 published: true
-date: 2026-09-27T09:12:30.000Z
+date: 2026-09-27T09:17:34.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:12:30.000Z
+dateCreated: 2026-09-27T09:17:34.000Z
 ---
 
 # 第 3 讲：Jetson Orin Nano 上 Qwen3-4B 的 decode（逐 token 生成阶段）优化
