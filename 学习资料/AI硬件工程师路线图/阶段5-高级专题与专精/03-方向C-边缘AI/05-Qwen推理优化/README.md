@@ -2,37 +2,37 @@
 title: Qwen 推理优化 — 5 讲系列
 description: Qwen 推理优化 — 5 讲系列
 published: true
-date: 2026-09-27T09:17:34.000Z
+date: 2026-09-27T11:30:49.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:17:34.000Z
+dateCreated: 2026-09-27T11:30:49.000Z
 ---
 
 # Qwen 推理优化 — 5 讲系列
 
-一套动手实践、硬件优先的系列课程，目标是从两个横跨部署谱系的具体 Qwen 模型上榨出真实吞吐：
+一套动手实操、硬件优先的系列，讲如何从两个恰好覆盖部署谱系两端的特定 Qwen 模型中拿到真实吞吐：
 
 * **Qwen3-4B-Instruct (Q4_K_M)** — 边缘目标，运行在 Jetson Orin Nano 8 GB 上。
 * **Qwen2.5-72B-Instruct (FP16)** — 数据中心目标，需要多 GPU。
 
-同一个架构家族，硬件工程完全不同。本系列同时讲解两个端点，再通过跨模型策略（投机解码、边缘↔云端 routing）把它们统一起来。
+同一架构家族，硬件工程完全不同。本系列先讲两个端点，再通过跨模型策略（投机解码、边缘↔云端路由）把它们统一起来。
 
-**范围：** 仅推理。训练与微调不在范围内。
+**范围：** 仅限推理。训练与微调不在范围内。
 
 | 讲次 | 标题 | 重点 |
 |---|---|---|
-| 01 | Qwen 架构深入剖析 | 配置、shape、GQA、RoPE、SwiGLU、tokenizer |
-| 02 | 把 Qwen3-4B 量化为 Q4 | AWQ、GPTQ、K-quants、校准、GGUF layout |
-| 03 | Jetson 上的 decode（逐 token 生成阶段）优化 | GEMV 链、KV cache、融合、CUDA Graphs、INT8 KV |
+| 01 | Qwen 架构深入剖析 | 配置、形状、分组查询注意力、旋转位置编码（RoPE）、SwiGLU、tokenizer |
+| 02 | 把 Qwen3-4B 量化到 Q4 | AWQ、GPTQ、K-quants、校准、GGUF 布局 |
+| 03 | Jetson 上的 decode（逐 token 生成阶段）优化 | GEMV（矩阵-向量乘）链、KV cache、融合、CUDA Graphs、INT8 KV |
 | 04 | Qwen2.5-72B 多 GPU FP16 | TP/PP、NCCL 热路径、paged attention、YaRN |
-| 05 | 跨模型与生产级推理服务 | 投机解码、vLLM/TRT-LLM、可观测性、混合 |
-| 06 | 批处理 GEMM（矩阵-矩阵乘）vs 常规 GEMM | cuBLAS API 形式、layout、张量核心、位精确可复现性 |
+| 05 | 跨模型与生产环境推理服务 | 投机解码、vLLM/TRT-LLM、可观测性、混合 |
+| 06 | 批 GEMM（矩阵-矩阵乘）vs 普通 GEMM | cuBLAS API 形式、布局、张量核心、位精确可复现性 |
 
 **前置要求：**
 
-* 阶段 5 — 边缘 AI — [Edge LLM Inference Internals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01) (GEMV（矩阵-向量乘）vs GEMM, roofline（性能上界模型）
-* 阶段 4 方向 B — [Jetson Real-Time Inference](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/11-Orin-Nano实时推理/Guide)
-* 阶段 4 方向 C — [Quantization](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/04-量化/Guide)
+* 阶段 5 — 边缘 AI — [边缘大语言模型推理内幕](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01)（GEMV vs GEMM，roofline（性能上界模型））
+* 阶段 4 方向 B — [Jetson 实时推理](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/11-Orin-Nano实时推理/Guide)
+* 阶段 4 方向 C — [量化](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/04-量化/Guide)
 
 
 <details>

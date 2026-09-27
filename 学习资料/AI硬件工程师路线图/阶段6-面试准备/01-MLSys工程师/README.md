@@ -1,14 +1,14 @@
 ---
-title: MLSys Engineer —— 面试准备
-description: MLSys Engineer —— 面试准备
+title: MLSys Engineer — 面试准备
+description: MLSys Engineer — 面试准备
 published: true
-date: 2026-09-27T09:17:34.000Z
+date: 2026-09-27T11:30:55.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:17:34.000Z
+dateCreated: 2026-09-27T11:30:55.000Z
 ---
 
-# MLSys Engineer —— 面试准备
+# MLSys Engineer — 面试准备
 
 <div class="course-identity" markdown="1">
 <div class="course-identity__icon">ML</div>
@@ -25,11 +25,11 @@ dateCreated: 2026-09-27T09:17:34.000Z
 
 资深 MLSys 面试考察三件事：
 
-1. **系统推理** —— 能否识别瓶颈（计算 vs 内存 vs 延迟），用数字支撑，并围绕它设计？不是"什么是 roofline（性能上界模型）"，而是"roofline 告诉你这个具体 kernel 应该怎么做得不一样。"
+1. **系统推理能力** —— 你能否识别瓶颈（compute vs memory vs latency），用数字支撑结论，并围绕它做设计？不是问「什么是 roofline」，而是问「roofline 告诉你这个特定 kernel 应该怎么做才不一样」。
 
-2. **实现深度** —— 你是否真正写过 fused kernel、debug 过量化回退、移植过新架构？判别标准是具体性：真实实现有失效模式、坑点和实测数字。泛泛的描述没有。
+2. **实现深度** —— 你是否真的写过融合 kernel、debug 过量化回归、移植过新架构？判断依据是具体程度：真实实现有失效模式、坑点和实测数字。泛泛的描述没有。
 
-3. **取舍的担当** —— 能否为一个决策辩护？"我们对 KV 用了 INT8 是因为 X，但在 Gemma 上把 V 留作 FP16 是因为 Y"是资深级回答。"INT8 省内存"不是。
+3. **取舍的担当** —— 你能否为一个决定辩护？「我们对 KV 用了 INT8，因为 X；但 Gemma 的 V 保留 FP16，因为 Y」是资深级回答。「INT8 省内存」不是。
 
 ---
 
@@ -37,17 +37,17 @@ dateCreated: 2026-09-27T09:17:34.000Z
 
 | 主题领域 | 问题 | 文件 |
 |------------|-----------|------|
-| KV cache 与内存管理 | PagedAttention、KV 优化、prefix caching | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
-| Attention kernel | FlashAttention 分块、HBM 流量分析、fused kernel 设计 | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
-| 投机解码 | TRT-LLM 中的 EAGLE-3、边缘调度、接受长度的经济性 | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
-| 延迟优化 | TTFT 降低、prefill（首字前的整段计算）吞吐、prefix caching | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
-| 架构集成 | 将新模型移植到 TRT-LLM、分歧检查清单 | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
+| KV cache 与内存管理 | PagedAttention、KV 优化、前缀缓存 | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
+| attention kernel | FlashAttention 分块、HBM 访存分析、融合 kernel 设计 | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
+| 投机解码 | TRT-LLM 中的 EAGLE-3、边缘调度、接受长度经济学 | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
+| 延迟优化 | TTFT 降低、prefill 吞吐、前缀缓存 | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
+| 架构集成 | 把新模型移植到 TRT-LLM、差异检查清单 | [01 — Inference Systems](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) |
 
 ---
 
 ## 自评量表
 
-面试前，针对每个主题给自己打 1–3 分：
+面试前，给每个主题打 1–3 分：
 
 ```text
 1 = I know the concept and can explain it
@@ -55,31 +55,31 @@ dateCreated: 2026-09-27T09:17:34.000Z
 3 = I have shipped this in production and can defend tradeoffs with numbers
 ```
 
-目标：最强的两个主题打 3 分，其余打 2 分，最多一个打 1 分。资深级别的面试官期望你至少在两个领域有深度。
+目标：最强的两个主题拿 3 分，其余拿 2 分，最多一个拿 1 分。资深级别面试官期望你至少在两个领域有深度。
 
 ---
 
 ## 如何准备
 
-**第 1 周（广度）：** 把全部 8 个问答通读一遍。找出哪两个对你来说最自然 —— 那便是你的锚定主题。找出哪两个最薄弱 —— 那些需要下功夫。
+**第 1 周（广度）：** 把 8 个问答通读一遍。找出哪两个对你最自然 —— 那是你的锚点主题。找出哪两个最弱 —— 那需要补。
 
-**第 2 周（在薄弱领域补深度）：** 针对每个薄弱主题动手做点东西：写一个玩具版 fused attention kernel、用 Python 实现一个 PagedAttention block table、跑一遍投机解码 benchmark。从代码出发讲胜于从笔记出发讲。
+**第 2 周（弱项深挖）：** 对每个弱项主题动手做点东西：写一个玩具级融合 attention kernel，用 Python 实现一个 PagedAttention block table，跑投机解码 benchmark。从代码出发讲胜过从笔记出发讲。
 
-**第 3 周（表达）：** 按面试节奏（每题 3–4 分钟）出声练习作答。给自己录一次音。资深级别最常见的失败是技术上正确，但切入关键洞察太慢 —— 面试官还没等你讲到就打断。
+**第 3 周（表达）：** 按面试语速出声练答案（每问 3–4 分钟）。录一次自己的音。资深级别最常见的失败是技术上正确，但讲得太慢、来不及说到关键洞见 —— 面试官会在你说到之前打断。
 
-**面试前一天：** 复习你自己项目的数字。面试官会问"你实际测到的加速比是多少？"要记住你的数字。
+**面试前一天：** 回顾你自己项目的数字。面试官会问「那你实际测到的加速是多少？」要记得自己的数字。
 
 ---
 
-## 本节文件
+## 本节的文件夹
 
-| 文件 | 内容 |
+| File | Content |
 |------|---------|
-| [01-Inference-Systems-QA.md](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) | 8 个深度问答：PagedAttention、EAGLE-3、KV 优化、fused attention kernel、FlashAttention HBM 分析、Jetson 上的投机解码、Orin Nano 上的 TTFT、TRT-LLM 中的新架构集成 |
+| [01-Inference-Systems-QA.md](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/01-Inference-Systems-QA) | 8 个深度问答：PagedAttention、EAGLE-3、KV 优化、融合 attention kernel、FlashAttention HBM 分析、Jetson 上的投机 decode、Orin Nano 上的 TTFT、TRT-LLM 中的新架构集成 |
 
 ---
 
-*上级：[面试准备](/学习资料/AI硬件工程师路线图/阶段6-面试准备/README)*
+*Up: [Interview Preparation](/学习资料/AI硬件工程师路线图/阶段6-面试准备/README)*
 
 
 <details>

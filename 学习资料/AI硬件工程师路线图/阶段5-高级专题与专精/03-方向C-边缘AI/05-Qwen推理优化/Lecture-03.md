@@ -2,39 +2,39 @@
 title: 第 3 讲：Jetson Orin Nano 上 Qwen3-4B 的 decode（逐 token 生成阶段）优化
 description: 第 3 讲：Jetson Orin Nano 上 Qwen3-4B 的 decode（逐 token 生成阶段）优化
 published: true
-date: 2026-09-27T09:17:34.000Z
+date: 2026-09-27T11:30:49.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:17:34.000Z
+dateCreated: 2026-09-27T11:30:49.000Z
 ---
 
 # 第 3 讲：Jetson Orin Nano 上 Qwen3-4B 的 decode（逐 token 生成阶段）优化
 
-## 概述
+## 概览
 
-你现在有了一个 Qwen3-4B-Q4_K_M GGUF，以及一个加载它的 runtime。之前的 JLLM log 显示它以 **0.2 tok/s** 运行。Orin Nano roofline（性能上界模型）表明，对这个模型应该能达到 **~14–20 tok/s**。本讲按影响大小依次讲解优化，以弥合这 70–100× 的差距：
+现在你手上有了 Qwen3-4B-Q4_K_M GGUF，以及一个能加载它的 runtime。之前的 JLLM 日志显示它以 **0.2 tok/s** 运行。Orin Nano 的 roofline（性能上界模型）表明，这个模型应该能跑到 **~14–20 tok/s**。本讲按收益从大到小的顺序逐一讲解各项优化，把这个 70–100× 的差距补上：
 
-1. 修复平台配置（`nvpmodel`、`jetson_clocks`）。
-2. 验证 CUDA 路径确实在用。
-3. 融合 QKV 与 gate/up，使 kernel 启动次数减半。
-4. 应用 CUDA Graphs 压缩每 token 的启动开销。
-5. 上下文增长后，将 KV cache 量化为 INT8。
-6. 为最后 1.5× 加入投机解码。
+1. 修好平台配置（`nvpmodel`、`jetson_clocks`）。
+2. 确认实际走的是 CUDA 路径。
+3. 融合 QKV 与 gate/up，把 kernel 启动次数减半。
+4. 用 CUDA Graphs 压掉每 token 的启动开销。
+5. 上下文变长后把 KV cache 量化到 INT8。
+6. 加上投机解码，拿下最后的 1.5×。
 
-每一步都很具体：shape 运算、kernel shape 变化，以及要测量什么。
+每一步都很具体：形状算术、kernel 形状变化，以及该测什么。
 
-学完后你应能：
+学完本讲，你应该能够：
 
-* 取一份 JLLM 风格的 trace，并识别出影响最大的单个修复项。
-* 在运行前估算每 token 带宽并预测 tok/s。
-* 配置融合 QKV 路径，并在 `nsys` 中验证 kernel 数下降。
-* 将 CUDA Graphs 应用于 decode 热路径，并量化收益。
+* 拿到一份 JLLM 风格的 trace，找出收益最大的那一项改动。
+* 估算每 token 带宽，在运行之前就预测出 tok/s。
+* 配置融合 QKV 路径，并在 `nsys` 中确认 kernel 数量下降。
+* 把 CUDA Graphs 用到 decode 热路径上，并量化收益。
 
 ---
 
 ## 1. 平台配置 —— 第一个 50× 收益
 
-在做其他事之前，**锁定平台**。Orin Nano 8 GB 有三种功耗模式；对内存带宽受限的工作负载，模式 0（15 W）与模式 1（7 W）的差别约为 **3× tok/s**。
+动手之前，先**把平台定下来**。Orin Nano 8 GB 有三种功耗模式；对内存带宽受限的工作负载，模式 0（15 W）与模式 1（7 W）之间的 tok/s 差约 **3×**。
 
 ```bash
 # Step 1: maximum performance
@@ -55,17 +55,17 @@ tegrastats --interval 500
 #   EMC_FREQ  near 100% (you're bandwidth-bound)
 ```
 
-如果推理期间 `GR3D_FREQ` 保持在 0%，说明 GPU 没有被使用。这表明是 CUDA 构建问题，而不是配置问题——回到第 0 步。
+如果推理期间 `GR3D_FREQ` 一直是 0%，说明 GPU 根本没被用上。这说明问题出在 CUDA 构建，而不是配置 —— 回到第 0 步。
 
-如果 `EMC_FREQ` 一直远低于 100%，而 `GR3D_FREQ` 很高，则你的 kernel 在权重读取之外的某处算力受限——这对 4B Q4 模型不寻常，通常表明激活值工作集很大（长上下文、大中间缓冲区）。
+如果 `GR3D_FREQ` 很高而 `EMC_FREQ` 远低于 100%，说明你的 kernel 算力受限的原因不是权重读取 —— 这对 4B Q4 模型并不常见，通常意味着激活值工作集很大（长上下文、大的中间缓冲区）。
 
-**仅这一步之后你应立即看到的结果：** 在 Qwen3-4B-Q4_K_M 上 0.2 tok/s → ~10 tok/s。
+**仅做完这一步就应该立刻看到的结果：** 在 Qwen3-4B-Q4_K_M 上 0.2 tok/s → ~10 tok/s。
 
 ---
 
-## 2. Decode 热路径
+## 2. decode 热路径
 
-在 Qwen3-4B 上，使用朴素（未融合）的 GEMV（矩阵-向量乘）调度 decode 单个 token：
+Qwen3-4B 上用朴素（未融合）GEMV（矩阵-向量乘）派发，生成单个 token：
 
 ```
 Per layer (× 36):
@@ -90,7 +90,7 @@ Then once:
   - sample
 ```
 
-每层 kernel 数：**13**。乘以 36 层 + 约 3 个最终 kernel = **每 token 471 次 kernel 启动**。在 Orin 上每次启动约 10 µs，即每 token 约有 4.7 ms 纯启动开销——即使 kernel 本身的计算不花时间，上限也只有约 210 tok/s。实际上在 Orin Nano 上，上限会低得多，因为其中一些 kernel 相对启动开销而言很小。
+每层 kernel 数：**13**。乘以 36 层 + 末尾约 3 个 = **每 token 471 次 kernel 启动**。在 Orin 上每次启动约 10 µs，即每 token 约 4.7 ms 的纯启动开销 —— 即便 kernel 本身的计算不要钱，上限也只有 ~210 tok/s。实际上在 Orin Nano 上上限会低得多，因为其中有些 kernel 相对启动开销来说太小了。
 
 每层从 DRAM 读取的字节数：
 
@@ -103,7 +103,7 @@ Plus KV cache reads — at 4 k context filled:
    read once per token through flash-attention      = ~576 MB
 ```
 
-总计：**约 1.66 GB/token 的 DRAM 流量**。按 Orin Nano 实测约 50 GB/s 的有效带宽：**短上下文约 30 tok/s 上限，完整 4 k 上下文约 16 tok/s**。这就是你要追赶的数字。
+合计：**每 token 约 1.66 GB 的 DRAM 流量**。按 Orin Nano 实测约 50 GB/s 的有效带宽：**短上下文上限 ~30 tok/s，完整 4 k 上下文 ~16 tok/s**。这就是你要逼近的数字。
 
 ---
 
@@ -212,16 +212,16 @@ Total: **~1.66 GB/token of DRAM traffic**. At Orin Nano's measured ~50 GB/s effe
 
 </details>
 
-## 3. 融合 #1 —— QKV 拼接
+## 3. 融合 #1 — QKV 拼接
 
-三个 GEMV（矩阵-向量乘）从 DRAM 读取 `x` 三次。把矩阵拼接起来：
+三个 GEMV（矩阵-向量乘）从 DRAM 读取 `x` 三次。拼接矩阵：
 
 ```
 W_QKV = [W_Q | W_K | W_V]    # shape: K × (M_Q + M_K + M_V) = 2560 × (4096+1024+1024)
                               #      = 2560 × 6144
 ```
 
-一次 GEMV：`M=6144, K=2560`。输出切分到 Q、K、V。
+一个 GEMV：`M=6144, K=2560`。输出切片到 Q、K、V。
 
 ```cuda
 // Before: three kernels, three reads of x
@@ -234,43 +234,43 @@ gemv_q4k_q6k_mixed_kernel<<<...>>>(qkv_out, w_qkv, x, 6144, 2560);
 // then in subsequent kernels treat qkv_out[0:4096], [4096:5120], [5120:6144]
 ```
 
-等等——Qwen 的 Q（Q4_K）和 V（Q6_K）量化类型不同。直白的融合会把它们统统存成同一类型。可选方案：
+等一下 — Qwen 对 Q (Q4_K) 和 V (Q6_K) 使用不同的量化类型。直接融合将它们全部存储为同一类型。选项：
 
-1. **全部量化到 Q4_K，接受质量下降。** 约 0.1 困惑度损失。
-2. **保留各自独立的矩阵，但在同一个流上启动并重叠执行。** 省下启动开销，省不掉输入 x 的重复读取。
-3. **写一个 kernel，在一次启动内处理混合量化。** 大多数生产 runtime 都是这么做的。
+1. **将所有内容量化为 Q4_K 并接受质量下降。** ~0.1 困惑度损失。
+2. **保留单独的矩阵，但在同一流上启动并重叠执行。** 节省启动开销，不节省 input-x 的重复读取。
+3. **编写一个在一次启动内处理混合量化的 kernel。** 大多数生产 runtime 都这样做。
 
-对 Qwen3-4B-Q4_K_M，JLLM/llama.cpp 的默认做法是方案 2；vLLM/TRT-LLM（在做 AWQ-int4）则免费获得方案 3，因为 AWQ 对整个矩阵使用统一量化。
+对于 Qwen3-4B-Q4_K_M，JLLM/llama.cpp 默认采用选项 2；vLLM/TRT-LLM（正在开发 AWQ-int4）免费获得选项 3，因为 AWQ 对整个矩阵使用均匀量化。
 
 **预期收益：** 在 Orin Nano 上 tok/s 提升约 15–25%。
 
 ---
 
-## 4. 融合 #2 —— Gate 与 Up
+## 4. 融合 #2 — Gate 和 Up
 
-FFN 上用同样的手法：
+对 FFN 使用同样的技巧：
 
 ```
 W_gu = [W_gate | W_up]    # shape: 2560 × (6912 + 6912) = 2560 × 13824
 ```
 
-一次 GEMV 同时产出两者，随后按如下方式应用 SwiGLU：
+一个 GEMV 产生两者，然后按如下方式应用 SwiGLU：
 
 ```
 out = silu(gu_out[0:6912]) * gu_out[6912:13824]
 ```
 
-这是干净的收益，因为两个矩阵量化类型相同（在标准 Q4_K_M recipe 中都是 Q4_K）。不存在混合类型的顾虑。
+这是一个干净的收益，因为两个矩阵具有相同的量化类型（在标准 Q4_K_M recipe 中都是 Q4_K）。没有混合类型的问题。
 
-**预期收益：** 额外约 10–15% tok/s。
+**预期收益：** 额外提升约 10–15% tok/s。
 
 ---
 
-## 5. CUDA Graphs —— 合并启动
+## 5. CUDA Graphs — 合并启动
 
-融合之后，每 token 的 kernel 数量从约 470 降到约 250。仍然很多。在 Orin 上每次启动约 5–10 µs。
+融合后，每个 token 的 kernel 数量从约 470 降至约 250。仍然很多。在 Orin 上每次启动约 5–10 µs。
 
-CUDA Graphs 让你可以**把整个单 token decode（逐 token 生成阶段）的计算捕获一次**，之后作为单个图节点重新启动：
+CUDA Graphs 让你**一次性捕获整个 decode（逐 token 生成阶段）单 token 计算**，并作为单个 graph 节点重新启动：
 
 ```c++
 cudaGraph_t graph;
@@ -291,20 +291,20 @@ for (int t = 0; t < n_tokens; t++) {
 }
 ```
 
-需要知道的约束：
-- **形状必须在捕获时固定。** 对 decode 而言没问题（batch=1，seq_len=1）。
-- **指针必须稳定。** 使用常驻的 scratch arena，不要在捕获区域内 malloc。
-- **KV cache 索引每个 token 都会变化。** 要么用带 `cudaGraphExecKernelNodeSetParams` 的图来更新索引，要么为整次生成预先算好索引数组。
+需要了解的约束：
+- **形状必须在捕获时固定。** 这对 decode 来说没问题（batch=1，seq_len=1）。
+- **指针必须稳定。** 使用持久化的 scratch arena，不要在捕获区域内 malloc。
+- **KV cache 索引每个 token 都会变化。** 要么使用带有 `cudaGraphExecKernelNodeSetParams` 的 graph 来更新索引，要么为整个生成过程预计算索引数组。
 
-**预期收益：** 在 Orin Nano 上尤其明显，约 30–50%——iGPU 的启动开销占总 kernel 时间的比例比独立 GPU 更大。
+**预期收益：** 在 Orin Nano 上特别明显，约 30–50% — iGPU 的启动开销占总 kernel 时间的比例比独立 GPU 更大。
 
 ---
 
-## 6. 面向 attention 模块的 FlashAttention-Decode
+## 6. 用于 Attention 块的 FlashAttention-Decode
 
-你在构建日志里看到的 `flash_attention_decode_kernel` 就是 attention 这一步的**标准优化**。思路是：不把 `[seq_len × seq_len]` 的 attention score 矩阵实体化，而是**沿 KV cache 分块**，在片上累加 `softmax · V`。
+你在构建日志中看到的 `flash_attention_decode_kernel` 是 attention 步骤的**标准优化**。思路：不物化 `[seq_len × seq_len]` attention 分数矩阵，而是**跨 KV cache 分块**并在片上累加 `softmax · V`。
 
-就 decode 而言，该操作是：
+具体到 decode，操作是：
 
 ```
 q:    [n_heads, head_dim]                = [32, 128]
@@ -315,15 +315,15 @@ output[h] = softmax(q[h] · K[:, h//4, :]ᵀ / √128) · V[:, h//4, :]
 ```
 
 优化后的 kernel：
-1. 每个 thread block 处理一个 Q head。
-2. 把 K cache 按约 64 个 token 一块分块放进 shared memory。
-3. 流式遍历 Q · Kᵀ，增量地应用 softmax（来自 FlashAttention-2 的 online softmax 技巧）。
-4. 与 V 分块累加。
-5. 写出一个大小为 `head_dim` 的输出向量。
+1. 每个线程块处理一个 Q head。
+2. 将 K cache 分块到共享内存，每块约 64 个 token。
+3. 流式处理 Q · Kᵀ，增量应用 softmax（来自 FlashAttention-2 的 online softmax 技巧）。
+4. 针对 V 分块进行累加。
+5. 写入一个 `head_dim` 大小的输出向量。
 
-相比朴素实现，收益巨大——在 Orin 上处理长上下文时，由于 KV cache 反复遍历，朴素实现很容易慢 5 倍。
+相对于朴素实现的收益是巨大的 — 由于重复的 KV cache 传递，朴素实现在 Orin 上处理长上下文时很容易慢 5 倍。
 
-如果你的 runtime 没有像样的 FlashAttention-decode kernel，那就该先专注于此，再动别的。MLC-LLM 和 llama.cpp 的实现可作为参考。
+如果你的 runtime 没有合适的 FlashAttention-decode kernel，那么在其他任何东西之前，你应该聚焦于此。MLC-LLM 和 llama.cpp 的实现是可用的参考。
 
 ---
 
@@ -448,9 +448,9 @@ If your runtime doesn't have a proper FlashAttention-decode kernel, that's where
 
 </details>
 
-## 7. INT8 KV Cache —— 当上下文变得重要
+## 7. INT8 KV cache——上下文何时变得重要
 
-一旦上下文超过约 4 k，KV cache 就占了 decode（逐 token 生成阶段）带宽的可观比例。把它量化：
+一旦上下文超过约 4 k，KV cache 就成为 decode（逐 token 生成阶段）带宽中不可忽视的一部分。把它量化：
 
 ```
 FP16 KV: 4096 bytes/token/layer  → 576 MB at 4k ctx
@@ -458,25 +458,25 @@ INT8 KV: 2048 bytes/token/layer  → 288 MB at 4k ctx (-50%)
 INT4 KV: 1024 bytes/token/layer  → 144 MB at 4k ctx (-75%)
 ```
 
-实践中有效的量化布局：
+实证有效的量化布局：
 
-* 每 head 的 scale（FP16），在 prefill（首字前的整段计算）期间每 N 个 token 计算一次（例如每 64 个 token 一块）。
-* INT8 的 K 与 V 分开存储（统计特性不同 —— V 的离群值更多）。
-* 在 flash-attention-decode 内部、共享内存中做即时 dequant。
+* 每 head 的 scale（FP16），在 prefill（首字前的整段计算）期间每 N 个 token 计算一次（例如每 64-token 块一次）。
+* INT8 的 K 与 V 分开存储（两者统计特性不同——V 的离群点更多）。
+* 在 flash-attention-decode 内部于 shared memory 中即时反量化。
 
-对 Qwen3-4B 的质量影响：INT8 KV 基本免费（困惑度下降 < 0.1）。INT4 KV 在上下文超过约 16 k 后开始出现退化。在 prefill 期间做 per-channel 校准的 INT4 KV，在约 64 k 上下文以内可与 INT8 KV 相竞争。
+对 Qwen3-4B 的质量影响：INT8 KV 基本是白送的（困惑度下降 < 0.1）。INT4 KV 在超过约 16 k 上下文后开始出现退化。在 prefill 期间配合 per-channel 校准的 INT4 KV，在约 64 k 上下文以内可与 INT8 KV 相媲美。
 
-多数生产 runtime（vLLM、SGLang、TRT-LLM）把 INT8 KV 作为一个开关选项提供。llama.cpp 中它是 `--cache-type-k q8_0 --cache-type-v q8_0`。
+大多数生产级 runtime（vLLM、SGLang、TRT-LLM）都把 INT8 KV 作为单 flag 选项提供。llama.cpp 中它对应 `--cache-type-k q8_0 --cache-type-v q8_0`。
 
 ---
 
-## 8. 投机解码 —— 最后的 1.5×
+## 8. 投机解码——最后的 1.5×
 
-decode 出的序列是**自回归**的：每个 token 都依赖前一个。投机解码通过以下方式打破这一点：
+解码出的序列是**自回归的**：每个 token 都依赖前一个。投机解码通过以下方式打破这一点：
 
-1. 用**小的 draft model**（比如 Q4 的 Qwen3-0.5B）生成接下来 K 个 token。
-2. 对**目标模型**（Qwen3-4B-Q4_K_M）在这 K 个候选上**并行**运行（一次 seq_len = K 的前向传播）。
-3. 接受目标模型本会产出的候选前缀，外加一个额外的免费 token。
+1. 用一个**小的 draft 模型**（比如 Q4 的 Qwen3-0.5B）生成接下来 K 个 token。
+2. 用**目标模型**（Qwen3-4B-Q4_K_M）对这 K 个候选**并行**计算（一次 seq_len = K 的前向传播）。
+3. 接受目标模型本来也会产生的那段候选前缀，外加一个白送的 token。
 
 具体到 Orin Nano，账是这样算的：
 
@@ -492,35 +492,35 @@ Spec dec (K=4):
   - Effective rate: 2.4 / 83ms = 29 tok/s
 ```
 
-几个坑：
-- draft model 必须**大多数时候与目标模型一致**，投机解码才能赢。用 Qwen3-0.5B 做 Qwen3-4B 的 draft 效果尚可（接受率约 50–65%）。随机的极小模型不行。
-- 两个模型要多占 DRAM。在 Orin Nano 8 GB 上这很紧张 —— 通常会把两个模型都跑在 Q4，并接受更小的 cache 预算。
+需要注意的坑：
+- draft 模型必须在**大多数时候与目标模型一致**，投机解码才能赢。用 Qwen3-0.5B 作为 Qwen3-4B 的 draft 效果尚可（约 50-65% 接受率）。随便找个小模型不行。
+- 两个模型要多占 DRAM。在 Orin Nano 8 GB 上这很紧张——通常两个模型都跑 Q4，并接受更小的 cache 预算。
 
-多数边缘 runtime 尚未提供投机解码。截至 2026 年，它在 vLLM/SGLang 中是标配，在 MLC-LLM 中是可选项，在 llama.cpp 和多数嵌入式路径中则缺失。
+大多数边缘 runtime 尚未提供投机解码。截至 2026 年，它在 vLLM/SGLang 中是标配，在 MLC-LLM 中可选，在 llama.cpp 和大多数嵌入式路径中尚缺。
 
 ---
 
-## 9. 汇总 —— Orin Nano 上 Qwen3-4B 的预算
+## 9. 汇总——Orin Nano 上 Qwen3-4B 的一份预算
 
-| 步骤 | 动作 | 累计 tok/s |
+| 步骤 | 操作 | 累计 tok/s |
 |---|---|---|
 | 基线（来自 JLLM log） | 未改动，默认 DVFS | 0.2 |
-| + `nvpmodel -m 0 && jetson_clocks` | 锁定最大功率与时钟 | 8–10 |
-| + 确认 CUDA 路径已启用 | 未走 CPU fallback | 10–12 |
-| + 融合 QKV | 一次 GEMV（矩阵-向量乘）而非三次 | 12–14 |
-| + 融合 gate+up | 一次 GEMV 而非两次 | 14–16 |
-| + 用 CUDA Graphs 覆盖逐 token decode | 把 250 次 launch 合并为一次 | 18–22 |
-| + FlashAttention-decode（正确实现） | 若尚未采用 | 20–24 |
-| + INT8 KV（仅 >4k 上下文） | 随 ctx 增长保持性能 | 20–24（更长 ctx） |
+| + `nvpmodel -m 0 && jetson_clocks` | 锁定最大功耗与频率 | 8–10 |
+| + 确认 CUDA 路径已启用 | 未落到 CPU 回退 | 10–12 |
+| + QKV 融合 | 一次 GEMV（矩阵-向量乘）代替三次 | 12–14 |
+| + gate+up 融合 | 一次 GEMV 代替两次 | 14–16 |
+| + 对逐 token decode 套 CUDA Graphs | 把 250 次 launch 收敛成一次 | 18–22 |
+| + FlashAttention-decode（正确实现） | 若尚未用上 | 20–24 |
+| + INT8 KV（仅 >4k 上下文） | 随 ctx 增长保住性能 | 20–24（更长 ctx） |
 | + 投机解码（Qwen3-0.5B draft） | 用额外 DRAM 换接受率 | 28–35 |
 
-一个打磨良好的 runtime，在 Orin Nano 上跑 Qwen3-4B-Q4_K_M、短上下文，应落在 25–35 tok/s 区间。这就是目标。如果你交付的是 8–12，说明漏了融合或 graphs。如果你交付的是 1–3，说明仍有配置问题或走了 CPU fallback。
+一个工程做得扎实的 runtime，在 Orin Nano 上短上下文跑 Qwen3-4B-Q4_K_M 应落在 25–35 tok/s 区间。这就是目标。如果只能跑到 8–12，说明缺了融合或 CUDA Graphs。如果只有 1–3，说明还卡在配置问题或 CPU 回退上。
 
 ---
 
 ## 10. 诊断你自己的 trace
 
-来自 JLLM log：
+从 JLLM log 看：
 
 ```
 Power: 0W mode, GPU @ 0 MHz
@@ -528,13 +528,13 @@ Power: 0W mode, GPU @ 0 MHz
 [engine] Decode:  16 tokens in 100064 ms (0.2 tok/s)
 ```
 
-逐条走查：
-1. **0.2 tok/s，GPU @ 0 MHz** → DVFS 被 park 住。本讲第 1 步可修复。
-2. 执行 `jetson_clocks` 后，预期约 10 tok/s。若能拿到，说明 runtime 本身是好的，继续沿优化清单往下走。
-3. **可见三个 GEMV**（`#0 #1 #2` 分别对应 Q、K、V）→ 未做 QKV 融合。见第 3 步。
-4. **prefill 与 decode 速度相同** → JLLM 在 prefill 期间跑的是逐 token GEMV，而不是 batched GEMM。改用 GEMM 可获得很大的 prefill 收益（TTFT 提升一个数量级，不影响 decode 速率）。
+逐步解读：
+1. **0.2 tok/s，GPU @ 0 MHz** → DVFS 停摆。本讲第 1 步可解决。
+2. 执行 `jetson_clocks` 后，预期约 10 tok/s。若能达到，说明 runtime 本身可用，继续沿优化清单往下走。
+3. **可见三次 GEMV**（Q、K、V 的 `#0 #1 #2`）→ 没有 QKV 融合。见第 3 步。
+4. **prefill 与 decode 速度相同** → JLLM 在 prefill 期间跑的是逐 token GEMV，而不是 batched GEMM（矩阵-矩阵乘）。改用 GEMM 可换来 prefill 的大幅收益（TTFT 提升一个数量级，不影响 decode 速率）。
 
-JLLM runtime 在结构上没问题 —— 它缺的是那些标准优化。按 §9 的顺序逐项应用。
+JLLM 的 runtime 在结构上没问题——只是缺了标准优化。按 §9 的顺序逐项施加即可。
 
 ---
 
@@ -636,22 +636,22 @@ The JLLM runtime is structurally fine — it's missing the standard optimization
 
 ## 动手练习
 
-1. **前后对比表。** 在同一台 Orin Nano 上，用 llama.cpp 运行 Qwen3-4B-Q4_K_M，配置依次为：
-   (a) 默认配置，
-   (b) 应用 `jetson_clocks` 之后，
-   (c) 配合 `--mlock`（锁定权重），
-   (d) 启用 CUDA Graphs（较新的 llama.cpp 版本已暴露该选项）。
-   记录每种配置的 tok/s 与 `tegrastats` 快照。产出四行表格。
+1. **优化前后对照表。** 在同一台 Orin Nano 上，用 llama.cpp 运行 Qwen3-4B-Q4_K_M，分别采用：
+   （a）默认配置，
+   （b）应用 `jetson_clocks` 之后，
+   （c）启用 `--mlock`（pin weights），
+   （d）启用 CUDA Graphs（较新的 llama.cpp 构建已开放该选项）。
+   记录每种配置的 tok/s 和 `tegrastats` 快照。产出四行表格。
 
-2. **roofline 图**（roofline：性能上界模型）**。** 针对 Qwen3-4B-Q4_K_M，绘制 tok/s 随上下文长度从 256 到 4096 的变化曲线。叠加带宽受限的理论曲线。指出你在哪里偏离了该曲线以及原因（KV 开销上升、attention 计算开始主导等）。
+2. **roofline（性能上界模型）图。** 针对 Qwen3-4B-Q4_K_M，绘制 tok/s 随上下文长度从 256 到 4096 变化的曲线。叠加带宽受限的理论曲线。找出偏离点及其原因（KV 开销上升、attention 计算开始主导等）。
 
-3. **FlashAttention 检查。** 通过检查 `nsys` trace 中的 kernel 名称，判断你的 runtime 是否使用了融合 attention kernel。如果没有，切换到带该 kernel 的 build/分支，并重新测量 §1 的 roofline 图。
+3. **FlashAttention 检查。** 通过检查 `nsys` trace 中的 kernel 名称，判断你的 runtime 是否在使用融合 attention kernel。如果没有，切换到带该 kernel 的构建/分支，并重新测量 §1 的 roofline 图。
 
-4. **长上下文下的 INT8 KV。** 生成一个 16 k-token 的 prompt（分块代码补全是不错的来源）。先用 FP16 KV decode（逐 token 生成阶段）256 个新 token，再用 INT8 KV。对比 tok/s 与实际生成的文本。量化带宽节省与感知到的质量差异。
+4. **长上下文下的 INT8 KV。** 生成一个 16 k token 的 prompt（分块的代码补全是不错的来源）。先用 FP16 KV decode（逐 token 生成阶段）256 个新 token，再用 INT8 KV 做一次。比较 tok/s 与实际的生成文本。量化带宽节省与可感知的质量差异。
 
-5. **用 Qwen3-0.5B 做投机解码。** 下载 Qwen3-0.5B（或 1.7B），量化到 Q4_K_M，并在 vLLM（或受支持时的 MLC-LLM）中搭建投机解码。在 chat prompt 与代码 prompt 上测量接受率。报告 Orin Nano 上实际的端到端 tok/s 收益。
+5. **用 Qwen3-0.5B 做投机解码。** 下载 Qwen3-0.5B（或 1.7B），量化到 Q4_K_M，并在 vLLM（或支持该功能的 MLC-LLM）中配置投机解码。测量在 chat prompt 和代码 prompt 上的接受率。报告 Orin Nano 上实际的端到端 tok/s 收益。
 
-6. **「它到底用上 CUDA 了吗？」健全性检查。** 取一个你怀疑存在 CPU 回退的 runtime。跑一次 32-token 的 decode。读取 `tegrastats`。如果 `GR3D_FREQ` 为 0% 而 CPU 负载为 100%，说明你的 runtime 跑在 CPU 上。修好 build（用 `LLAMA_CUDA=1` 或等效选项重新编译）并重新测试。
+6. **「到底有没有用上 CUDA？」的健全性检查。** 找一个你怀疑发生了 CPU 回退的 runtime。跑一次 32 token 的 decode。查看 `tegrastats`。如果 `GR3D_FREQ` 为 0% 且 CPU 占用为 100%，说明你的 runtime 跑在 CPU 上。修复构建（用 `LLAMA_CUDA=1` 或等效选项重新编译）后重测。
 
 ---
 
@@ -659,27 +659,27 @@ The JLLM runtime is structurally fine — it's missing the standard optimization
 
 | 要点 | 为什么重要 |
 |---|---|
-| `nvpmodel` + `jetson_clocks` 是最大的单一调节旋钮 | 最差与最佳配置之间相差 50×——而且它们是免费的 |
-| 每 token 471 次 kernel 启动就是未融合的基线 | 仅启动开销就能主导 decode |
-| 融合 QKV 与融合 gate+up 可将启动次数减半 | 配置之后首先要落地的两项优化 |
-| CUDA Graphs 在 Orin 上价值独特 | 启动开销占比高于独立 GPU |
-| 上下文超过约 1k 后 FlashAttention-decode 不可或缺 | 朴素 attention 会主导 KV 缓存带宽 |
-| Qwen3-4B 上 INT8 KV 在质量上基本免费 | 只要上下文 > 4 k 就用它 |
-| 投机解码需要一个与目标模型一致的 draft | 用 Qwen3-0.5B 搭配 Qwen3-4B 是合理组合 |
+| `nvpmodel` + `jetson_clocks` 是最大的单一调节项 | 最差与最佳配置之间相差 50× —— 而且这些都是免费的 |
+| 每 token 471 次 kernel 启动是未融合的基线 | 仅 kernel 启动开销就可能主导 decode |
+| 融合 QKV 与融合 gate+up 可将启动次数减半 | 配置调优之后应首先落地的两项优化 |
+| CUDA Graphs 在 Orin 上价值尤为突出 | 启动开销占比高于独立 GPU |
+| 上下文超过约 1k 后，FlashAttention-decode 必不可少 | 朴素 attention 可能主导 KV 缓存带宽 |
+| 在 Qwen3-4B 上，INT8 KV 基本不损失质量 | 只要上下文 > 4 k 就应使用 |
+| 投机解码需要与目标模型一致的 draft | Qwen3-0.5B 搭配 Qwen3-4B 是合理的组合 |
 
 ---
 
 ## 资源
 
-* **[NVIDIA Jetson Linux Developer Guide — Power Modes](https://docs.nvidia.com/jetson/archives/r36.2/DeveloperGuide/)：** 权威的 `nvpmodel` 与 `jetson_clocks` 文档。
+* **[NVIDIA Jetson Linux Developer Guide — Power Modes](https://docs.nvidia.com/jetson/archives/r36.2/DeveloperGuide/)：** `nvpmodel` 与 `jetson_clocks` 的权威文档。
 * **[CUDA Graphs — Programming Guide](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#cuda-graphs)：** 捕获机制、参数更新。
-* **[FlashAttention-2 paper](https://arxiv.org/abs/2307.08691)：** decode kernel 中使用的 online-softmax + 分块原语。
-* **[FlashDecoding](https://crfm.stanford.edu/2023/10/12/flashdecoding.html)：** 面向 decode 的变体，在 KV 块之间并行。
-* **[Speculative Decoding paper (Leviathan et al.)](https://arxiv.org/abs/2211.17192)：** 原始的投机解码分析。
+* **[FlashAttention-2 paper](https://arxiv.org/abs/2307.08691)：** decode kernel 所用的 online-softmax + 分块原语。
+* **[FlashDecoding](https://crfm.stanford.edu/2023/10/12/flashdecoding.html)：** 面向 decode 的变体，跨 KV 块并行。
+* **[Speculative Decoding paper (Leviathan et al.)](https://arxiv.org/abs/2211.17192)：** 投机解码的原始分析。
 * **[Medusa: Multiple decoding heads](https://arxiv.org/abs/2401.10774)：** 内联投机解码变体；若想避免双模型开销则值得关注。
-* **[MLC-LLM Qwen example](https://llm.mlc.ai/docs/)：** Jetson 上融合 kernel 的参考。
+* **[MLC-LLM Qwen example](https://llm.mlc.ai/docs/)：** Jetson 上融合 kernel 的参考实现。
 * **[llama.cpp Qwen3 support](https://github.com/ggerganov/llama.cpp)：** 默认参考 runtime。
-* **[阶段 5 — Edge LLM Inference Internals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01)：** 前置内容，含 roofline 数学。
+* **[阶段 5 — Edge LLM Inference Internals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01)：** 前置内容，含 roofline 计算。
 
 
 <details>

@@ -2,42 +2,42 @@
 title: MLSys Engineer — 推理系统 Q&A
 description: MLSys Engineer — 推理系统 Q&A
 published: true
-date: 2026-09-27T09:17:34.000Z
+date: 2026-09-27T11:30:54.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:17:34.000Z
+dateCreated: 2026-09-27T11:30:54.000Z
 ---
 
 # MLSys Engineer — 推理系统 Q&A
 
-**Collection：** [MLSys Engineer](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/README) | **Up：** [Interview Preparation](/学习资料/AI硬件工程师路线图/阶段6-面试准备/README)
+**所属合集：** [MLSys Engineer](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/README) | **上级：** [Interview Preparation](/学习资料/AI硬件工程师路线图/阶段6-面试准备/README)
 
 `#kv-cache` `#attention` `#speculative-decode` `#latency` `#trt-llm` `#edge`
 
 ---
 
-> 这些答案按 senior/staff 级别撰写。每一条都包含问题陈述、机制、真正的工程洞见，以及至少一个生产环境坑点。在实际面试中，每个答案控制在 3–4 分钟——长到足以讲到关键取舍，短到面试官不会在你讲到之前打断你。
+> 这些答案按 senior/staff 级别撰写。每一条都包含问题陈述、机制、真正的工程洞察，以及至少一个生产环境的坑。在实际面试中，每个答案控制在 3–4 分钟——长到足以讲到关键取舍，短到面试官不会在你讲到重点之前打断你。
 
 ---
 
-## Q1. PagedAttention 是如何工作的？
+## Q1. PagedAttention 如何工作？
 
-**它解决的问题：** 朴素的推理服务在分配时按请求预留一块连续的 `max_seq_len` KV 缓冲区。这会以两种方式浪费内存：内部碎片（预留块中未填充的槽位）和外部碎片（无法重排请求之间的空间）。vLLM 在这套模式下测得 60–80% 的有效内存浪费。
+**它解决的问题：** 朴素的推理服务在分配时为每个请求预留一块连续的 `max_seq_len` KV 缓冲区。这会以两种方式浪费内存：内部碎片（预留块中未被填充的槽位）与外部碎片（请求之间的空间无法重新打包）。vLLM 在该模型下测得 60–80% 的有效内存浪费。
 
-**机制：** PagedAttention 把 OS 虚拟内存分页应用到 KV cache 上。该缓存被划分为固定大小的 **block**（通常每个 block 存 16 个 token 的 K 和 V）。每个序列有一张 **block table**——从逻辑 token 位置 → 物理 block 索引的映射——由 CPU 侧的 block 管理器维护。attention kernel 被重写为通过这一间接层 gather K 和 V，而不是访问连续缓冲区。
+**机制：** PagedAttention 把操作系统的虚拟内存分页机制用到 KV cache 上。缓存被划分为固定大小的 **block**（通常每块 16 个 token 的 K 和 V）。每个序列有一张 **block table**——从逻辑 token 位置 → 物理 block 索引的映射——由 CPU 侧的 block manager 维护。attention kernel 被改写为通过这层间接寻址来收集 K 和 V，而不是访问连续缓冲区。
 
-**为什么这有帮助：**
+**为什么有用：**
 
-- 内部碎片以一个 block 为界（每个序列最多浪费 15 个 token 槽位，而不是多达 `max_seq_len`）
-- block 在物理内存中不必连续 → 分配器可以复用分散的页
-- 内容相同的 block 可以 **copy-on-write 共享**：beam search 的分支在分叉前共享前缀；并行采样共享 prompt；常驻的 system-prompt 前缀跨所有请求共享（**前缀缓存**）
+- 内部碎片被限制在一个 block 以内（每个序列浪费 ≤15 个 token 槽位，而不是最多 `max_seq_len`）
+- block 在物理内存中无需连续 → 分配器可以复用零散的页
+- 内容相同的 block 可以 **copy-on-write 共享**：beam search 的各分支在分叉之前共享前缀；并行采样共享 prompt；常驻的 system prompt 前缀在所有请求之间共享（**prefix caching**）
 - KV 增长完全动态——无需预先承诺序列长度
 
-**kernel 重写：** 核心变化在于 attention kernel 的 K/V 访问模式。连续 kernel 索引 `K[seq_offset + i]` 的地方，分页 kernel 转而解引用 `K[block_table[i // block_size] * block_stride + (i % block_size)]`。这一间接层会多花几个寄存器，但相对于 HBM 带宽瓶颈可以忽略。
+**kernel 改写：** 核心变化在 attention kernel 的 K/V 访问模式。连续 kernel 索引的是 `K[seq_offset + i]`，而分页 kernel 解引用的是 `K[block_table[i // block_size] * block_stride + (i % block_size)]`。这层间接寻址要额外消耗几个寄存器，但相对 HBM 带宽这一瓶颈可以忽略不计。
 
-**生产环境注意事项——前缀缓存的有效性：** 缓存条目以 token id 的哈希为键。BOS/EOS 或 system prompt 只要有一处不同，整个前缀就会失效。在多租户推理服务中，缓存命中率高度依赖工作负载——在宣称前缀缓存带来加速之前，先用你的实际流量做 benchmark。
+**生产注意事项——prefix caching 的有效性：** 缓存条目以 token-id 哈希为键。只要 BOS/EOS 或 system prompt 有一处不同，整个前缀就会失效。在多租户推理服务中，缓存命中率高度依赖工作负载——在声称 prefix cache 有加速之前，先用你的实际流量做 benchmark。
 
-**边缘场景：** 在单 stream 的边缘设备上，多租户带来的收益更小。我把预分配池的大小定为 `actual_context_budget`，而不是采用分页 block。但前缀共享的思路可以直接迁移：我那个常驻的跨轮次 KV 缓冲区（warm start 时从磁盘填充）是同一个洞见——不要对已经计算过的前缀重新做 prefill（首字前的整段计算）。
+**边缘场景：** 在单流边缘设备上，多租户带来的收益更小。我把预分配池的大小设为 `actual_context_budget`，而没有采用分页 block。但前缀共享的思路可以直接迁移：我的跨轮次常驻 KV 缓冲区（warm start 时从磁盘加载填充）就是同一个洞察——不要对已经算过的前缀重新执行 prefill（首字前的整段计算）。
 
 ---
 
@@ -82,21 +82,21 @@ dateCreated: 2026-09-27T09:17:34.000Z
 
 ## Q2. 如何在 TensorRT-LLM 中实现 EAGLE-3？
 
-**EAGLE-3 做了什么：** EAGLE 在特征层面而非 token 层面进行 draft。一个微小的 draft head 预测目标在下一位置的 **隐藏状态**，然后从 draft logits 中采样以构建候选 token 树。目标使用树 attention mask 在一次前向传播中验证整个树。EAGLE-3 特别去掉了 EAGLE-1/2 的特征回归损失约束，取而代之的是融合来自目标低层、中层和最终层的隐藏状态作为 draft 输入——这提高了接受长度，同时避免了回归约束的不稳定性。
+**EAGLE-3 做了什么：** EAGLE 在特征层面而非 token 层面做 draft。一个很小的 draft head 预测目标模型下一位置的**隐藏状态**，然后从 draft logits 中采样，构建一棵候选 token 树。目标模型用 tree attention mask 在一次前向传播中验证整棵树。EAGLE-3 特别去掉了 EAGLE-1/2 的特征回归 loss 约束，改为把目标模型低层、中层和末层的隐藏状态融合起来作为 draft 输入——这提升了接受长度，同时没有回归约束带来的不稳定性。
 
-**在 TRT-LLM 中具体实施，分阶段：**
+**在 TRT-LLM 中具体分阶段实现：**
 
-**阶段 1 — 暴露目标隐藏状态。** 修改基础模型的 TRT engine，使其从三个层（早期 ≈ L/4、中期 ≈ L/2、接近最终层）输出隐藏状态作为额外的输出。在 TRT-LLM 的 Eagle 实现（`eagle_base`）中，这就是 `emit_hidden_states` 标志——基础 engine 在输出 logits 的同时，从这些检查点导出拼接后的隐藏状态。
+**阶段 1 —— 暴露目标模型的隐藏状态。** 修改 base model 的 TRT engine，使其把三层（靠前 ≈ L/4、中间 ≈ L/2、接近末层）的隐藏状态作为额外输出。在 TRT-LLM 的 Eagle 实现（`eagle_base`）中，这就是 `emit_hidden_states` flag——base engine 会把这些检查点拼接后的隐藏状态与 logits 一并导出。
 
-**阶段 2 — draft head。** 一个小的 1–2 层 Transformer（即 EAGLE draft head）将拼接后的隐藏状态作为输入（无需上下文重新编码），并自回归地构建 draft token 树。该树具有可配置的宽度和深度；典型情况：深度 1 有 4–6 个候选，深度 2 有 2–3 个（总共 10–20 个节点）。
+**阶段 2 —— draft head。** 一个 1–2 层的小 Transformer（即 EAGLE draft head）以拼接后的隐藏状态为输入（不做 context 重编码），自回归地构建一棵 draft token 树。树的宽度和深度可配置；典型配置：深度 1 有 4–6 个候选，深度 2 有 2–3 个（共 10–20 个节点）。
 
-**阶段 3 — 树 attention。** 验证过程同时在所有树节点上运行目标一次。每个节点仅关注树中的祖先节点——通过自定义 `attention_mask`（在树内为上三角，具有适当的父子结构）加上自定义 `attention_pos_id` 实现，以使每个节点的位置编码与其在因果前缀中的深度匹配。TRT-LLM 的 attention plugin 接受 `attention_mask` 和 `position_ids` 覆盖参数，正是为了这种情况。
+**阶段 3 —— tree attention。** 验证时目标模型一次对所有树节点同时运行。每个节点只 attend 它在树中的祖先——实现方式是自定义 `attention_mask`（在树内为上三角，并具备相应的父子结构）加自定义 `attention_pos_id`，使每个节点的位置编码与其在因果前缀中的深度一致。TRT-LLM 的 attention plugin 正是为这种情况提供了 `attention_mask` 和 `position_ids` 覆盖。
 
-**阶段 4 — accept + KV 压缩。** 从根开始遍历树，接受最长的匹配前缀（与标准 spec-decode 相同的随机接受规则），仅保留被接受节点的 KV 条目，丢弃被拒绝的分支。将树 KV 压缩为线性 KV 是棘手部分：它是对 KV 缓冲区进行原地 gather，以被接受 token 的树路径为键。
+**阶段 4 —— 接受 + KV 压缩。** 从根节点开始遍历树，接受最长的匹配前缀（与标准 spec-decode 相同的随机接受规则），只保留被接受节点的 KV 条目，丢弃被拒绝的分支。把树状 KV 压缩成线性 KV 是最麻烦的部分：它是对 KV buffer 的一次原地 gather，以被接受 token 的树路径为索引。
 
-**阶段 5 — 注册为 drafter。** 接入 TRT-LLM 的 spec-decode 调度循环：draft N 棵树 → 验证 batch → accept → 继续。在 batch=1 时收益很大，因为目标前向传播受权重读取限制——验证 K 个 token 的 HBM 开销大致与 decode（逐 token 生成阶段）1 个 token 相同，因此在良好的接受率下，你能以约 1 个 token 的带宽开销获得 K 个被接受的 token。
+**阶段 5 —— 注册为 drafter。** 接入 TRT-LLM 的 spec-decode 调度循环：draft N 棵树 → 验证批 → 接受 → 继续。在 batch=1 时收益很大，因为目标模型的前向传播受权重读取限制（weight-read-bound）——验证 K 个 token 消耗的 HBM 与 decode 1 个 token（逐 token 生成阶段）大致相同，因此在接受率良好时，约 1 个 token 的带宽代价就能换来 K 个被接受的 token。
 
-**注意：** EAGLE 的特征依赖性意味着 `draft(t+1)` 在 `verify(t)` 完成之前无法开始（它需要来自 t 的目标隐藏状态）。与 token 级外部 draft（1B 模型）不同，你无法跨步骤重叠 draft 和验证。在并行度低的边缘硬件上，这会减少 wall-clock 收益。
+**坑点：** EAGLE 对特征的依赖意味着 `verify(t)` 完成前 `draft(t+1)` 无法启动（它需要 t 时刻目标模型的隐藏状态）。与 token 级的外部 draft（1B 模型）不同，无法跨步骤让 draft 与 verify 重叠。在并行度低的边缘硬件上，这会降低实际耗时上的收益。
 
 ---
 
@@ -126,34 +126,34 @@ dateCreated: 2026-09-27T09:17:34.000Z
 
 </details>
 
-## Q3. 如何在内存受限设备上优化 KV cache？
+## Q3. 如何在内存受限的设备上优化 KV cache？
 
-**Context：** 我的 Orin 工作面向 8 GB 共享 LPDDR5 上的 Gemma 4 4B —— 每个字节都很重要。
+**背景：** 我的 Orin 工作面向 8 GB 共享 LPDDR5 与 Gemma 4 4B —— 每个字节都很关键。
 
 **优先级顺序：**
 
-**1. 将 KV 量化为 INT8。** 按 token 缩放（scale = `max(|K_row|) / 127`），在 attention softmax 之前反量化。相比 FP16 内存减少约 50%，且在典型激活值上的漂移以 FP16 ULP 为界。我在多数模型上将其作为默认方案发布。
+**1. 把 KV 量化到 INT8。** 逐 token 缩放（scale = `max(|K_row|) / 127`），在 attention softmax 之前反量化。相比 FP16 内存减少约 50%，且在典型激活值上的漂移有 FP16-ULP 边界。我把它作为大多数模型的默认配置交付。
 
-*Gemma 4 例外：* Gemma 4 的 V 激活值在某些 layer 中有约 10× RMS 离群值。按行 INT8 会把它们压成截断值，导致长上下文摘要出现肉眼可见的质量下降。我对 Gemma 4 强制使用 FP16 KV，并记录在案。教训：离群值感知方案（保留少量按通道的 FP16 槽位）可以把 INT8 方法推广开 —— 但需按架构逐一验证。
+*Gemma 4 例外：* Gemma 4 的 V 激活值在某些 layer 上有约 10× 的 RMS 离群值。逐行 INT8 会把它们压成截断值，导致长上下文摘要上出现可见的质量下降。我对 Gemma 4 强制使用 FP16 KV，并记录在案。教训：离群值感知方案（保留少量逐通道 FP16 槽位）能推广 INT8 做法 —— 但要按架构逐一验证。
 
-**2. 利用 GQA/MQA。** 每减少一个 KV head，KV 内存就线性下降。Gemma 4 4B 使用 4 个 KV head（对比 8 个 Q head）→ 在任何量化之前，架构层面就已经带来 2× 的 KV 缩减。GQA 是 KV 内存方面单一杠杆最高的架构旋钮。
+**2. 利用分组查询注意力/MQA。** 每减少一个 KV head，KV 内存就线性下降。Gemma 4 4B 使用 4 个 KV head（对比 8 个 Q head）→ 在任何量化之前，架构层面就带来 2× 的 KV 缩减。分组查询注意力是 KV 内存上杠杆率最高的单一架构旋钮。
 
-**3. 考虑 KV 共享的 layer。** Gemma 4 有 34 个 transformer layer，其中只有 15 个 **拥有**自己的 KV（后 19 个 layer 通过 `kv_shared_layers` 映射复用前面某个 layer 的 K/V）。按 15 个 layer 而非 34 个 layer 分配 KV pool —— 相比朴素计算，pool 大小减少 57%。
+**3. 计入 KV 共享 layer。** Gemma 4 有 34 个 transformer layer，其中只有 15 个 **拥有**自己的 KV（末尾 19 个 layer 通过 `kv_shared_layers` 映射复用前面某个 layer 的 K/V）。按 15 个 layer 而非 34 个 layer 分配 KV pool —— 相比朴素估算，pool 大小减少 57%。
 
-**4. 限制滑动窗口 KV。** Gemma 4 的局部 attention layer 只需要最后 W=1024 个 token，而非完整上下文。把每个局部 layer 的 KV buffer 实现为 W 个条目的环形结构。无论上下文长度多大，局部 layer 的 KV 都是 O(1)。
+**4. 限制滑动窗口 KV。** Gemma 4 的局部 attention layer 只需要最后 W=1024 个 token，而不是完整上下文。把 KV buffer 实现为每个局部 layer 一个含 W 项的环。局部 layer 的 KV 与上下文长度无关，恒为 O(1)。
 
-**5. 预分配 pool + OOM 防护。** 在边缘端，绝不要放任 KV 无界增长 —— 启动时按硬上限一次性分配整个 pool，pool 满时拒绝新请求，而不是冒生成中途 OOM 的风险。需要计入：
+**5. 预分配 pool + OOM 防护。** 在边缘，绝不让 KV 无界增长 —— 启动时按硬上限一次性分配完整 pool，pool 满时拒绝新请求，而不是冒生成中途 OOM 的风险。需要计入：
 
 ```text
 pool_bytes = num_own_layers × num_kv_heads × max_ctx_tokens × head_dim × dtype_bytes
            + overhead (block tables, metadata)
 ```
 
-**6. 持久化前缀（prefix caching）。** 热启动时从磁盘载入 system prompt / 持久上下文的 KV。这样可降低第 2–N 轮的 TTFT，并避免对已算过的上下文重复 prefill。实测收益：在 1261 token 的上下文上，冷启动 TTFT 877 ms → 热启动 TTFT 444 ms。
+**6. 持久化前缀（前缀缓存）。** 热启动时从磁盘加载 system prompt / 持久上下文的 KV。这能降低第 2–N 轮的首 token 时延，并避免对已经算过的上下文重新做 prefill（首字前的整段计算）。实测收益：在 1261 token 上下文上，冷启动首 token 时延 877 ms → 热启动 444 ms。
 
-**7. 为合并访问设计布局。** 按 `[layer, head, token, dim]` 顺序存储 KV，使单个 warp 能连续读取一个 head 的 token 切片。用 `cache_head_dim` 步长字段处理参差不齐的 head 维度（Gemma 4 的 256 维滑动 K 为对齐存放在 512 宽的槽位中）。
+**7. 为合并访问而布局。** 按 `[layer, head, token, dim]` 顺序存放 KV，使单个 warp 能连续读取一个 head 的 token 切片。`cache_head_dim` 步长字段用于处理不规整的 head 维度（Gemma 4 的 256 维滑动 K 为对齐存放在 512 宽的槽位中）。
 
-**8. 驱逐（最后手段）。** 极端上下文用 StreamingLLM 式的 sink+recent 驱逐（保留前 S 个 token + 后 W 个 token）或 H2O（heavy hitters）。这些方法会降低输出质量 —— 记录这一取舍并实测。
+**8. 驱逐（最后手段）。** 面向极端上下文，采用 StreamingLLM 式的 sink+recent 驱逐（保留前 S 个 token + 后 W 个 token）或 H2O（heavy hitters）。这些做法会降低输出质量 —— 记录取舍并实测。
 
 ---
 
@@ -196,37 +196,37 @@ pool_bytes = num_own_layers × num_kv_heads × max_ctx_tokens × head_dim × dty
 
 ## Q4. 如何编写一个融合 attention kernel？
 
-**核心思路（FlashAttention 分块）：** 绝不物化完整的 N×N attention score 矩阵。对 Q 分块；循环遍历 K/V 分块；对每个分块：在寄存器或 SRAM 中计算 `S = Q·Kᵀ`，应用 online softmax，累加 `O += P·V`，最后一次性写出 O。
+**核心思路（FlashAttention 分块）：** 绝不实际生成完整的 N×N attention score 矩阵。对 Q 分块；循环遍历 K/V 分块；对每个分块：在寄存器或 SRAM 中计算 `S = Q·Kᵀ`，应用 online softmax，累加 `O += P·V`，最后只写一次 O。
 
-**Online softmax：** 为每个 query 维护运行最大值 `m` 和运行分母 `l`。当新的 K/V 分块产生新的最大值 `m_new > m_old` 时，在加入新分块的贡献之前，先用 `exp(m_old - m_new)` 重新缩放已有的 O 累加器和 `l`。这样无需物化 S 也能保持数值正确性。
+**Online softmax：** 为每个 query 维护运行最大值 `m` 和运行分母 `l`。当新的 K/V 分块产生新的最大值 `m_new > m_old` 时，在加入新分块的贡献之前，用 `exp(m_old - m_new)` 重新缩放现有的 O 累加器和 `l`。这样无需实际生成 S 即可保持数值正确性。
 
 **在真实硬件上至关重要的工程细节：**
 
-**Tensor Core（MMA）：** 对 `Q·Kᵀ` 和 `P·V` 都使用 `m16n8k16` 或 `m16n8k32` MMA atom（fp16/bf16 输入，fp32 累加）。把 softmax 中间结果和 O 累加器保持为 fp32。
+**Tensor Core（MMA）：** 使用 `m16n8k16` 或 `m16n8k32` MMA atom（fp16/bf16 输入，fp32 累加）来完成 `Q·Kᵀ` 和 `P·V` 两者。将 softmax 中间结果和 O 累加器保持为 fp32。
 
-*我在 Gemma 4 上踩过的精度陷阱：* `P·V` 矩阵乘里的 fp16 累加在 V 离群值上会崩——累加和发生截断。fp16 输入/fp32 累加没问题（即使在 20× 离群值幅度下，实测 rel-RMS 为 3e-4）。规则：始终用 fp32 累加；只有 MMA 输入可以是 fp16/bf16。
+*我在 Gemma 4 上踩到的精度陷阱：* `P·V` 矩阵乘中的 fp16 累加会在 V 离群值上出错——累加和会被截断。fp16 输入/fp32 累加没问题（即使在 20× 离群值幅度下，实测 rel-RMS 为 3e-4）。规则：始终用 fp32 累加；只有 MMA 输入可以为 fp16/bf16。
 
-**双缓冲 K/V 分块：** 在 tile `t` 的 MMA 执行时，为 tile `t+1` 发起 `cp.async` 加载。这会把全局内存延迟（HBM 访问）与计算重叠起来。在 Orin 上 D=512、4K 上下文实测：1289ms → 348ms——这是我这个 kernel 中迄今最大的单项延迟收益。
+**双缓冲 K/V 分块：** 在分块 `t` 的 MMA 执行时，为分块 `t+1` 发起 `cp.async` 加载。这样就把全局内存延迟（HBM 访问）与计算重叠起来。在 Orin 上 D=512、4K 上下文下实测影响：1289ms → 348ms——这是我 kernel 中迄今为止最大的单项延迟收益。
 
-**跳过全被 mask 的分块：** 对滑动窗口 attention，最早相关的 K 分块从 `kt_start = ((q_pos + 1 - W) / KT) * KT` 开始。对完全落在窗口之外的分块，连加载都不要发起——它们对输出的贡献为零，而且能同时省下 HBM 带宽和 MMA 周期。
+**跳过完全被掩码的分块：** 对于滑动窗口 attention，最早相关的 K 分块从 `kt_start = ((q_pos + 1 - W) / KT) * KT` 开始。对于完全在窗口之外的分块，连加载都不要发起——它们对输出的贡献为零，还能节省 HBM 带宽和 MMA 周期。
 
-**Occupancy：** 把 O 累加器放在**寄存器**里，而不是共享内存。放在共享内存里的 O 会把 occupancy 限制到每个 SM 约 1 个活跃 block，因为每个 block 的 shared 分配太大。代价是 online-softmax 的重新缩放必须直接作用在 MMA 寄存器片段上——你需要知道你所用的具体 MMA atom 的 lane 到输出行映射（`lane gid` 拥有行 `{gid, gid+8}`、列 `{2t, 2t+1}`）。
+**Occupancy：** 将 O 累加器放在**寄存器**中，而不是共享内存。共享内存中的 O 会将 occupancy 限制到每个 SM 约 1 个活跃 block，因为每个 block 的共享内存分配太大。代价是 online-softmax 的重新缩放必须直接作用于 MMA 寄存器 fragment——你需要知道特定 MMA atom 的 lane 到输出行的映射（`lane gid` 拥有行 `{gid, gid+8}`，列 `{2t, 2t+1}`）。
 
-**先看 roofline（性能上界模型）：** 在 Orin 的 8-SM iGPU 上，我实测自己的 attention kernel 是带宽受限的（算术强度 ≈ 16–32 FLOP/byte，远低于 ~190 FLOP/byte 的 ridge point）。真正的收益来自 **queries-per-block**：启动 16 个 query 共享每个已加载的 K/V 分块 = DRAM 流量摊薄 16×，而不是更快的 MMA。当瓶颈是字节时，不要伸手去用张量核心。
+**先看 roofline（性能上界模型）：** 在 Orin 的 8-SM iGPU 上，我测得我的 attention kernel 是带宽受限的（算术强度 ≈ 16–32 FLOP/byte，远低于约 190 FLOP/byte 的 ridge point）。真正的收益来自 **queries-per-block**：启动 16 个 query 共享每个加载的 K/V 分块 = 对 DRAM 流量进行 16× 摊销，而不是更快的 MMA。当瓶颈是字节数时，不要动辄使用张量核心。
 
 ---
 
-## Q5. 为什么 FlashAttention 能减少 HBM 流量？
+## Q5. FlashAttention 为什么能减少 HBM 流量？
 
-**朴素 attention 的做法：** 把 `S = QKᵀ`（N×N fp16 矩阵）写入 HBM → 再读回来做 softmax → 写入 `P`（N×N）→ 读出 `P` 用于 `P·V`。在序列长度 N=4096、D=128 时，仅一层的 attention 矩阵就产生约 4 GB 的 HBM 流量——而 softmax 在其上完全是带宽受限的。
+**朴素 attention 的做法：** 将 `S = QKᵀ`（N×N fp16 矩阵）写入 HBM → 读回来做 softmax → 写入 `P`（N×N）→ 读取 `P` 用于 `P·V`。在序列长度 N=4096、D=128 时，仅一层的 attention 矩阵就产生约 4 GB 的 HBM 流量——而 softmax 在它上面纯粹是带宽受限的。
 
-**FlashAttention 的做法：** 对计算分块，使 `S` 和 `P` 分块始终不离开 SRAM/寄存器。kernel 从 HBM 基本只读一次 Q、K、V，并只写一次 O。HBM 流量从 O(N² · d) 降到 O(N · d)。
+**FlashAttention 的做法：** 对计算分块，使 `S` 和 `P` 分块从不离开 SRAM/寄存器。kernel 从 HBM 中基本只读取一次 Q、K、V，并只写一次 O。HBM 流量从 O(N² · d) 降至 O(N · d)。
 
-**取舍：** 更多 FLOPs。online-softmax 的重新缩放是额外算术；反向传播重新计算 S 分块而不是把它们暂存下来。但关键洞见是：在典型的 N 和 D 下 attention 是**带宽受限的**，所以用充裕的 FLOP 换稀缺的带宽永远是正确的。瓶颈从 HBM 带宽上移开了。
+**取舍：** 更多 FLOPs。online-softmax 的重新缩放是额外的算术；反向 pass 会重新计算 S 分块，而不是把它们存起来。但关键洞察是，在典型的 N 和 D 下 attention 是**带宽受限的**，因此用充裕的 FLOP 换稀缺的带宽总是正确的。瓶颈从 HBM 带宽上移开。
 
-**FlashAttention 何时不再有帮助：** 序列极短（N < 512）时，N×N 矩阵小到本来就能放进缓存；或者 `D` 极端（head_dim=256 或更大）时，Q·Kᵀ 的算术强度终于把天平推向算力受限。Gemma 4 的 head_dim=256 正好处于边缘——在 N=4096 时它仍是带宽受限，但在 N=512、D=256 时分块计算开始占主导。
+**FlashAttention 何时不再有帮助：** 非常短的序列（N < 512），此时 N×N 矩阵小到足以放进缓存，或者极端的 `D`（head_dim=256 或更大），此时 Q·Kᵀ 的算术强度最终推向算力受限。Gemma 4 的 head_dim=256 正好处在边缘——在 N=4096 时它仍是带宽受限的，但在 N=512、D=256 时，分块计算开始占主导。
 
-**反向传播：** 沿用同样的思路。Flash 不再为反向传播存储 P（N×N 激活值），而是在反向传播过程中于 SRAM 中重新计算 S。反向传播的内存占用从 O(N²) 降到 O(N)。这也是 FlashAttention 能大幅提升长上下文训练内存效率的原因。
+**反向 pass：** 延续同样的思路。反向时不再存储 P（N×N 激活值），Flash 会在反向 pass 期间在 SRAM 中重新计算 S。反向的内存占用从 O(N²) 降至 O(N)。这也是 FlashAttention 能大幅提升长上下文训练内存效率的原因。
 
 ---
 
@@ -274,11 +274,11 @@ pool_bytes = num_own_layers × num_kv_heads × max_ctx_tokens × head_dim × dty
 
 ## Q6. 如何在 Jetson 上调度投机解码？
 
-**机会所在：** Jetson 上 batch=1 的 decode（逐 token 生成阶段）是权重读取受限的 —— GPU 在流式读取权重时空耗 LPDDR5 带宽。在一次 target 前向中验证 K 个 draft token，消耗的 HBM 与解码 1 个 token 大致相同，因为无论哪种方式，权重读取瓶颈都一样。如果平均有 K 个 token 被接受，就能以约 1× 的带宽代价换来 K× 的吞吐。
+**机会点：** Jetson 上 batch=1 的 decode（逐 token 生成阶段）是权重读取受限 —— GPU 在流式读取权重时空等 LPDDR5 带宽。在一次 target 前向中验证 K 个 draft token 所消耗的 HBM 与解码 1 个 token 大致相当，因为两种情况下权重读取瓶颈都一样。如果平均接受 K 个 token，就能以约 1× 带宽代价换来 K× 吞吐。
 
-**draft 模型选择：** 一个与 target 共享 tokenizer 的极小 draft。1–2 层的 EAGLE feature-draft 或 Medusa heads 优于单独一个 1B 模型 —— 完整的第二个模型会争抢同一个 LPDDR5 带宽池，侵蚀收益。共享的 LPDDR5（CPU + draft + target）是 Jetson 上的关键约束，这在数据中心（NVLink 隔离的 HBM）中并不存在。
+**draft 模型选择：** 选一个与 target 共享 tokenizer 的极小 draft。1–2 层的 EAGLE feature-draft 或 Medusa heads 优于单独的 1B 模型 —— 完整的第二模型会争抢同一个 LPDDR5 带宽池，侵蚀收益。共享的 LPDDR5（CPU + draft + target）是 Jetson 上的关键约束，这在数据中心（NVLink 隔离的 HBM）并不存在。
 
-**经济性核算：** `net_win = accept_len × target_cost - (draft_cost + verify_cost)`。只有满足 `accept_len > 1 + draft_cost / target_cost` 时才有净收益。先在实际任务分布上测量接受率；再按测量值调整树深度与宽度。对代码/技术文本，接受长度通常为 3–4；对推理/数学则更低。
+**经济性核算：** `net_win = accept_len × target_cost - (draft_cost + verify_cost)`。只有当 `accept_len > 1 + draft_cost / target_cost` 时才有净收益。先在实际任务分布上测量接受率；再按实测值调整树的深度与宽度。对代码/技术文本，接受数通常为 3–4；对推理/数学则更低。
 
 **内层循环：**
 
@@ -290,11 +290,11 @@ while generating:
     repeat
 ```
 
-**CUDA graphs：** 把 target 的 decode 步捕获为 CUDA graph，以消除 kernel 启动开销（Orin 上每步约 100–200 µs）。问题在于：接受长度每步都在变化，所以 graph 里的 KV 更新是变长的。应对办法是用填充后的定长树 + mask-out（被接受的路径门控 KV 写入），或者按接受数分别维护捕获好的 graph。对 Gemma 4 的逐 token PLE（Per-Layer Embeddings）我关闭 graph 捕获，因为 PLE 依赖位置，而动态位置会破坏静态 graph 捕获。
+**CUDA graphs：** 把 target 的 decode 步骤捕获为 CUDA graph，以消除 kernel 启动开销（Orin 上每步约 100–200 µs）。问题在于：每步的接受长度都在变化，因此该 graph 存在变长的 KV 更新。解决办法是用填充到固定长度的树 + mask-out（被接受的路径控制 KV 写入），或者按接受数量分别维护捕获好的 graph。我在 Gemma 4 的逐 token PLE（Per-Layer Embeddings）上关闭 graph 捕获，因为 PLE 依赖位置，而动态位置会破坏静态 graph 捕获。
 
-**功耗/热管理：** 投机解码会提高 GPU 利用率 —— draft + verify 两步都要用 GPU，而纯 decode 在两次 HBM 取数之间让 GPU 处于内存空闲状态。在 Jetson 15–25W 的功耗预算下，这可能引发热降频。报告 tok/s 时务必用持续锁定频率下的值（`jetson_clocks --store; jetson_clocks`），而不是瞬时峰值。
+**功耗/热管理：** 投机解码会提高 GPU 利用率 —— draft + verify 两步都要用 GPU，而纯 decode 在两次 HBM 取数之间让 GPU 处于访存空闲状态。在 Jetson 15–25W 的功耗预算下，这可能引发热降频。始终报告持续锁定频率（`jetson_clocks --store; jetson_clocks`）下的 tok/s，而非峰值突发值。
 
-**实际数字：** 在良好的接受率下，2–4B 的带宽受限模型可获得约 1.5–2.5× 的 decode 吞吐。对于 Orin 上的 Gemma 4 4B + E2B drafter：实测约 90 tok/s，基线约 55 tok/s。
+**实际数字：** 在良好接受率下，2–4B 的带宽受限模型可获约 1.5–2.5× 的 decode 吞吐。Orin 上 Gemma 4 4B + E2B drafter：实测约 90 tok/s，基线约 55 tok/s。
 
 ---
 
@@ -330,37 +330,37 @@ while generating:
 
 </details>
 
-## Q7. 如何在 Orin Nano 上降低 TTFT？
+## Q7. 如何降低 Orin Nano 上的 TTFT？
 
-**TTFT = 模型加载时间 + prompt prefill 时间。** 两者都是杠杆；对非平凡 prompt 而言 prefill 占主导。
+**TTFT = 模型加载时间 + prompt prefill 时间。** 两者都是可优化的杠杆；对非简单 prompt，prefill 占主导。
 
 **Prefill 吞吐（主要杠杆）：**
 
-我发现并修复的关键失效点：对超过 1024 token 的 prompt 走了**逐 token 回退**路径。系统对长 prompt 在循环中调用 `decode_one_token()`，而不是调用 `prefill_batch()`——这是 O(N) 次串行前向传播，而不是一次批处理 pass。修复方式：把任意 prompt 切成 `scratch_budget` 大小的片段，每片作为一个批传入。实测结果：在 1261 token 的 Gemma 4 prompt 上，152 → 620 tok/s。
+我发现并修复的关键故障：对超过 1024 token 的 prompt 存在 **逐 token 回退**。系统在长 prompt 上循环调用 `decode_one_token()` 而不是 `prefill_batch()` —— 那是 O(N) 次串行前向传播，而非一次批处理的前向传播。修复方式是把任意 prompt 切成 `scratch_budget` 大小的片段，每片作为一个批传入。实测结果：在 1261 token 的 Gemma 4 prompt 上 152 → 620 tok/s。
 
-其他 prefill 收益点：
-- **Tensor Core GEMM：** 量化投影（Q、K、V、out、gate、up、down）用 INT8 MMQ，attention 用 fp16/fp32。这把 GEMM 从标量 CUDA 核心搬到 Tensor Core 上。
-- **Tensor Core attention：** 把标量的 `QKᵀ` 循环换成 cuBLAS 批 GEMM（fp16 输入、fp32 累加）。prefill 时 batch=1 但 N>512，此时这条占主导。
-- **批量 RoPE + KV 存储：** 在一次 kernel 调用中对所有 prompt token 施加 RoPE，并在一趟中存好所有 K/V。避免在 Python 循环里逐 token 做 RoPE。
-- **跳过被完全 mask 的滑窗分块**（见 Q4）。
+其他 prefill 收益：
+- **Tensor Core GEMM：** 量化投影（Q、K、V、out、gate、up、down）用 INT8 MMQ，attention 用 fp16/fp32。这把 GEMM 从标量 CUDA 核心移到张量核心。
+- **Tensor Core attention：** 用 cuBLAS 批处理 GEMM（fp16 输入，fp32 累加）替换标量 `QKᵀ` 循环。prefill 时 batch=1 但 N>512，这一项占主导。
+- **批处理 RoPE+KV 存储：** 在一次 kernel 调用中对所有 prompt token 施加 RoPE，并一趟存完所有 K/V。避免在 Python 循环里逐 token 做 RoPE。
+- **跳过被完全 mask 的滑动窗口分块**（见 Q4）。
 
-**前缀缓存（对 chat 而言单项收益最大）：**
+**前缀缓存（聊天场景单项最大收益）：**
 
-从磁盘恢复系统提示词/对话的 KV，而不是每轮都重新 prefill。我的实测：1261 token 上下文下，冷 TTFT 877 ms → 热 TTFT 444 ms。实现：prefill 之后把 KV 序列化到 memory-mapped 文件；热启动时 mmap + `cudaHostRegister`，直接从 page cache 喂给 GPU（页面命中时即零拷贝）。
+从磁盘 hydrate 系统提示词 / 对话的 KV，而不是每一轮重新 prefill。我的实测：1261 token 上下文下，冷 TTFT 877 ms → 热 TTFT 444 ms。实现方式：prefill 之后把 KV 序列化到内存映射文件；热启动时 mmap + `cudaHostRegister`，直接从 page cache 喂给 GPU（页命中即零拷贝）。
 
 **模型加载时间：**
 
-对 GGUF 文件做 `mmap` 并对权重页做 `cudaHostRegister` → GPU 可直接从映射文件读取（零拷贝 DMA）。冷加载受限于 NVMe；热加载（page cache 命中时重启进程）对 Gemma 4 4B INT4 约 1.3 s。保持推理服务进程常驻——请求之间不要重启。
+`mmap` GGUF 文件，`cudaHostRegister` 权重页 → GPU 可直接从映射文件读取（零拷贝 DMA）。冷加载受限于 NVMe；热加载（进程重启但 page cache 是热的）在 Gemma 4 4B INT4 上约 1.3 s。让推理服务进程保持常驻 —— 不要在请求之间重启。
 
 **时钟：**
 
-锁定 MAXN_SUPER + `jetson_clocks`，避免第一次推理突发时的 DVFS 升频。不锁时钟时，首次 prefill 要付出约 200ms 的 DVFS 升频开销，而 llama-bench 的 warm-up pass 会把它丢掉——使 benchmark 看起来比生产环境更好。
+锁定 MAXN_SUPER + `jetson_clocks`，避免首次推理突发时的 DVFS 升频。不锁时钟的话，首次 prefill 要付出约 200ms 的 DVFS 升频代价，而 llama-bench 的 warm-up 阶段会把它丢掉 —— 使 benchmark 看起来比生产环境更好。
 
 **Prompt 压缩：**
 
-把 persona/系统/工具定义内容烧进 LoRA 权重（适配器），让更少 token 进入 prefill 路径。在 Orin 上，500 token 的系统提示词约花 50ms；编码进 LoRA 适配器后，它占 0 个 prefill token。
+把 persona / 系统 / 工具定义内容烘进 LoRA 权重（适配器），让更少的 token 进入 prefill 路径。500 token 的系统提示词在 Orin 上要花约 50ms；编码进 LoRA 适配器后，prefill token 数为 0。
 
-**务必测量真实的冷启动路径**——`llama-bench pp` 会丢掉一个 warmup 步骤，但你的用户付出的是真实的冷启动代价。在冷进程中用 `nsys profile --trace cuda,osrt` 做 profile。
+**务必测量真实的冷路径** —— `llama-bench pp` 会丢掉一个 warmup 步骤，但你的用户付出的是真实的冷启动。用 `nsys profile --trace cuda,osrt` 从冷进程开始 profile。
 
 ---
 
@@ -404,50 +404,52 @@ Bake persona/system/tool-definition content into LoRA weights (adapter) so fewer
 
 </details>
 
-## Q8. 如何将新的模型架构集成进 TensorRT-LLM？
+## Q8. 如何把一个新的模型架构集成进 TensorRT-LLM？
 
-**背景：** 这正是我完成的 Gemma 4 → TensorRT-Edge-LLM 移植，包含那些分叉特性：按 layer 类型不同的 head dims、双 RoPE、QK+V norm、单位 attention scaling、Per-Layer Embeddings、KV-sharing、GeGLU、soft-capped logits。
+**背景：** 这正是我完成的 Gemma 4 → TensorRT-Edge-LLM 移植，包括其中那些有差异的特性：逐 layer 类型的 head dim、dual RoPE、QK+V norm、unit attention scaling、Per-Layer Embeddings、KV-sharing、GeGLU、soft-capped logits。
 
-**阶段 1 — 识别 + 配置解析。**
+**阶段 1 — 识别 + config 解析。**
 
-把 `config.json` `model_type` 映射为一个解析后的配置对象。字段检查清单：head dims（按 layer 类型可能不同）、RoPE 参数（`rope_theta`、`rope_scaling`，是部分还是全量）、layer 类型标注（交错的 local/global 用 `attention_type` 列表）、norm 类型（RMSNorm vs LayerNorm，以及位置）、KV-sharing（`kv_shared_layers` 映射）、soft-cap（`attn_logit_softcapping`）。注册 `model_type → model_class`。遇到无法识别的特性必须大声报错——一个被静默当成 Llama 错误构建的检查点能跑起来、产出垃圾，然后耗掉几个小时去调试。
+把 `config.json` `model_type` 映射为一个解析后的 config 对象。字段检查清单：head dim（可能逐 layer 类型不同）、RoPE 参数（`rope_theta`、`rope_scaling`，是 partial 还是 full）、layer 类型标注（交错的 local/global 用 `attention_type` 列表）、norm 类型（RMSNorm 还是 LayerNorm，以及布局）、KV-sharing（`kv_shared_layers` 映射）、soft-cap（`attn_logit_softcapping`）。
+
+注册 `model_type → model_class`。遇到无法识别的特性要直接报错 —— 一个被悄悄按 Llama 错误构建出来的检查点会照常运行、产出垃圾，而且要花几小时才能 debug 出来。
 
 **阶段 2 — Python 模型定义。**
 
-用框架的模块组装模型：`QuantizedLinear`、attention plugin、RoPE op、RMSNorm。只有在架构确实分叉的地方才写自定义代码。
+用框架的 module 组装模型：`QuantizedLinear`、attention plugin、RoPE op、RMSNorm。只在架构确实有分歧的地方写自定义代码。
 
-*Gemma 4 的分叉点及其解法：*
+*Gemma 4 的差异点及其解决方案：*
 
-| 特性 | 解法 |
+| 特性 | 解决方案 |
 |---------|---------|
-| 按 layer 类型不同的 head dims（local：256，global：512） | 在 attention plugin 调用中把 `head_dim` 参数化；传入 `layer_type` 索引 |
-| 双 RoPE（两张独立的 cos/sin 表） | 两个模型输入；在 runtime 初始化时预计算两张表 |
+| 逐 layer 类型的 head dim（local：256，global：512） | 在 attention plugin 调用中参数化 `head_dim`；传入 `layer_type` 索引 |
+| Dual RoPE（两张独立的 cos/sin 表） | 两个模型输入；在 runtime 初始化时预计算两张表 |
 | QK-norm + V-norm | 在 attention 点积之前对 Q 和 K 插入 RMSNorm；对投影之后的 V 做 RMSNorm |
-| 单位 attention scaling | 在 RoPE 之前把 Q 预乘 `√head_dim`，以抵消 plugin 内置的 `1/√head_dim`；验证 RoPE 与该标量可交换（确实可以——RoPE 是旋转，scaling 是标量乘法） |
-| Per-Layer Embeddings | 第二条 embedding 通路：一个额外的整型输入（PLE token）+ 图内 embedding 查表 + 加到 residual stream |
-| KV-sharing（尾部 layer 复用之前的 KV） | 传入源 layer 的物理 KV buffer 地址，而不新分配 KV；在 pool 中通过 `kv_shared_layers` 别名实现 |
-| GeGLU | gate proj + up proj 组成双倍宽度的 linear，然后在单个融合 kernel 里做 `gate ⊙ gelu(up)` |
-| Soft-cap | 在 lm_head 之后施加 `logits = tanh(logits / cap) * cap` |
+| Unit attention scaling | 在 RoPE 之前把 Q 预缩放 `√head_dim`，以抵消 plugin 内置的 `1/√head_dim`；验证 RoPE 与该标量可交换（确实可交换 —— RoPE 是旋转，缩放是标量乘法） |
+| Per-Layer Embeddings | 第二条 embedding 通路：一个额外的整数输入（PLE token）+ 图内 embedding 查表 + 加到残差 stream 上 |
+| KV-sharing（尾部 layer 复用此前的 KV） | 传入源 layer 的物理 KV buffer 地址，而不是分配新的 KV；在 pool 中通过 `kv_shared_layers` 别名来实现 |
+| GeGLU | gate proj + up proj 的双倍宽线性层，然后在单个融合 kernel 中做 `gate ⊙ gelu(up)` |
+| Soft-cap | 在 lm_head 之后应用 `logits = tanh(logits / cap) * cap` |
 
 **阶段 3 — 导出契约。**
 
-对 ONNX→TRT 技术栈：定义 forward 签名——输入、dtype、动态轴、名字。新的架构特性会成为 runtime 必须提供的新图输入（我加了第二个 RoPE 表输入、一个 PLE 整型输入，以及图中作为常量的 `layer_type`）。用 dynamo exporter 配合自定义 TRT op 转换表导出；在写下第一行 runtime C++ 之前先做结构校验（实例化 + 导出 → 用 `onnx.checker.check_model` 检查 ONNX 图）。
+对 ONNX→TRT 这一类栈：定义前向签名 —— 输入、dtype、动态轴、名称。新的架构特性会变成 runtime 必须提供的新图输入（我加了第二个 RoPE 表输入、一个 PLE 整数输入，以及图中作为常量存在的 `layer_type`）。用 dynamo exporter 配合自定义 TRT op 转换表导出；在写下第一行 runtime C++ 之前先做结构校验（实例化 + 导出 → 用 `onnx.checker.check_model` 检查 ONNX 图）。
 
 **阶段 4 — Plugin + runtime。**
 
-把新的 op 映射到 TRT plugin：双 RoPE 预计算（扩展 RoPE fuser）、PLE 查表（新的 embedding plugin）、KV-share 别名（扩展 cache manager）。每个新 plugin 都是一个风险点——要单独对参考实现（HuggingFace 或 numpy）做单元测试。
+把新 op 映射到 TRT plugin：dual-RoPE 预计算（扩展 RoPE fuser）、PLE 查表（新的 embedding plugin）、KV-share 别名（扩展 cache 管理器）。每个新 plugin 都是一个风险点 —— 要对着参考实现（HuggingFace 或 numpy）单独对每个 plugin 做单元测试。
 
 **阶段 5 — 权重加载。**
 
-把 HuggingFace 检查点的 key 名 → TRT-LLM 参数名做映射。注意：tied embeddings（lm_head 与 `embed_tokens.weight` 共享）、按 layer 类型的权重 shape（local head != global head）、KV-sharing layer 上被丢弃的权重（这些 layer 在检查点里没有 KV 投影）。
+把 HuggingFace 检查点的 key 名映射到 TRT-LLM 的参数名。注意：tied embeddings（lm_head 共享 `embed_tokens.weight`）、逐 layer 类型的权重形状（local head != global head）、KV-sharing layer 上被丢弃的权重（这些 layer 在检查点里没有 KV 投影）。
 
 **阶段 6 — 验证。**
 
-贪心一致性检查：在 5 条事实型 prompt 上，用 `temperature=0` 与 HuggingFace 逐 token 对比。按 layer 做张量对比以定位回归（`model.forward(return_all_hidden_states=True)` 对比是最快的调试工具）。在最大支持长度上做长上下文测试。然后看性能：prefill（首字前的整段计算）吞吐、decode（逐 token 生成阶段）tok/s、KV 显存核算。
+贪心一致（greedy-identical）校验：在 5 条事实性 prompt 上用 `temperature=0` 与 HuggingFace 逐 token 比对。逐 layer 张量比对以定位回归（`model.forward(return_all_hidden_states=True)` 比对是最快的 debug 工具）。在最大支持长度下做 long-context 测试。然后看性能：prefill（首字前的整段计算）吞吐、decode（逐 token 生成阶段）tok/s、KV 内存统计。
 
-**降风险策略：** 我先在一个更简单的 GGUF runtime 上做到与 `llama.cpp` 贪心一致。这在独立于 TRT 机制的前提下验证了数学部分。之后 TRT 移植的风险就是机械性的（图构建、plugin 接线）而非数学性的——调试起来容易得多。
+**降风险策略：** 我先在一个更简单的 GGUF runtime 里做到与 `llama.cpp` 贪心一致。这样就在不依赖 TRT 机制的前提下验证了数学部分。之后 TRT 移植的风险就是机械性的（图构建、plugin 接线）而非数学性的 —— debug 起来容易得多。
 
-**每个 PR 只解决一个问题：** 识别 → 建模+导出 → runtime → 性能。不要把权重加载的 bug 和 attention plugin 的 bug 混在一起——你将无法隔离它们。
+**每个 PR 只处理一件事：** 识别 → 建模+导出 → runtime → 性能。不要把权重加载的 bug 和 attention plugin 的 bug 混在一起 —— 那样无法把它们区分开。
 
 ---
 
@@ -506,27 +508,27 @@ Greedy-identical check: compare token-by-token against HuggingFace on 5 factual 
 
 ## 快问快答校准题
 
-这些题考察你能否给出精确的 30 秒回答——相当于面试里检查单位是否写对。
+这些题考察你在 30 秒内给出精确答案的能力 —— 相当于面试中检查单位。
 
-**Q：decode（逐 token 生成阶段）阶段的 GEMM（矩阵-矩阵乘）算术强度是多少，它意味着什么？**
+**问：decode（逐 token 生成阶段）阶段的 GEMM 算术强度是多少，它意味着什么？**
 
-A：batch=1（M=1）时 AI = `2·M·K·N / (M·K + M·N + K·N) bytes`：`2·K·N / (K + N + K·N) ≈ 2 / (1/K + 1/N)`。K=N=4096 时，AI ≈ 2 FLOP/byte。H100 的 ridge point 约 300 FLOP/byte——decode GEMM 比 ridge 低约 150×。它完全是内存带宽受限的。含义：更快的计算单元没用；更多的 HBM 带宽或权重量化（要 stream 的字节更少）才有用。
+答：在 batch=1（M=1）时 AI = `2·M·K·N / (M·K + M·N + K·N) bytes`：`2·K·N / (K + N + K·N) ≈ 2 / (1/K + 1/N)`。当 K=N=4096 时，AI ≈ 2 FLOP/byte。H100 的 ridge point 约为 300 FLOP/byte —— decode GEMM 比 ridge 低约 150×。它完全受内存带宽限制。含义：更快的计算单元没有帮助；更大的 HBM 带宽或权重量化（需要 stream 的字节更少）才有帮助。
 
-**Q：张量并行和流水线并行有什么区别？**
+**问：张量并行与流水线并行的区别是什么？**
 
-A：TP 把每层的权重矩阵切分到各设备上（MLP 用列并行 + 行并行；attention 把 Q/K/V head 分散到各设备）——每一层都在所有设备上运行，每层之后用 `AllReduce` 通信。对延迟友好，对带宽开销大。PP 切分模型深度——不同的 layer 位于不同设备上，用点对点 `send`/`recv` 相连。通信量更低，但会引入流水线气泡（设备在等待本阶段输入时空闲）。对于大 batch 推理服务，PP 降低每步的 AllReduce 压力；对于延迟敏感的单个请求路径，TP 通常更优，因为它没有流水线空闲。
+答：TP 把每个 layer 的权重矩阵切分到各设备上（MLP 用列并行 + 行并行；attention 把 Q/K/V head 分到各设备）—— 每个 layer 都在所有设备上运行，并在每个 layer 之后用 `AllReduce` 通信。对延迟友好，带宽开销大。PP 按模型深度切分 —— 不同 layer 位于不同设备上，通过点对点 `send`/`recv` 连接。通信量更低，但会引入流水线气泡（设备在等待本 stage 输入时空闲）。对于大批量推理服务，PP 降低每步的 AllReduce 压力；对于延迟关键的单个请求路径，TP 通常更优，因为它没有流水线空闲。
 
-**Q：为什么 GQA 的 KV 内存比 MHA 小？**
+**问：为什么 GQA 的 KV 内存比 MHA 小？**
 
-A：MHA 为每个 query head 存一个 K 和 V head。GQA 把 G 个 query head 分组共享一个 K/V head。内存：MHA → `num_heads × 2 × seq_len × head_dim`；GQA → `num_kv_heads × 2 × seq_len × head_dim`，其中 `num_kv_heads = num_heads / G`。对于 Gemma 4 4B（G=2）：KV 内存是 MHA 的一半。吞吐：每步的 KV HBM 读取量减半 → 仅靠带宽，decode 吞吐上限就提升 2×。
+答：MHA 为每个 query head 存一个 K 和 V head。GQA 把 G 个 query head 分为一组共享一个 K/V head。内存：MHA → `num_heads × 2 × seq_len × head_dim`；GQA → `num_kv_heads × 2 × seq_len × head_dim`，其中 `num_kv_heads = num_heads / G`。对于 Gemma 4 4B（G=2）：KV 内存是 MHA 的一半。吞吐：每步的 KV HBM 读取量减半 → 仅凭带宽就能把 decode 吞吐上限提高 2×。
 
-**Q：GGUF 中 Q8_0 和 Q4_K_M 有什么区别？**
+**问：GGUF 中 Q8_0 与 Q4_K_M 的区别是什么？**
 
-A：Q8_0 是 8-bit 整数分块量化，每 32 元素块一个 FP32 scale。每个权重有效约 8.5 bit。质量高，压缩中等。Q4_K_M 是 k-quant：4-bit（M = mixed，某些关键 layer 用 6-bit），每 256 元素块有分组的 scales 和 mins，scale 本身用 6-bit 子量化。每个权重有效约 4.5 bit。由于 scale 做了子量化，多数模型上的质量损失低得出奇。Q4_K_M 是边缘部署的标准推荐——它把 Gemma 4 4B 装进 2.2 GB，而 BF16 需要 8.2 GB。
+答：Q8_0 是 8-bit 整数分块量化，每 32 元素块配一个 FP32 scale。每个权重有效约 8.5 bits。质量高，压缩适中。Q4_K_M 是一种 k-quant：4-bit（M = mixed，部分关键 layer 使用 6-bit），按每 256 元素块分组 scale 和 min，scale 本身用 6-bit 子量化。每个权重有效约 4.5 bits。由于 scale 子量化，大多数模型上的质量损失低得出人意料。Q4_K_M 是边缘部署的标准推荐 —— 它能把 Gemma 4 4B 装进 2.2 GB，而 BF16 需要 8.2 GB。
 
 ---
 
-*上级：[MLSys Engineer](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/README) | 返回：[Interview Preparation](/学习资料/AI硬件工程师路线图/阶段6-面试准备/README)*
+*上一级：[MLSys Engineer](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/README) | 返回：[Interview Preparation](/学习资料/AI硬件工程师路线图/阶段6-面试准备/README)*
 
 
 <details>

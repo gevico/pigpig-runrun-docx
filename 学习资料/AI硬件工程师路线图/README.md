@@ -2,17 +2,17 @@
 title: AI 硬件工程。 从模型到机器。
 description: AI 硬件工程。 从模型到机器。
 published: true
-date: 2026-09-27T09:17:34.000Z
+date: 2026-09-27T11:30:55.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:17:34.000Z
+dateCreated: 2026-09-27T11:30:55.000Z
 ---
 
 <div class="home-hero">
 <div class="home-hero__copy">
 <p class="home-hero__eyebrow">AI 硬件工程师路线图</p>
 <h1 class="home-hero__title"><span>AI 硬件工程。</span> <span>从模型到机器。</span></h1>
-<p class="home-hero__lede">一套动手实践的课程，用于理解、优化并在真实硬件上部署 AI —— GPU kernel、agent runtime、嵌入式系统与 Jetson —— 并通向设计其底层的加速器。从一个能跑通的实验开始；以别人能复现的结果收尾。</p>
+<p class="home-hero__lede">一套动手实践的课程，用于理解、优化并部署真实硬件上的 AI —— GPU kernel、agent runtime、嵌入式系统与 Jetson —— 并通向设计底层加速器的路径。从一个可运行的实验开始；以他人能复现的结果收尾。</p>
 </div>
 <div class="home-hero__art">
   <img src="/学习资料/AI硬件工程师路线图/Assets/images/physical-ai-chip.png" alt="AI Hardware Engineering — from models to machines" />
@@ -21,12 +21,12 @@ dateCreated: 2026-09-27T09:17:34.000Z
 
 <div class="home-rail" markdown="1">
 <div class="home-rail__row">
-  <a class="home-rail__step" href="Phase%201%20-%20Foundational%20Knowledge/Guide.md"><span class="home-rail__n">01</span><span class="home-rail__t">数字基础</span></a>
-  <a class="home-rail__step" href="Phase%202%20-%20Embedded%20Systems/Guide.md"><span class="home-rail__n">02</span><span class="home-rail__t">嵌入式系统</span></a>
-  <a class="home-rail__step" href="Phase%203%20-%20Artificial%20Intelligence/Guide.md"><span class="home-rail__n">03</span><span class="home-rail__t">人工智能</span></a>
-  <a class="home-rail__step" href="Phase%204%20-%20Track%20C%20-%20DL%20Inference%20Optimization/Guide.md"><span class="home-rail__n">04</span><span class="home-rail__t">部署 &amp; 编译</span></a>
-  <a class="home-rail__step" href="Phase%205%20-%20Advanced%20Topics%20and%20Specialization/Guide.md"><span class="home-rail__n">05</span><span class="home-rail__t">专精方向</span></a>
-  <a class="home-rail__step" href="Phase%206%20-%20Interview%20Preparation/README.md"><span class="home-rail__n">06</span><span class="home-rail__t">面试准备</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide"><span class="home-rail__n">01</span><span class="home-rail__t">数字基础</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide"><span class="home-rail__n">02</span><span class="home-rail__t">嵌入式系统</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide"><span class="home-rail__n">03</span><span class="home-rail__t">人工智能</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide"><span class="home-rail__n">04</span><span class="home-rail__t">部署 &amp; 编译</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/Guide"><span class="home-rail__n">05</span><span class="home-rail__t">专精方向</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段6-面试准备/README"><span class="home-rail__n">06</span><span class="home-rail__t">面试准备</span></a>
 </div>
 </div>
 
@@ -34,25 +34,25 @@ dateCreated: 2026-09-27T09:17:34.000Z
 
 ## 目标
 
-> **精通 AI 推理、AI agent harness（agent 运行时框架）系统与硬件工程 —— 然后设计一颗物理 AI 芯片。**
+> **掌握 AI 推理、AI agent harness（agent 运行时框架）系统与硬件工程 —— 然后设计一颗物理 AI 芯片。**
 
-终点是一颗单 die，运行生产级 AI 工作负载、承载真实的 agent runtime，并通过 Wi-Fi/BLE/Thread 与物理世界通信 —— 一颗 Jetson 级 AI 大脑与一套 ESP32 级无线协议栈融合在同一颗芯片上。设计它需要同时具备三套可用的技能：**推理工程**（Qwen 级 decode（逐 token 生成阶段）、kernel、量化、roofline（性能上界模型）、多 GPU 推理服务）、**agent harness 系统**（会话、工具、多 agent 循环、RAG（检索增强生成）、评测、生产可观测性）与**硬件工程**（RTL、嵌入式 Linux、Jetson、ESP32、RF、ASIC 流程）。本路线图让这三者并排推进 —— 芯片是产物，但三大支柱才是真正的工作。
+终点是一颗单片 die：它运行生产级 AI 工作负载、承载真实的 agent runtime，并通过 Wi-Fi/低功耗蓝牙（BLE）/Thread 与物理世界通信 —— 一颗 Jetson 级 AI 大脑，与一套 ESP32 级无线协议栈融合在同一颗芯片上。设计它需要同时具备三套可落地的技能：**推理工程**（Qwen 级 decode（逐 token 生成阶段）、kernel、量化、roofline（性能上界模型）、多 GPU 推理服务）、**agent harness 系统**（会话、工具、多 agent 循环、RAG（检索增强生成）、评测、生产可观测性）与**硬件工程**（RTL、嵌入式 Linux、Jetson、ESP32、RF、ASIC 流程）。本路线图将这三者并排教授 —— 芯片是产物，但这三大支柱才是真正的工作。
 
 ---
 
-## 适合人群
+## 适合谁读
 
-- **AI/ML 工程师**，希望不再把推理当作黑盒，而是设计运行它的芯片。
-- **推理工程师**，希望向上延伸到 agent runtime 协同设计，向下延伸到 kernel + 硅。
-- **嵌入式/固件工程师**，希望沿栈向上攀登 —— 从板卡到 runtime 再到芯片架构。
-- **硬件/RTL/FPGA 工程师**，在为加速器定规格之前需要工作负载与 runtime 的直觉。
-- **计算机专业学生**，希望有一条结构化的路径，终点是「我设计了一颗芯片」，而不是「我读过关于芯片的内容」。
+- **AI/ML 工程师**：希望不再把推理当作黑盒，转而设计运行它的芯片。
+- **推理工程师**：希望向上延伸到 agent runtime 协同设计，向下延伸到 kernel 与硅。
+- **嵌入式/固件工程师**：希望沿技术栈向上攀登 —— 从板卡到 runtime 再到芯片架构。
+- **硬件/RTL/FPGA 工程师**：在定义加速器规格之前，需要工作负载与 runtime 的直觉。
+- **计算机专业学生**：想要一条结构化路径，终点是「我设计了一颗芯片」，而不是「我读过关于芯片的资料」。
 
-**基线：** 熟悉 Python 或 C++，会基本的 Linux 命令行操作。不要求有硬件背景。
+**基线：** 熟悉 Python 或 C++，会用 Linux 命令行基础操作。不要求硬件背景。
 
-**已经过了基础阶段？** [阶段 1](/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide) 和 [阶段 2](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide) 的存在是为了补齐特定的空白 —— 数字逻辑、嵌入式 Linux —— 而不是为了设门槛。如果你已经会 CUDA/C++，直接去 [阶段 3](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide)，只在后续模块说明需要时才补阶段 1–2 的内容。
+**已经过了基础阶段？** [阶段 1](/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide) 与 [阶段 2](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide) 的存在是为了填补特定缺口 —— 数字逻辑、嵌入式 Linux —— 而不是用来设门槛的。如果已经会 CUDA/C++，直接进入 [阶段 3](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide)，只在后续模块明确说需要时，再去补阶段 1–2 的内容。
 
-如果你只想调用 LLM API，这里不适合你。如果你想设计调用它的硅，继续往下读。
+如果只想调用 LLM API，这份路线图不适合你。如果想设计调用它的硅片，继续往下读。
 
 ---
 
@@ -73,12 +73,12 @@ dateCreated: 2026-09-27T09:17:34.000Z
 
 <div class="home-rail" markdown="1">
 <div class="home-rail__row">
-  <a class="home-rail__step" href="Phase%201%20-%20Foundational%20Knowledge/Guide.md"><span class="home-rail__n">01</span><span class="home-rail__t">Digital Foundations</span></a>
-  <a class="home-rail__step" href="Phase%202%20-%20Embedded%20Systems/Guide.md"><span class="home-rail__n">02</span><span class="home-rail__t">Embedded Systems</span></a>
-  <a class="home-rail__step" href="Phase%203%20-%20Artificial%20Intelligence/Guide.md"><span class="home-rail__n">03</span><span class="home-rail__t">Artificial Intelligence</span></a>
-  <a class="home-rail__step" href="Phase%204%20-%20Track%20C%20-%20DL%20Inference%20Optimization/Guide.md"><span class="home-rail__n">04</span><span class="home-rail__t">Deployment &amp; Compilation</span></a>
-  <a class="home-rail__step" href="Phase%205%20-%20Advanced%20Topics%20and%20Specialization/Guide.md"><span class="home-rail__n">05</span><span class="home-rail__t">Specialization</span></a>
-  <a class="home-rail__step" href="Phase%206%20-%20Interview%20Preparation/README.md"><span class="home-rail__n">06</span><span class="home-rail__t">Interview Prep</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide"><span class="home-rail__n">01</span><span class="home-rail__t">Digital Foundations</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide"><span class="home-rail__n">02</span><span class="home-rail__t">Embedded Systems</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide"><span class="home-rail__n">03</span><span class="home-rail__t">Artificial Intelligence</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide"><span class="home-rail__n">04</span><span class="home-rail__t">Deployment &amp; Compilation</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/Guide"><span class="home-rail__n">05</span><span class="home-rail__t">Specialization</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段6-面试准备/README"><span class="home-rail__n">06</span><span class="home-rail__t">Interview Prep</span></a>
 </div>
 </div>
 
@@ -110,29 +110,25 @@ If you only want to call an LLM API, this isn't for you. If you want to design t
 
 </details>
 
-## 三条入门路径
+## Three Ways In
 
-选择与你想要具备的能力相匹配的那条终点线，而不是赛道编号。
+选一条与你想要达到的能力相匹配的终点线，而不是一个赛道编号。
 
-| 路径 | 你将构建 | 终点产物 | 从这里开始 |
+| Path | 你会构建什么 | 终点线产物 | 从这里开始 |
 |---|---|---|---|
-| **AI 推理工程** | Transformer 执行、GEMV（矩阵-向量乘）/GEMM（矩阵-矩阵乘）kernel、量化、推理服务 | 一份 benchmark 报告：在真实模型上预测与实测的 tok/s，并解释其差距 | [阶段 3 — AI 工作负载](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide) |
-| **AI Agent Harness 系统**（agent 运行时框架） | 会话、工具调用、多 agent 循环、评测、可观测性 | 可端到端运行的生产形态 agent harness | [智能体化 AI 与 GenAI — 42 讲](/学习资料/AI硬件工程师路线图/阶段3-人工智能/04-智能体AI与ML工程/01-智能体AI与生成式AI/01-讲座/README) |
-| **物理硬件工程** | 板卡、嵌入式 Linux、RTL、FPGA、ASIC 流程 | 一块你自己 bring up 起来的板卡，或一份带真实数字的加速器规格说明 | [阶段 1 — 数字基础](/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide) |
+| **AI 推理工程** | Transformer 执行、GEMV（矩阵-向量乘）/GEMM（矩阵-矩阵乘）kernel、量化、推理服务 | 一份 benchmark 报告：真实模型上预测与实测 tok/s 的对比，并解释其中差距 | [阶段 3 — AI Workloads](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide) |
+| **AI Agent Harness 系统** | 会话、工具调用、多 agent 循环、评测、可观测性 | 一套生产形态的 agent harness（agent 运行时框架），可端到端运行 | [Agentic AI & GenAI — 42 lectures](/学习资料/AI硬件工程师路线图/阶段3-人工智能/04-智能体AI与ML工程/01-智能体AI与生成式AI/01-讲座/README) |
+| **物理硬件工程** | 板卡、嵌入式 Linux、RTL、FPGA、ASIC 流程 | 一块自己 bring-up 的板卡，或一份带真实数字的加速器规格 | [阶段 1 — Digital Foundations](/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide) |
 
-每条路径都自成一体 —— 不需要另外两条，你也能从中得到实实在在的东西。[路径](#the-path) 就是三者汇聚成物理 AI 芯片终点的所在。
+每条路径都自成一体 —— 不需要另外两条，你也能从中得到实打实的收获。[The Path](#the-path) 是三条路径汇聚到 physical-AI-chip 端点的地方。
 
 ---
 
 ## 三大支柱
 
-*(已经在上文选好路径了？本节深入探讨三者为何彼此相连 —— 如果只想看逐阶段的拆解，可直接跳到[路径](#the-path)。)*
+*(上面的路径已经选好了？本节深入解释三者为何相互关联 —— 若只想看逐阶段的拆解，直接跳到 [The Path](#the-path)。)*
 
-这份路线图不是三条互不相关的学习轨道。它是一个协同设计闭环。
-推理工作负载告诉你硅片必须加速什么，agent
-harness 告诉你 runtime 必须支持怎样的产品行为，硬件平台则
-告诉你功耗、内存、I/O、安全和制造方面的约束中哪些
-是真实存在的。
+这条路线图不是三条互不相关的学习轨道，而是一个协同设计闭环。推理工作负载告诉你芯片必须加速什么，agent harness 告诉你 runtime 必须支撑什么产品行为，硬件平台则告诉你哪些功耗、内存、I/O、安全与制造约束是真实存在的。
 
 ```
                                TARGET ARTIFACT
@@ -259,44 +255,44 @@ constraints are real.
 </details>
 
 ### 1. AI 推理工程
-你的芯片将运行的工作负载。这一支柱自底向上讲授 Transformer 执行：tokenization、embedding、QKV 投影、RoPE、attention、MLP、采样、KV cache 增长、量化、批处理与 serving。你会理解为什么 decode（逐 token 生成阶段）常常受内存带宽限制，为什么 prefill（首字前的整段计算）与 decode 行为不同，以及 GEMV/GEMM kernel、CUDA Graphs、FlashAttention、paged attention、张量并行与 roofline（性能上界模型）分析如何改变系统。
+你的芯片将要运行的工作负载。这一支柱自底向上讲授 Transformer 的执行：tokenization、embedding、QKV projection、RoPE、attention、MLP、sampling、KV cache 增长、量化、批处理与 serving。你会明白为什么 decode（逐 token 生成阶段）常常受内存带宽约束，为什么 prefill（首字前的整段计算）与 decode 表现不同，以及 GEMV/GEMM kernel、CUDA Graphs、FlashAttention、paged attention、张量并行与 roofline（性能上界模型）分析如何改变系统。
 
-**本支柱输出：** benchmark 报告、kernel 实验、模型内存预算、量化选择，以及精确到足以驱动加速器架构的工作负载契约。
+**本支柱的产出：** benchmark 报告、kernel 实验、模型内存预算、量化选型，以及精确到足以驱动加速器架构的工作负载契约。
 
-### 2. AI Agent Harness 系统（agent 运行时框架）
-位于你的芯片*之上*的软件栈。这一支柱涵盖 agentic runtime、会话模型、gateway RPC、工具调用、技能、多 agent 循环、RAG（检索增强生成）、评测、可观测性、策略控制与产品更新流。物理 AI 芯片不只运行 matmul。它还运行面向用户的循环，其中包含状态、超时、取消、工具失败、网络事件、传感器中断与安全约束。
+### 2. AI Agent Harness 系统
+位于你芯片*之上*的软件栈。这一支柱涵盖 agentic runtime、会话模型、网关 RPC、工具调用、skills、多 agent 循环、RAG（检索增强生成）、评测、可观测性、策略控制与产品更新流程。物理 AI 芯片不只是跑 matmul。它跑的是面向用户的循环，涉及状态、超时、取消、工具失败、网络事件、传感器中断与安全约束。
 
-**本支柱输出：** 一个生产级 agent harness，具有清晰的 runtime 接口、遥测、评测、工具边界、调度需求，以及你的芯片必须支持的运行行为。
+**本支柱的产出：** 一套生产级 agent harness（agent 运行时框架），具备清晰的 runtime 接口、遥测、评测、工具边界、调度需求，以及你的芯片必须支持的运行行为。
 
 ### 3. 物理硬件工程
-基础底座本身。这一支柱从数字设计、计算机体系结构、C/C++ 系统工作、嵌入式 Linux、Jetson Orin、定制载板、L4T、TensorRT/DLA（深度学习加速器）、ESP32、OpenThread、Zigbee、ESP-Hosted、传感器、摄像头 bring-up（上电点亮/调通）、音频、电源、散热、合规与制造开始。然后转向 FPGA、HLS、MLIR/编译器工作、RTL、SoC 架构与 AI 芯片设计。
+底座本身。这一支柱从数字设计、计算机体系结构、C/C++ 系统开发、嵌入式 Linux、Jetson Orin、自定义载板、L4T、TensorRT/DLA（深度学习加速器）、ESP32、OpenThread、Zigbee、ESP-Hosted、传感器、camera bring-up（上电点亮/调通）、音频、电源、散热、合规与制造起步。随后转向 FPGA、HLS（高层次综合）、MLIR/编译器工作、RTL、SoC 架构与 AI 芯片设计。
 
-**本支柱输出：** 可工作的板卡、bring-up 日志、Linux 镜像、无线集成、传感器流水线、FPGA/RTL 原型，以及一份可信的芯片规格，涵盖计算、内存、I/O、安全与制造约束。
+**本支柱的产出：** 可工作的板卡、bring-up 日志、Linux 镜像、无线集成、传感器流水线、FPGA/RTL 原型，以及一份可信的芯片规格，涵盖计算、内存、I/O、安全与制造约束。
 
-| 设计问题 | 推理支柱答案 | Agent 支柱答案 | 硬件支柱答案 |
+| 设计问题 | 推理支柱的回答 | Agent 支柱的回答 | 硬件支柱的回答 |
 |---|---|---|---|
-| 芯片必须有多快？ | TTFT、tok/s、批形状、上下文长度 | 用户可见延迟、工具循环时序 | MACs、SRAM、DRAM 带宽、时钟 |
-| 内存多少才够？ | 权重、KV cache、激活、量化 | 会话状态、工具缓冲区、日志 | SRAM、LPDDR、DMA、缓存层级 |
-| 它如何与世界通信？ | 流式推理、多模态输入 | 事件、RPC、工具、按需唤醒 | Wi-Fi/低功耗蓝牙（BLE）/Thread/Zigbee、MIPI、音频 |
-| 它如何安全地出货？ | 可复现 benchmark、模型更新 | 评测、策略、可观测性、回滚 | 安全启动、OTA、合规、测试 |
+| 芯片必须多快？ | TTFT、tok/s、批形状、上下文长度 | 用户可见延迟、工具循环时序 | MACs、SRAM、DRAM 带宽、时钟 |
+| 多少内存才够？ | 权重、KV cache、activations、量化 | 会话状态、工具缓冲区、日志 | SRAM、LPDDR、DMA、缓存层级 |
+| 它如何与外界通信？ | 流式推理、多模态输入 | 事件、RPC、工具、按需唤醒 | Wi-Fi/BLE/Thread/Zigbee、MIPI、音频 |
+| 它如何安全地出货？ | 可复现的 benchmark、模型更新 | 评测、策略、可观测性、回滚 | 安全启动、OTA、合规、测试 |
 
-**为什么要组合？** 没有 runtime 的芯片是砖头。没有 agent 栈的 runtime 是 benchmark。没有推理成本纪律的 agent 栈是 demo。无法通过无线、摄像头、音频与传感器接口与物理世界通信的推理加速器，是别人必须集成的协处理器。三大支柱就是你构建一款**出货到真实物理产品**的芯片的方式：工作负载、runtime、射频、传感器、板卡、编译器与硅片从一开始就对齐。
+**为什么是这种组合？** 没有 runtime 的芯片是一块砖。没有 agent 栈的 runtime 只是一个 benchmark。没有推理成本纪律的 agent 栈只是一个 demo。无法通过无线、摄像头、音频与传感器接口与物理世界通信的推理加速器，是别人不得不替你集成的协处理器。这三大支柱，就是你打造一颗**能在真实物理产品中出货**的芯片的方式：工作负载、runtime、射频、传感器、板卡、编译器与硅片从一开始就对齐。
 
 ---
 
-## 最后你会得到什么
+## 最终你会得到什么
 
-这份路线图的目的，写成检查清单：
+这份路线图的用意，写成一份检查清单：
 
-- [ ] 你能拿一个 Transformer 模型，从第一性原理预测它在给定芯片上的 decode tok/s，并解释它在哪些地方达不到 roofline。
-- [ ] 你能为 Qwen 级模型手工调优 CUDA/kernel 路径——fused QKV、fused gate+up、CUDA Graphs、INT8 KV、投机解码——并给出前后对比 benchmark。
-- [ ] 你能端到端运行生产级 agent harness：gateway、会话、技能、工具调用、多 agent 监督、可观测性仪表盘，全套。
-- [ ] 你能拿一个 Jetson 模块，为它设计载板，bring up 定制 L4T，批量烧录，并让产品通过 FCC/CE 出货。
-- [ ] 你能通过 SPI bring up 一个 ESP32 无线协处理器，把它作为 Wi-Fi/BLE/Thread/Zigbee 射频暴露给 Linux 主机，并集成到同一产品中。
-- [ ] 你能编写 RTL，在真实 FPGA 上驱动时序收敛，并通过 HLS 或自定义 MLIR dialect 下沉一个小型 Transformer 块。
-- [ ] 你能为**物理 AI agent 芯片**编写架构规格——单 die 包含一个 NPU 分块（在边缘功耗下进行 Qwen 级 decode）、一个无线子系统（Wi-Fi 6/BLE 5/Thread/Zigbee）、MIPI CSI-2 摄像头输入、ISP（图像信号处理器）、音频 I/O，以及一个能跑 Linux 的 CPU——并为分块尺寸、SRAM 预算、MAC 阵列、DMA、RF 集成与编译器/runtime 接口给出可信数字。
+- [ ] 你能拿到一个 Transformer 模型，从第一性原理出发预测它在给定芯片上的 decode tok/s，并解释它在哪里达不到 roofline。
+- [ ] 你能为 Qwen 级模型手工调优 CUDA/kernel 路径 —— fused QKV、fused gate+up、CUDA Graphs、INT8 KV、投机解码 —— 并给出调优前后的 benchmark。
+- [ ] 你能端到端跑起一套生产级 agent harness：网关、会话、skills、工具调用、多 agent 监管、可观测性看板，全套。
+- [ ] 你能拿到一个 Jetson 模块，为它设计载板，bring-up 自定义 L4T，量产烧录，并按 FCC/CE 要求出货产品。
+- [ ] 你能通过 SPI bring-up 一个 ESP32 无线协处理器，把它作为 Wi-Fi/BLE/Thread/Zigbee 射频暴露给 Linux 主机，并集成进同一个产品。
+- [ ] 你能写 RTL，在真实 FPGA 上驱动时序收敛，并通过 HLS 或自定义 MLIR dialect 下移一个小的 Transformer block。
+- [ ] 你能为**物理 AI agent 芯片**写出架构规格 —— 单颗裸片上包含一个 NPU 分块（边缘功耗下做 Qwen 级 decode）、一个无线子系统（Wi-Fi 6/BLE 5/Thread/Zigbee）、MIPI CSI-2 摄像头输入、ISP（图像信号处理器）、音频 I/O，以及一个能跑 Linux 的 CPU —— 并给出分块尺寸、SRAM 预算、MAC 阵列、DMA、射频集成与编译器/runtime 接口的真实数字。
 
-最后这条是目标。前六条的存在是为了让它成真。
+最后一条就是目标。前六条的存在，是为了让它成真。
 
 ---
 
@@ -377,52 +373,52 @@ That last bullet is the goal. The first six exist to make it real.
 
 ## AI 芯片栈
 
-本路线图中的所有内容都映射到一个 8 层栈上。重点不是记住各层——而是理解某一层中的决策如何波及到其他层。
+本路线图中的一切内容都映射到一个 8 层栈上。重点不是记住各层——而是理解一层的决策如何波及到其他层。
 
 ![AI 芯片栈示意图](/学习资料/AI硬件工程师路线图/Assets/images/ai-chip-stack.png)
 
-设计芯片时，**每个**层都既是一种约束，也是一个自由度。本路线图教你读懂整列。
+设计芯片时，**每一**层既是约束也是自由度。路线图教你读懂整列。
 
 ---
 
 ## 路径
 
-五个阶段。前四个是基础；第五个是三个支柱汇合之处。
+五个阶段。前四个是基础；第五个是三大支柱汇聚之处。
 
-### [阶段 1 — 数字基础](/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide) *（硬件支柱）*
+### [阶段 1 — 数字基础](/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide) *(硬件支柱)*
 *硬件的语言。逻辑门 → GPU 代码。*
 
 | 模块 | 你将学到什么 |
 |--------|------------------|
-| [数字设计与 HDL](/学习资料/AI硬件工程师路线图/阶段1-基础知识/01-数字设计与HDL/Guide) | Verilog/SystemVerilog、仿真，以及你之后用来编写加速器的语言 |
-| [计算机体系结构](/学习资料/AI硬件工程师路线图/阶段1-基础知识/02-计算机体系结构与硬件/Guide) | CPU、GPU、缓存、内存层次结构——你的芯片背后的心智模型 |
-| [操作系统](/学习资料/AI硬件工程师路线图/阶段1-基础知识/03-操作系统/Guide) | 进程、驱动、调度——你芯片的主机实际在做什么 |
+| [数字设计与 HDL](/学习资料/AI硬件工程师路线图/阶段1-基础知识/01-数字设计与HDL/Guide) | Verilog/SystemVerilog、仿真，后续用来编写加速器的语言 |
+| [计算机体系结构](/学习资料/AI硬件工程师路线图/阶段1-基础知识/02-计算机体系结构与硬件/Guide) | CPU、GPU、缓存、内存层次结构——芯片背后的心智模型 |
+| [操作系统](/学习资料/AI硬件工程师路线图/阶段1-基础知识/03-操作系统/Guide) | 进程、驱动、调度——芯片的主机实际做什么 |
 | [C++ 与并行计算](/学习资料/AI硬件工程师路线图/阶段1-基础知识/04-C++与并行计算/Guide) | SIMD、OpenMP、**CUDA**、ROCm、OpenCL/SYCL |
 
-### [阶段 2 — 嵌入式系统](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide) *（硬件支柱）*
-*动手接触真实硬件。MCU、传感器、嵌入式 Linux。*
+### [阶段 2 — 嵌入式系统](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide) *(硬件支柱)*
+*上手真实硬件。MCU、传感器、嵌入式 Linux。*
 
 | 模块 | 你将学到什么 |
 |--------|------------------|
 | [原理图与 PCB 设计](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/01-原理图与PCB设计/Guide) | 阅读原理图，设计载板 |
 | [嵌入式软件](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/02-嵌入式软件/Guide) | Cortex-M、FreeRTOS、SPI/I²C/CAN、IoT（OpenThread、Zigbee） |
 | [嵌入式 Linux](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/03-嵌入式Linux/Guide) | Yocto、PetaLinux、驱动 bring-up（上电点亮/调通） |
-| [产品设计](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/04-产品设计/Guide) | 从原型走到可出货产品 |
+| [产品设计](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/04-产品设计/Guide) | 从原型到可交付产品 |
 
-### [阶段 3 — AI 工作负载](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide) *（推理与 Agent 支柱从这里开始）*
-*理解你的芯片必须服务的工作负载。核心 + 两条方向。*
+### [阶段 3 — AI 工作负载](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide) *(推理与 agent 支柱在此开始)*
+*理解芯片必须服务的工作负载。核心 + 两个方向。*
 
 **核心（所有人）：**
-- [神经网络](/学习资料/AI硬件工程师路线图/阶段3-人工智能/01-神经网络/Guide)——反向传播、CNN、从第一性原理出发的 Transformer
-- [**Transformer 基础**](/学习资料/AI硬件工程师路线图/阶段3-人工智能/01-神经网络/01-Transformer基础/Lecture-01)——下游每一节推理课程的前置要求
-- [深度学习框架](/学习资料/AI硬件工程师路线图/阶段3-人工智能/02-深度学习框架/Guide)——micrograd → PyTorch → tinygrad
+- [神经网络](/学习资料/AI硬件工程师路线图/阶段3-人工智能/01-神经网络/Guide) — 反向传播、CNN、从第一性原理理解 Transformer
+- [**Transformer 基础**](/学习资料/AI硬件工程师路线图/阶段3-人工智能/01-神经网络/01-Transformer基础/Lecture-01) — 后续每节推理课的前置要求
+- [深度学习框架](/学习资料/AI硬件工程师路线图/阶段3-人工智能/02-深度学习框架/Guide) — micrograd → PyTorch → tinygrad
 
-**方向 A — 硬件与边缘 AI：** 计算机视觉、传感器融合、语音 AI、边缘 AI 与优化。为阶段 4B 和阶段 5C 提供输入。
+**方向 A — 硬件与边缘 AI：** 计算机视觉、传感器融合、语音 AI、边缘 AI 与优化。为阶段 4B 和阶段 5C 提供基础。
 
-**方向 B — Agentic AI 与 ML 工程：** [42 讲](/学习资料/AI硬件工程师路线图/阶段3-人工智能/04-智能体AI与ML工程/01-智能体AI与生成式AI/01-讲座/README)，内容涵盖 agent harness（agent 运行时框架）、LangGraph、多 agent 系统、RAG（检索增强生成）、评估、生产 runtime 规范、OpenClaw、OpenAI Agents SDK、安全，外加一门 [Qwen3.5-4B-Base Unsloth 微调课程](/学习资料/AI硬件工程师路线图/阶段3-人工智能/04-智能体AI与ML工程/03-LLM应用开发/01-Qwen3-5-4B-Unsloth微调/Guide)。这就是 **agent harness 支柱的主要形态**——如果你的目的地是芯片 + runtime + harness 这条线，就按顺序阅读。
+**方向 B — Agentic AI 与 ML 工程：** [42 讲](/学习资料/AI硬件工程师路线图/阶段3-人工智能/04-智能体AI与ML工程/01-智能体AI与生成式AI/01-讲座/README)，涵盖 agent harness（agent 运行时框架）、LangGraph、多 agent 系统、RAG（检索增强生成）、评估、生产 runtime 纪律、OpenClaw、OpenAI Agents SDK、安全，外加一门 [Qwen3.5-4B-Base Unsloth 微调课程](/学习资料/AI硬件工程师路线图/阶段3-人工智能/04-智能体AI与ML工程/03-LLM应用开发/01-Qwen3-5-4B-Unsloth微调/Guide)。这是 **agent harness 支柱的主要形态**——如果你的目标是芯片 + runtime + harness 这条线，请按顺序阅读。
 
-### 阶段 4 — 部署与编译 *（三个支柱在此共存）*
-*把 AI 落到真实硅片。三条专门方向。*
+### 阶段 4 — 部署与编译 *(三大支柱在此共存)*
+*将 AI 落地到真实芯片。三个专门方向。*
 
 | 方向 | 重点 | 支柱 |
 |-------|-------|--------|
@@ -430,7 +426,7 @@ That last bullet is the goal. The first six exist to make it real.
 | [**B — NVIDIA Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) | Orin 平台、定制载板、L4T、OTA、TensorRT/DLA（深度学习加速器） | 硬件 + 推理 |
 | [**C — DL 推理优化**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide) | MLIR、TVM、Triton、kernel 工程、量化、runtime | 推理 |
 
-你不必三条都做。但要落脚到芯片设计，你需要足够的 **A** 来写 RTL，足够的 **B** 来了解推理平台长什么样，足够的 **C** 来了解编译器将如何面向你的芯片。
+你不必三个都做。但要进入芯片设计，你需要足够的 **A** 来编写 RTL，足够的 **B** 来了解推理平台长什么样，以及足够的 **C** 来了解编译器将如何面向你的芯片。
 
 
 <details>
@@ -496,19 +492,19 @@ You don't have to do all three. But to land at chip design, you want enough of *
 </details>
 
 ### [阶段 5 — 专业化与收敛](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/Guide)
-*三大支柱在此汇聚。专业化方向加上芯片设计终点。*
+*三大支柱在此汇聚。专业化方向，加上芯片设计这一终点。*
 
-| 方向 | 你将专精的领域 | 支柱 |
+| 方向 | 你将专精的内容 | 支柱 |
 |-------|---------------------------|-----------|
-| [**A — GPU 基础设施**](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/Guide) | Multi-GPU、NVLink、NCCL、AMD ROCm/HIP、MI300X | 推理 |
-| [**B — 高性能计算（HPC）(CUDA-X)**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/02-方向B-高性能计算/Guide) | cuBLAS、cuDNN、NVSHMEM、40+ 个库 | 推理 |
-| [**C — 边缘 AI**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/Guide) | Holoscan、[Edge LLM Inference Internals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01)、[**Qwen Inference Optimization (6-lecture series)**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/README)、AI 驱动的无线通信 | 推理 |
-| [**D — 机器人**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/04-方向D-机器人/Guide) | ROS 2、Nav2、运动规划、群体 | 硬件 + 推理 |
+| [**A — GPU 基础设施**](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/Guide) | 多 GPU、NVLink、NCCL、AMD ROCm/HIP、MI300X | 推理 |
+| [**B — 高性能计算（CUDA-X）**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/02-方向B-高性能计算/Guide) | cuBLAS、cuDNN、NVSHMEM、40+ 个库 | 推理 |
+| [**C — 边缘 AI**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/Guide) | Holoscan、[边缘 LLM 推理内幕](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01)、[**Qwen 推理优化（6 讲系列）**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/README)、AI 驱动的无线 | 推理 |
+| [**D — 机器人**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/04-方向D-机器人/Guide) | ROS 2、Nav2、运动规划、集群 | 硬件 + 推理 |
 | [**E — 自动驾驶汽车**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/05-方向E-自动驾驶/Guide) | openpilot、BEV（鸟瞰图）感知、ISO 26262、TRACE32 调试 | 硬件 + 推理 |
-| [**F — AI 芯片设计**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/06-方向F-AI芯片设计/Guide) | **终点。** 脉动阵列、dataflow 架构、tinygrad↔硬件、RISC-V AI 加速器设计、ASIC 流程 —— 以及那个集成问题：如何把 NPU、ESP32 级别的射频模块、ISP（图像信号处理器）和 Linux CPU 放到同一颗 die 上？ | **三者全部** |
+| [**F — AI 芯片设计**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/06-方向F-AI芯片设计/Guide) | **终点。** 脉动阵列、dataflow 架构、tinygrad↔硬件、RISC-V AI 加速器设计、ASIC 流程 — 以及那个集成问题：如何把 NPU、一个 ESP32 级别的射频、一个 ISP、一个 Linux CPU 放到同一颗 die 上？ | **全部三大支柱** |
 | [**G — ML 系统工程**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/Guide) | 训练系统、推理 runtime、GPU 调度、分布式推理服务、编译器/runtime 工作、可观测性 | 推理 + 基础设施 |
 
-**标志性路径：** 阶段 1 → 阶段 2 → 阶段 3（Core + 方向 B）→ 阶段 4（选定的）→ 阶段 5C + 阶段 5F。
+**标志性路径：** 阶段 1 → 阶段 2 → 阶段 3（Core + 方向 B）→ 阶段 4（选读）→ 阶段 5C + 阶段 5F。
 
 **MLSys 路径：** 阶段 1 §3/§4 → 阶段 3 Core → 阶段 4B/4C → 阶段 5A/B/C → 阶段 5G。
 
@@ -541,50 +537,46 @@ You don't have to do all three. But to land at chip design, you want enough of *
 
 ## 精选推理讲座
 
-最深入、最新的技术内容都在这些阶段 5 讲座中 —— 把它们作为一条完整的弧线来读：
+最深入、最新的技术内容都在这些阶段 5 讲座里 —— 把它们当作一条完整弧线来读：
 
 <div class="lecture-map" markdown>
 
 | # | 讲座 | 讲授内容 |
 |---|---------|-----------------|
-| 1 | [边缘大语言模型推理内部机制](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01) | GEMV 与 GEMM（矩阵-矩阵乘）的 roofline（性能上界模型）、K-quants、KV 缓存数学、Jetson `nvpmodel`/`jetson_clocks` 诊断 |
-| 2 | [Qwen 架构深入剖析](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-01) | Qwen3-4B 与 Qwen2.5-72B 并排对比、GQA、RoPE-NeoX、SwiGLU、完整的 `config.json` → 张量形状推导 |
-| 3 | [将 Qwen3-4B 量化到 Q4](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-02) | Q4_K_M 与 AWQ 与 GPTQ 对比、V 与 FFN-down 为何被升级、校准、GGUF 布局 |
-| 4 | [Jetson 上的 decode 优化（逐 token 生成阶段）](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-03) | 0.2 → 30 tok/s 的阶梯、融合 QKV/gate-up、CUDA Graphs、INT8 KV、投机解码 |
-| 5 | [Qwen2.5-72B 多 GPU FP16](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-04) | TP=8 切分、NCCL 热路径、paged attention、YaRN、runtime recipe |
-| 6 | [跨模型与生产推理服务](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-05) | 投机解码配对、边缘/云端布线、可观测性、容量规划 |
-| 7 | [批处理 GEMM 与普通 GEMM](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-06) | cuBLAS API 形态、列主序的舞蹈、张量核心、位精确可复现性 |
-| 8 | [AI 推理工程师 2026 —— 特别课程](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/README) | 以 27 讲系列呈现的完整 2026 生产推理栈：dense → MoE（混合专家模型）、Hopper → Blackwell、FP16 → FP8 → FP4、vLLM / SGLang / TensorRT-LLM、张量并行、集合/通信内部机制、分离式 prefill（首字前的整段计算）/decode、roofline |
-| 9 | [优化一个真实引擎 —— 第 4 部分案例研究](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/04-真实引擎优化/README) | 10 讲，讲述一段有实测数据的优化历程：Kimi K3（2.8T、896 个专家）在 8× H200 上，128k 下 **1.01 → 60.17 tok/s**，历经约 96 个 PR。构建无法被钻空子的 benchmark、诊断绑定上限、launch geometry、融合、拆分上下文的 attention、专家分片 + Amdahl、CUDA graphs、批处理 prefill，以及让 benchmark *更好* 的 bug |
+| 1 | [边缘 LLM 推理内部机制](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01) | GEMV vs GEMM roofline（性能上界模型），K-quants，KV-cache 数学，Jetson `nvpmodel`/`jetson_clocks` 诊断 |
+| 2 | [Qwen 架构深入解析](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-01) | Qwen3-4B 与 Qwen2.5-72B 并排对照，GQA，RoPE-NeoX，SwiGLU，完整的 `config.json` → 张量形状推导 |
+| 3 | [把 Qwen3-4B 量化到 Q4](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-02) | Q4_K_M vs AWQ vs GPTQ，为什么 V 和 FFN-down 会被升级，校准，GGUF 布局 |
+| 4 | [Jetson 上的 decode 优化（逐 token 生成阶段）](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-03) | 0.2 → 30 tok/s 的阶梯，融合 QKV/gate-up，CUDA Graphs，INT8 KV，投机解码 |
+| 5 | [Qwen2.5-72B 多 GPU FP16](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-04) | TP=8 切分，NCCL 热路径，paged attention，YaRN，runtime recipe |
+| 6 | [跨模型与生产推理服务](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-05) | 投机解码配对，边缘/云端路由，可观测性，容量规划 |
+| 7 | [批处理 GEMM vs 普通 GEMM](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-06) | cuBLAS API 形式，列主序的舞蹈，张量核心，位精确可复现性 |
+| 8 | [AI 推理工程师 2026 —— 特别课程](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/README) | 以 27 讲串起的完整 2026 生产推理技术栈：dense → MoE（混合专家模型），Hopper → Blackwell，FP16 → FP8 → FP4，vLLM / SGLang / TensorRT-LLM，张量并行，集合通信/通信内部机制，分离式 prefill（首字前的整段计算）/decode，roofline |
+| 9 | [优化一个真实引擎 —— 第 4 部分案例研究](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/04-真实引擎优化/README) | 10 讲，讲述一段有实测数据的优化历程：Kimi K3（2.8T，896 个专家）跑在 8× H200 上，在 128k 下跨约 96 个 PR 达到 **1.01 → 60.17 tok/s**。构建一个无法作假的 benchmark，诊断瓶颈上限，launch geometry，融合，split-context attention，专家分片 + Amdahl，CUDA graphs，批处理 prefill，以及让 benchmark *更优* 的 bug |
 
 </div>
 
-如果是新手，按顺序读。如果不是，直接跳到能解决你当前问题的那一篇。
+如果你是新手，就按顺序读。如果不是，就跳到能解决你当前问题的那一篇。
 
 ---
 
 ## 如何使用这份路线图
 
-不要像读书一样读它。把它当作一份 **边构建边测量的课程**。
+不要把它当成书来读。把它当作一套 **边构建边测量的课程**。
 
-对每个模块：
+对每一个模块：
 
 1. 读理论。
-2. 构建子系统，或实现该技术。
-3. 测量一些东西 —— 延迟、吞吐、occupancy、带宽、功耗、准确率、面积、困惑度。
-4. 交付一个可复用的产物（benchmark、kernel、板卡、仪表盘、RTL 模块、评测报告）。
+2. 把子系统搭出来，或把方法实现出来。
+3. 测量某个指标 —— 延迟、吞吐、occupancy、带宽、功耗、准确率、面积、困惑度。
+4. 交付一个可复用的产物（benchmark、kernel、板子、dashboard、RTL 模块、评测报告）。
 
-每个产物都是你将要设计的芯片里的一块砖。
+每一个产物都是你将要设计的那颗芯片里的一块砖。
 
-开始之前，先决定三件事：
+动手之前，先定三件事：
 
-1. **你从技术栈的哪一层进入。**（见上文的“Who This Is For”。）
-2. **你实际能用什么硬件。** Jetson Orin Nano 是最便宜的端到端推理目标；一张 RTX 或租用的 L40S/H100 覆盖大部分数据中心路径；一块 Xilinx Zynq 开发板覆盖 FPGA；一块 ESP32 + 传感器扩展板覆盖嵌入式。
-3. **你如何跟踪产出。** 笔记本、benchmark 仓库、项目日志 —— 任何你真正会用的系统。
-
----
-
- 
+1. **你从技术栈的哪一层切入。**（见上文“Who This Is For”。）
+2. **你实际能用上什么硬件。** Jetson Orin Nano 是最便宜的端到端推理目标；一块 RTX 或租来的 L40S/H100 能覆盖大部分数据中心路径；一块 Xilinx Zynq 开发板覆盖 FPGA；一块 ESP32 + 传感器扩展板覆盖嵌入式。
+3. **你如何跟踪产出。** 一个 notebook、一个 benchmark 仓库、一份项目日志 —— 任何你真正会用起来的系统。
 
 ---
 
@@ -641,80 +633,80 @@ Before you start, decide three things:
 
 ## 课程质量标准
 
-这份路线图中的每个严肃模块都应以证据收尾，而不是凭感觉。
+这条路线图中每个严肃的模块都应以证据收尾，而不是凭感觉。
 
-每个课程模块都用这个标准：
+每个课程模块都用这套标准：
 
-| 步骤 | 要做什么 | 证据 |
+| 步骤 | 做什么 | 证据 |
 |------|------------|----------|
-| 理解 | 学习概念，以及它在整个技术栈中为何重要 | 简短的设计说明或图 |
+| 理解 | 学懂概念，理解它在整个技术栈中为什么重要 | 简短的设计说明或图 |
 | 构建 | 实现子系统、kernel、模型路径、驱动、板级流程或 runtime 特性 | 代码、RTL、配置、原理图或构建脚本 |
-| 测量 | 采集真实数字 | 延迟、吞吐、内存、功耗、时序、利用率、准确率、面积或启动时间 |
-| 调试 | 至少解释一种失效模式 | 日志、波形、profiler trace、ILA 抓取或根因说明 |
-| 交付 | 把工作打包以供评审 | README、命令、原始结果和最终报告 |
+| 度量 | 收集真实数据 | 延迟、吞吐、内存、功耗、时序、利用率、准确率、面积或启动时间 |
+| 调试 | 解释至少一种失效模式 | 日志、波形、profiler trace、ILA 抓取或根因说明 |
+| 交付 | 把成果打包以便评审 | README、命令、原始结果与最终报告 |
 
-薄弱的完成：
+弱完成：
 
 ```text
 I read about CUDA, TensorRT, and FPGAs.
 ```
 
-扎实的完成：
+强完成：
 
 ```text
 I built a TensorRT INT8 benchmark on Orin Nano, captured latency/RAM/power,
 compared it to FP16, and explained why one layer stayed memory-bound.
 ```
 
-这份路线图刻意做得宽，但完成标准很窄：做出真东西，把它测出来，并解释其中的取舍。
+这条路线图刻意做得很宽，但完成标准很窄：做出真实的东西，测量它，并解释取舍。
 
 ---
 
 ## 参考项目
 
-这些项目是给你钻研的，而不只是读读而已：
+这些项目是为了让你去研究，而不只是读一读：
 
-| 项目 | 为什么在这里 |
+| 项目 | 为什么收录 |
 |---------|---------------|
-| [**jetson-llm-runtime**](/学习资料/AI硬件工程师路线图/项目/01-Jetson-LLM运行时/README) &nbsp;·&nbsp; [`GeniePod/genie-ai-runtime` v1.0.0](https://github.com/GeniePod/genie-ai-runtime) | 定制的 Jetson LLM 推理 runtime —— 每个 GEMV/GEMM（矩阵-矩阵乘）kernel、KV cache、paged-attention 路径、构建流程。本文件夹里的脚手架已演进为 `GeniePod/genie-ai-runtime` 上的生产 runtime：38 tok/s prefill（首字前的整段计算），在 Orin Nano Super 8 GB 上相比 `llama-bench` 提升 +115 %，tensor-core MMQ，持久化 KV，默认 INT8 KV，OpenAI 形状的 HTTP 服务器。推理支柱，以代码呈现。 |
-| [**llm-inference-viz**](https://github.com/ai-hpc/llm-inference-viz) | 稠密 decoder-only LLM 推理的交互式 3D 可视化 —— 走一遍前向传播，看每个阶段在 H200 roofline（性能上界模型）上落在内存受限还是算力受限，并用张量并行把模型切分到多块 GPU 上。把推理的心智模型变得可见；AI Inference Engineer 2026 课程的配套。 |
-| [**jetson-esp-hosted**](https://github.com/ai-hpc/jetson-esp-hosted) | 经 Jetson 验证的 ESP-Hosted 分支，用于 SPI/Wi-Fi/BLE（低功耗蓝牙）bring-up（上电点亮/调通）。嵌入式支柱，以代码呈现。 |
-| [**tinygrad**](https://github.com/tinygrad/tinygrad) | 约 10 K 行的 ML 框架。在一个 repo 里读通 framework → compiler → kernel → backend 的最干净的地方。 |
-| [**openpilot**](https://github.com/commaai/openpilot) | 生产级 ADAS 栈。端到端感知、ML 和嵌入式软件都在一块板卡上。 |
+| [**jetson-llm-runtime**](/学习资料/AI硬件工程师路线图/项目/01-Jetson-LLM运行时/README) &nbsp;·&nbsp; [`GeniePod/genie-ai-runtime` v1.0.0](https://github.com/GeniePod/genie-ai-runtime) | 定制的 Jetson LLM 推理 runtime — 每个 GEMV/GEMM kernel、KV cache、paged-attention 路径、构建流程。本文件夹中的脚手架已成长为 `GeniePod/genie-ai-runtime` 处的生产 runtime：prefill（首字前的整段计算）38 tok/s，在 Orin Nano Super 8 GB 上相比 `llama-bench` 提升 +115 %，tensor-core MMQ，持久化 KV，默认 INT8 KV，OpenAI 形态的 HTTP 服务器。推理支柱的代码落地。 |
+| [**llm-inference-viz**](https://github.com/ai-hpc/llm-inference-viz) | 稠密 decoder-only LLM 推理的交互式 3D 可视化 — 走一遍前向传播，观察每个阶段在 H200 roofline（性能上界模型）上落在内存受限还是算力受限，并用张量并行把模型切分到多块 GPU 上。把推理的心智模型变得可见；AI Inference Engineer 2026 课程的配套项目。 |
+| [**jetson-esp-hosted**](https://github.com/ai-hpc/jetson-esp-hosted) | 经 Jetson 验证的 ESP-Hosted 分支，用于 SPI/Wi-Fi/BLE bring-up（上电点亮/调通）。嵌入式支柱的代码落地。 |
+| [**tinygrad**](https://github.com/tinygrad/tinygrad) | 约 10 K 行的 ML 框架。在一个仓库里读透框架 → 编译器 → kernel → 后端的最干净的地方。 |
+| [**openpilot**](https://github.com/commaai/openpilot) | 生产级 ADAS 栈。在一块板子上实现端到端的感知、ML 与嵌入式软件。 |
 
 ---
 
-## 由此可胜任的目标角色
+## 这条路能通向的目标岗位
 
-这份路线图有意做成全栈，但沿途也会产出若干高薪的专业角色：
+这条路线图是刻意做成全栈的，但沿途会产出几个高薪的专业岗位：
 
-| 角色 | 关键阶段 |
+| 岗位 | 关键阶段 |
 |------|-----------|
 | **AI 推理工程师** | 3 + 4C + 5A/B/C |
 | **ML 系统工程师** | 1 + 3 + 4B/4C + 5A/B/C/G |
 | **AI 编译器工程师** | 1 + 4C + 5B |
 | **边缘 AI 工程师** | 3A + 4B + 5C |
 | **GPU Runtime / Kernel 工程师** | 1 + 4B + 5A |
-| **Agentic AI / Agent harness（agent 运行时框架）工程师** | 3B（完整讲座系列） + 5C |
+| **Agentic AI / Agent Harness（agent 运行时框架）工程师** | 3B（完整系列讲座）+ 5C |
 | **嵌入式 / 固件工程师** | 1 + 2 + 4B |
 | **自动驾驶汽车工程师** | 3A + 4B + 5E |
 | **RTL / FPGA 设计工程师** | 1 + 4A |
 | **AI 加速器架构师** | 1 + 4A + 5F |
-| **物理 AI 芯片架构师** | 全路径 —— Jetson + ESP32 融合进一颗 SoC；芯片设计的终点 |
+| **物理 AI 芯片架构师** | 完整路径 — Jetson + ESP32 融合成一颗 SoC；芯片设计的终点 |
 
-→ 参见 [**Roles & Market Analysis**](/学习资料/AI硬件工程师路线图/角色与市场分析)，了解薪酬数据、23 个细分角色、远程比例和招聘信号。
+→ 薪资数据、23 个细分岗位、远程比例和招聘信号，见 [**Roles & Market Analysis**](/学习资料/AI硬件工程师路线图/角色与市场分析)。
 
 ---
 
-## 为什么要有这份路线图
+## 为什么要有这条路线图
 
-一颗**物理 AI 芯片** —— Jetson 级的大脑 + ESP32 级的射频 + 传感器 + Linux 全放在一个 die 上 —— 是一支小团队能尝试的最严苛的工程项目之一。它需要：
+一颗**物理 AI 芯片** — Jetson 级别的算力大脑 + ESP32 级别的射频 + 传感器 + 单 die 上的 Linux — 是小团队能尝试的最苛刻的工程项目之一。它需要：
 
-- **工作负载真相。** 如果不知道 Qwen 级的 decode（逐 token 生成阶段）会向你抛出多少 bytes-per-token，就无法设计 NPU 分块或存储层次。这就是推理支柱。
-- **系统真相。** 你的芯片要承载 runtime，而 runtime 要在电池供电的产品里承载 agent harness（agent 运行时框架）。访问模式错（batch=1 对话 vs 常开唤醒词 vs 长上下文检索），radio 唤醒策略错，boot ROM 错，那你流片的芯片就是错的。这就是 agent harness 支柱。
-- **工程真相 —— 两半都要。** 硅不关心你的意图。RTL、时序、功耗、嵌入式软件、板卡、天线、FCC、制造 —— 没有捷径。你需要 AI 计算侧（Jetson 栈）*和*无线侧（ESP32 栈）在同一个 die 上，*并且*跑在同一个 Linux 上。这就是硬件支柱。
+- **工作负载的真相。** 不知道 Qwen 级别的 decode（逐 token 生成阶段）会向你抛出多少 bytes-per-token，就无法设计 NPU 分块或存储层次。这就是推理支柱。
+- **系统的真相。** 你的芯片要承载 runtime，而这些 runtime 要在电池供电的产品里承载 agent harness。访问模式错了（batch=1 聊天 vs 常开唤醒词 vs 长上下文检索）、无线唤醒策略错了、boot ROM 错了，那你就已经出货了一颗错的芯片。这就是 agent harness 支柱。
+- **工程的真相 — 两半都要。** 硅片不在乎你的意图。RTL、时序、功耗、嵌入式软件、板级、天线、FCC、制造 — 没有捷径。你需要 AI 计算侧（Jetson 栈）*和*无线侧（ESP32 栈）在同一颗 die 上*和*同一个 Linux 上。这就是硬件支柱。
 
-大多数人只学一根支柱。有些人学两根。这份路线图面向的是想学全部三根，然后做出那个把 AI agent 放进真实产品的东西的人 —— 让它跟传感器对话、跟网络对话、跟人对话，全部跑在单颗 SoC 上。
+大多数人只学一根支柱。有些人学两根。这条路线图是给想学全部三根、然后做出那个把 AI agent 放进真实产品里的东西的人 — 与传感器对话、与网络对话、与人对话，全都跑在一颗 SoC 上。
 
 ---
 

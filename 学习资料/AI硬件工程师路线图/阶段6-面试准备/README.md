@@ -2,10 +2,10 @@
 title: 阶段 6 — 面试准备
 description: 阶段 6 — 面试准备
 published: true
-date: 2026-09-27T09:17:34.000Z
+date: 2026-09-27T11:30:55.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T09:17:34.000Z
+dateCreated: 2026-09-27T11:30:55.000Z
 ---
 
 # 阶段 6 — 面试准备
@@ -14,14 +14,14 @@ dateCreated: 2026-09-27T09:17:34.000Z
 <div class="course-identity__icon">INT</div>
 <div markdown="1">
 <p class="course-identity__eyebrow">阶段 6 · 职业进阶</p>
-<p class="course-identity__title">面向 AI 硬件、推理与系统工程师的岗位针对性面试准备 —— 资深级别的真实问答，而非零碎知识点。</p>
-<p class="course-identity__meta">产物：扎根实战经验、自信而具体的回答 · 衡量标准：能否为取舍辩护，而不只是复述定义</p>
+<p class="course-identity__title">面向 AI 硬件、推理与系统工程师的岗位专属面试准备——资深级别的真实问答，而不是冷知识。</p>
+<p class="course-identity__meta">产物：扎根于实操经验、自信而具体的回答 · 衡量标准：能否为取舍辩护，而不只是背出定义</p>
 </div>
 </div>
 
-> *资深级别下「通过」与「录用」的差别，不在于知不知道 FlashAttention 是什么 —— 而在于能否讲清它搬走了哪个瓶颈、做出了什么取舍，以及真正动手实现时会撞到什么。*
+> *资深级别面试中，通过与录用之间的差别不在于知不知道 FlashAttention 是什么——而在于能否讲清它搬动了哪个瓶颈、做了什么取舍，以及你真正实现它时踩到了什么。*
 
-本阶段不是一套抽认卡题库。这里的每个回答都以真正把系统交付上线的人的水准写成：具体的数字、真实的失效模式、经得起推敲的取舍，以及只有亲手做过才会有的洞察。这正是 staff/资深面试所期待的。
+本阶段不是一叠抽认卡。这里的每个回答都写在把系统真正交付出去的人的水平上：具体的数字、真实的失效模式、经得起追问的取舍，以及只有亲手做过才能获得的洞见。这正是 staff/资深面试所期望的。
 
 ---
 
@@ -29,34 +29,34 @@ dateCreated: 2026-09-27T09:17:34.000Z
 
 | # | 岗位 | 重点 | 状态 |
 |---|------|-------|--------|
-| [1](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/README) | **MLSys 工程师** | 推理系统、attention kernel、KV cache、投机 decode（逐 token 生成阶段）、TRT-LLM 架构集成 | ✅ 进行中 |
+| [1](/学习资料/AI硬件工程师路线图/阶段6-面试准备/01-MLSys工程师/README) | **MLSys 工程师** | 推理系统、attention kernel、KV cache、投机 decode、TRT-LLM 架构集成 | ✅ 活跃 |
 
-更多岗位即将加入：边缘 AI 工程师、CUDA Kernel 工程师、AI 芯片架构师、机器人 AI 工程师。
-
----
-
-## 如何使用本材料
-
-**不要背 —— 要重建。** 读一遍答案，合上，然后用自己的话讲回来。目标是面试时能从第一性原理推导出答案，而不是背诵。
-
-**校准级别。** 每个问答都按资深/staff 级别写成。如果你面的是 L4/E4，不需要每个细节 —— 但每个回答都需要第一性原理的推理和一个具体的取舍。
-
-**用你自己的数字扩展。** 答案中引用了具体测量值（例如 prefill（首字前的整段计算）152→620 tok/s，双缓冲下 1289ms→348ms）。把这些换成你自己项目的数字。面试官能分辨出泛泛而谈的回答和扎根于真实工作的回答。
-
-**先广度，后深度。** 通读所有问题，校准面试官关心哪些主题，然后在你最熟的两三个上深入。其余的诚实以对。
+更多岗位即将推出：边缘 AI 工程师、CUDA Kernel 工程师、AI 芯片架构师、机器人 AI 工程师。
 
 ---
 
-## 按公司类型划分的面试形式
+## 如何使用这份材料
+
+**别背——要重建。** 把答案读一遍，合上，用自己的话复述。目标是在面试中能从第一性原理推导出答案，而不是背诵。
+
+**校准层级。** 每个问答都写在资深/staff 级别。如果你面的是 L4/E4，不必每个细节都掌握——但你需要第一性原理的推理，以及每个答案里至少一个具体的取舍。
+
+**用自己的数字扩展。** 答案中引用了具体测量值（如 prefill 152→620 tok/s、双缓冲下 1289ms→348ms）。把它们换成你自己项目里的数字。面试官能分辨泛泛而谈的回答和扎根于真实工作的回答。
+
+**先广度，后深度。** 通读所有问题，校准面试官关心哪些主题，然后在你最熟的两三个上深入。其余的如实承认。
+
+---
+
+## 各类型公司的面试形式
 
 | 公司类型 | 典型形式 | 考察点 |
 |---|---|---|
-| 推理初创公司（Groq、Cerebras、Together、Fireworks） | 深度系统设计，1 到 2 轮编码，不刷 LC | 瓶颈分析、kernel 编写、延迟计算 |
-| NVIDIA（NIM、TRT-LLM、cuBLAS） | 设计 + 编码 + 硬件题混合 | PTX、occupancy、插件 API、TRT engine 生命周期 |
-| Google（XLA、TPU、Google AI） | 偏设计，少量编码，ML 广度 | 分布式系统、编译器 IR、量化理论 |
-| Meta（PyTorch、AITER、infra） | 编码 + 设计 + infra | Python 扩展 API、CUDA/Triton、分布式训练 |
+| 推理初创公司（Groq、Cerebras、Together、Fireworks） | 深度系统设计，1 到 2 轮 coding，不刷 LC | 瓶颈分析、kernel 编写、延迟计算 |
+| NVIDIA（NIM、TRT-LLM、cuBLAS） | 设计 + coding + 硬件问题混合 | PTX、occupancy、plugin API、TRT engine 生命周期 |
+| Google（XLA、TPU、Google AI） | 偏重设计，少量 coding，ML 广度 | 分布式系统、编译器 IR、量化理论 |
+| Meta（PyTorch、AITER、infra） | coding + 设计 + infra | Python 扩展 API、CUDA/Triton、分布式训练 |
 | 边缘 / Jetson（NVIDIA EGX、Qualcomm、Apple） | 端到端系统设计 | 内存预算、延迟预算、runtime 可移植性 |
-| 大厂 ML infra | LC 编码 + 广谱系统设计 | 硬件相关更少，分布式、调度、成本更多 |
+| 大厂 ML infra | LC coding + 广谱系统设计 | 硬件相关更少，更多分布式、调度、成本 |
 
 ---
 
