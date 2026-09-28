@@ -679,7 +679,7 @@ Pass criterion: you can defend the choice of TP for a chat product at 32K contex
 Cross-references:
 
 * [阶段 5 → ML Systems Engineering Guide → Stage 5 Distributed Training Systems](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/Guide) — 训练侧基础
-* [阶段 5 → GPU Infrastructure → 8x-H200-Training-Inference → 02 Training Setup](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/04-Nvidia-GPU/01-高性能计算环境搭建/01-8x-H200训练推理/02-Training-Setup)
+* [阶段 5 → GPU Infrastructure → 8x-H200-Training-Inference → 02 Training Setup](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/01-8x-H200训练推理/02-Training-Setup)
 
 ---
 
@@ -712,7 +712,7 @@ NCCL 2.30+、vLLM 0.22+ V1、SGLang 0.5+、TRT-LLM 1.3+、NVLink 4、NVSwitch v3
 Cross-references:
 
 * [Phase 5 → ML Systems Engineering Guide → Stage 5 Distributed Training Systems](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/Guide) — the training-side foundation
-* [Phase 5 → GPU Infrastructure → 8x-H200-Training-Inference → 02 Training Setup](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/04-Nvidia-GPU/01-高性能计算环境搭建/01-8x-H200训练推理/02-Training-Setup)
+* [Phase 5 → GPU Infrastructure → 8x-H200-Training-Inference → 02 Training Setup](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/01-8x-H200训练推理/02-Training-Setup)
 
 ---
 

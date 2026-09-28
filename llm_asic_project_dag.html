@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LLM ASIC · 项目依赖图</title>
+  <style>
+    :root{--paper:#f0eee7;--ink:#10242a;--muted:#607077;--navy:#0b1b24;--grid:#23404b;--line:#36515d;--active:#edaa66;--active2:#ffd6a8;--teal:#8bc9c1;--edge:#7895a0;--panel:#f8f7f1}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:"Avenir Next","PingFang SC","Hiragino Sans GB","Noto Sans CJK SC",sans-serif;color:var(--ink);background:var(--paper)}
+    button,input,textarea,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #f5a958;outline-offset:2px}
+    .shell{min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr) 338px;grid-template-rows:auto auto minmax(560px,1fr)}
+    .top{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;padding:26px 32px 24px;background:#e9e6dc;border-bottom:1px solid #c6c7be}
+    .eyebrow,.tiny,.lane-kicker,.stage,.stat-label,.chip,.field-label{font-family:"SFMono-Regular",Menlo,Consolas,monospace;letter-spacing:.09em;text-transform:uppercase}
+    .eyebrow{font-size:11px;color:#846348;display:flex;align-items:center;gap:9px}.eyebrow::before{content:"";width:23px;height:2px;background:#b97848}
+    h1{font-family:"Songti SC","STSong","Noto Serif CJK SC",serif;font-weight:800;letter-spacing:.02em;font-size:clamp(29px,3vw,47px);margin:8px 0 7px;line-height:1.1}
+    .subtitle{font-size:13px;color:#52636a;margin:0;max-width:900px;line-height:1.6}
+    .top-id{text-align:right;border-left:1px solid #c4c6bc;padding-left:22px;min-width:140px}.top-id strong{display:block;font-size:24px;font-family:Georgia,serif;font-weight:400}.top-id span{display:block;font-size:10px;letter-spacing:.2em;color:#68777b;margin-top:5px}
+    .bar{grid-column:1;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 23px;background:#f5f3ec;border-bottom:1px solid #d4d6cf}
+    .segment{display:flex;background:#e1e5df;padding:3px;border:1px solid #cad1cd;border-radius:9px;gap:2px}
+    .segment button{border:0;background:transparent;color:#475e62;border-radius:6px;padding:9px 15px;font-size:13px;font-weight:700;transition:.2s}.segment button.active{background:var(--ink);color:#fff;box-shadow:0 2px 8px #142c3330}
+    .mode-note{font-size:12px;color:#5d6d70;flex:1;min-width:190px}.mode-note b{color:#945f2f}
+    .tool{padding:8px 11px;background:transparent;border:1px solid #b9c3bd;border-radius:7px;color:#243e44;font-size:12px;white-space:nowrap}.tool:hover{background:#e9efe9}.tool.primary{background:#e3a163;border-color:#d49558;color:#172630;font-weight:800}.tool.primary:hover{background:#f3b276}
+    .viewport{grid-column:1;grid-row:3;overflow:auto;background:var(--navy);position:relative;overscroll-behavior:contain;scrollbar-color:#64818c #112833}
+    .viewport::before{content:"";position:sticky;top:0;left:0;z-index:9;pointer-events:none;display:block;height:1px;width:1px}
+    .canvas-frame{position:relative;min-height:500px}.canvas{position:absolute;top:0;left:0;transform-origin:0 0;background-color:#0d2029;background-image:radial-gradient(#53707c35 .8px,transparent .8px);background-size:21px 21px}
+     .lanebg{position:absolute;top:0;border-left:1px solid #72919c35;border-right:1px solid #72919c25;background:linear-gradient(180deg,#17313a7a,#152b3244 45%,#152b321c);pointer-events:none}.lanebg:nth-of-type(even){background:linear-gradient(180deg,#20374374,#20374336 45%,#20374316)}
+    .lane-label{position:absolute;width:340px;padding:10px 8px 12px 0;border-top:1px solid #78919b8c;pointer-events:none}.lane-kicker{font-size:10px;color:#77a0a6}.lane-label b{display:block;font-size:17px;margin-top:8px;color:#e5ebe5;letter-spacing:.02em;font-weight:650}.lane-label span{display:block;font-size:11px;color:#8da5aa;margin-top:6px;line-height:1.5}
+    .stage{position:absolute;left:18px;right:32px;font-size:10px;color:#9bb0b5;border-top:1px solid #42606a68;padding:5px 0 0 2px;white-space:nowrap}
+    .edges{position:absolute;inset:0;pointer-events:none;overflow:visible}.edge{fill:none;stroke:var(--edge);stroke-width:1.5;opacity:.27;transition:opacity .18s,stroke .18s,stroke-width .18s}.edge.poc-edge{stroke:#c89468;opacity:.55}.edge.faded{opacity:.055}.edge.hot{opacity:1;stroke:#ffd39d;stroke-width:2.5}.edge.disabled{stroke:#63727a;opacity:.065}
+    .card{position:absolute;width:270px;min-height:86px;border-radius:8px;background:#233b45;border:1px solid #5d7780;color:#edf1ea;text-align:left;padding:10px 12px 9px 13px;box-shadow:0 5px 0 #081820,0 9px 23px #0003;transition:opacity .22s,border-color .18s,box-shadow .18s,transform .18s;cursor:pointer;user-select:none;touch-action:none}
+    .card::before{content:"";position:absolute;left:-1px;top:12px;bottom:12px;width:3px;background:#829ba4;border-radius:3px}.card.poc{background:#353b38;border-color:#f1ab70}.card.poc::before{background:var(--active)}
+    .card:hover{transform:translateY(-3px);z-index:5;box-shadow:0 7px 0 #081820,0 14px 28px #0007}.card.selected{z-index:7;border-color:#fff0d7;box-shadow:0 0 0 3px #ffc7895c,0 9px 28px #0008}.card.related{border-color:#f4c48c}
+    .card.dim{opacity:.14;filter:grayscale(.9)}.card.dim:hover{opacity:.48}.card.focus-muted{opacity:.25}.card.dragging{z-index:10;transition:none;cursor:grabbing}
+    .card-head{display:flex;align-items:center;justify-content:space-between;gap:6px}.card-id{font:700 10px "SFMono-Regular",Menlo,monospace;letter-spacing:.07em;color:#c3d3d0}.card-badge{font:700 9px Menlo,monospace;border-radius:3px;padding:2px 4px;background:#627981;color:#fff}.poc .card-badge{background:#d2945c;color:#17222a}.card-title{display:block;font-size:14px;font-weight:750;line-height:1.3;margin-top:8px;white-space:normal}.card-desc{display:block;font-size:10.5px;line-height:1.35;color:#acbfc0;margin-top:5px;max-height:32px;overflow:hidden}.poc .card-desc{color:#d3c6b7}
+    .inspector{grid-column:2;grid-row:2/4;background:var(--panel);border-left:1px solid #c6cfc9;display:flex;flex-direction:column;min-height:0;box-shadow:-5px 0 24px #0d202918;z-index:12}
+    .inspector-head{padding:19px 19px 16px;border-bottom:1px solid #d2d9d1}.tiny{color:#718487;font-size:10px}.inspector-head h2{font-family:"Songti SC","STSong",serif;margin:6px 0 0;font-size:23px}.inspector-body{overflow:auto;flex:1;padding:18px 19px 30px}.empty{border:1px dashed #adb9b2;padding:24px 18px;border-radius:8px;background:#f0f2ec;color:#52686b;line-height:1.65;font-size:13px}.empty strong{display:block;color:#172d31;font-size:17px;margin-bottom:10px}.empty .graphic{font:400 45px Georgia,serif;color:#bd8a5c;line-height:1;margin-bottom:13px}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 16px}.stat{background:#e5ebe4;border:1px solid #d0dcd1;padding:10px 8px;border-radius:6px;text-align:center}.stat b{display:block;font:600 19px Georgia,serif}.stat-label{font-size:9px;color:#59706c}
+    .field{margin:0 0 15px}.field-label{display:block;font-size:10px;font-weight:750;color:#567071;margin-bottom:7px}.input{width:100%;background:#fff;border:1px solid #c6d2ca;border-radius:6px;padding:9px 10px;color:#172e31;font-size:13px}.input:focus{border-color:#bc7843}textarea.input{min-height:70px;resize:vertical;line-height:1.5}.smallhelp{font-size:11px;color:#687e7c;line-height:1.55;margin-top:5px}.checkline{display:flex;align-items:flex-start;gap:8px;background:#f5e6d4;border:1px solid #e4c9aa;border-radius:6px;padding:10px;font-size:12px;color:#674931}.checkline input{accent-color:#ba7139;margin-top:3px}
+    .dep-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;min-height:22px}.dep{background:#e1e9e5;color:#264249;border-radius:4px;border:1px solid #bfd1c8;font:11px Menlo,monospace;padding:4px 6px;cursor:pointer}.dep:hover{background:#d3e3dc}.dep.none{opacity:.6;cursor:default}
+    .form-actions{display:flex;gap:8px;margin-top:18px}.form-actions button{flex:1}.danger{border:1px solid #caad9d;color:#8b4c3b;background:#fff4ec}.error{display:none;border:1px solid #d58a76;background:#fff2ed;color:#9b402d;padding:10px;border-radius:6px;font-size:12px;line-height:1.5;margin:10px 0}.error.show{display:block}
+    .footnote{font-size:11px;color:#59716f;line-height:1.65;margin-top:20px;border-top:1px solid #d0d9d2;padding-top:13px}.kbd{font:10px Menlo,monospace;border:1px solid #bdc8bf;background:#fff;padding:2px 4px;border-radius:3px}
+    .toast{position:fixed;left:26px;bottom:24px;background:#f7e2c6;color:#293431;border:1px solid #c99762;border-radius:7px;padding:11px 14px;font-size:12px;z-index:30;box-shadow:0 12px 25px #0714196b;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}
+    @media(max-width:1000px){.shell{grid-template-columns:1fr;grid-template-rows:auto auto minmax(460px,65vh) auto}.inspector{grid-column:1;grid-row:4;max-height:none;min-height:330px;border-left:0;border-top:1px solid #c6cfc9}.viewport{grid-row:3}.top-id{display:none}.mode-note{order:5;flex-basis:100%}}
+    @media(max-width:600px){.top{padding:20px}.bar{padding:12px}.segment{width:100%}.segment button{flex:1}h1{font-size:29px}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div><div class="eyebrow">ARCHITECTURE / EXECUTION MAP</div><h1>LLM ASIC · 项目依赖图</h1><p class="subtitle">硬件 / ISA / gem5、KMD / UMD、PyTorch / AI 编译器、RTL / FPGA 原型四线并行；gem5 的设备、时序、观测和回放不必等待 ISA。</p></div>
+    <div class="top-id"><strong>01 / DAG</strong><span>EDITABLE PROJECT MAP</span></div>
+  </header>
+  <div class="bar">
+    <div class="segment" role="group" aria-label="显示模式"><button id="fullBtn" class="active" aria-pressed="true">完整项目</button><button id="pocBtn" aria-pressed="false">POC 高亮</button></div>
+    <div id="modeNote" class="mode-note">完整视图：四列并行开发；POC 不做 RTL / FPGA 或整模端到端推理。</div>
+    <button class="tool" id="fitBtn" title="适合窗口">适合窗口</button><button class="tool" id="zoomOut" title="缩小">－</button><span id="zoomLabel" class="tiny">100%</span><button class="tool" id="zoomIn" title="放大">＋</button>
+    <button class="tool" id="addBtn">＋ 新增节点</button><button class="tool primary" id="exportBtn">导出当前 HTML</button>
+  </div>
+  <div class="viewport" id="viewport" aria-label="可滚动、可缩放的项目DAG"><div class="canvas-frame" id="frame"><div class="canvas" id="canvas"><div id="lanes"></div><div id="stages"></div><svg class="edges" id="edges"></svg><div id="cards"></div></div></div></div>
+  <aside class="inspector"><div class="inspector-head"><span class="tiny">NODE / INSPECTOR</span><h2 id="inspectorTitle">节点编辑器</h2></div><div class="inspector-body" id="inspectorBody"></div></aside>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script type="application/json" id="dag-data">
+[
+  {
+    "id": "H0",
+    "title": "硬件能力描述",
+    "detail": "原语、数据类型、并发资源与容量；供目标相关编译使用",
+    "lane": "hardware",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "H1",
+    "title": "ISA / 命令语义",
+    "detail": "计算、DMA、同步与事件的行为及编码；独立指令测试",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H0"
+    ]
+  },
+  {
+    "id": "H2",
+    "title": "设备寄存器与地址语义",
+    "detail": "独立定义 MMIO、命令队列门铃、设备地址空间与中断语义；后续与计算 ISA 对接",
+    "lane": "hardware",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "H3",
+    "title": "数据流微架构设计",
+    "detail": "计算单元、SRAM、NoC、DMA 的组织与资源约束",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H0"
+    ]
+  },
+  {
+    "id": "H4",
+    "title": "参数化性能模型骨架",
+    "detail": "先以可配置算力、带宽、容量和延迟建立计算/DMA 时序模型；不等待微架构冻结",
+    "lane": "hardware",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "H5",
+    "title": "gem5 主机 / 内存基础设施",
+    "detail": "配置 CPU、主存、设备端口、事件与最小运行入口；模拟设备可独立于计算 ISA 启动",
+    "lane": "hardware",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "G0",
+    "title": "gem5 模拟设备壳层",
+    "detail": "独立实现 MMIO、队列 / 门铃、地址映射和完成通知；桩命令即可检查设备路径",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H2",
+      "H5"
+    ]
+  },
+  {
+    "id": "G1",
+    "title": "gem5 时序 / 存储资源模型",
+    "detail": "参数化计算流水、SRAM 容量及端口、DMA、主存带宽 / 延迟、争用和背压；先用抽象参数",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H4",
+      "H5"
+    ]
+  },
+  {
+    "id": "G2",
+    "title": "gem5 观测接口",
+    "detail": "预留命令 / tile 标识与阶段事件钩子，支持时间线、访存流和资源状态采集；不依赖 ISA",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H5"
+    ]
+  },
+  {
+    "id": "H6",
+    "title": "抽象原语功能 C-model",
+    "detail": "独立执行计算、搬运、同步原语并校验数值与状态；先不绑定 ISA 编码或 gem5",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H0"
+    ]
+  },
+  {
+    "id": "H7",
+    "title": "C-model 与 gem5 事务接入",
+    "detail": "设备壳层接收抽象命令，C-model 产生访存、回写与完成；不等待计算 ISA 解码",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "G0",
+      "H6"
+    ]
+  },
+  {
+    "id": "G3",
+    "title": "设备时序与观测接通",
+    "detail": "将设备路径的实际计算、DMA、SRAM / 主存事务接入时序和观测钩子；可追溯等待、冲突及完成顺序",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "G1",
+      "G2",
+      "H7"
+    ]
+  },
+  {
+    "id": "G4",
+    "title": "抽象事务注入与回放",
+    "detail": "用手写小算子 / DMA 事务直接驱动时序模型并采集事件，覆盖搬运、计算、依赖和并发；绕过 ISA、设备寄存器、驱动与 PyTorch",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "G1",
+      "G2",
+      "H6"
+    ]
+  },
+  {
+    "id": "G6",
+    "title": "ISA 命令解码接入",
+    "detail": "将 ISA 命令解析、校验并映射到已可执行的抽象原语；手写命令可驱动完整路径",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H1",
+      "H7"
+    ]
+  },
+  {
+    "id": "H8",
+    "title": "gem5 时序基本校验",
+    "detail": "以确定性小算子 / DMA 用例验证周期、带宽上限、资源竞争与重叠行为；不依赖 ISA 或设备寄存器",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H3",
+      "H4",
+      "G1",
+      "G4"
+    ]
+  },
+  {
+    "id": "G5",
+    "title": "硬件参数探索与瓶颈验证",
+    "detail": "变更 SRAM / 带宽 / 并发资源，验证阻塞点与重叠行为是否按预期变化；只需可复现测试，不要求报告",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "H8",
+      "H3"
+    ]
+  },
+  {
+    "id": "R0",
+    "title": "FPGA 平台与接口准备",
+    "detail": "独立准备板卡、时钟复位、片外内存与主机接口；先用桩模块验证基础链路",
+    "lane": "rtl",
+    "poc": false,
+    "deps": []
+  },
+  {
+    "id": "H9",
+    "title": "计算与控制 RTL",
+    "detail": "可综合计算流水线、指令解码与本地控制",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "H1",
+      "H3"
+    ]
+  },
+  {
+    "id": "H10",
+    "title": "存储 / NoC / DMA RTL",
+    "detail": "片上存储、互联、搬运及设备接口 RTL",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "H2",
+      "H3"
+    ]
+  },
+  {
+    "id": "H11",
+    "title": "RTL 集成与功能验证",
+    "detail": "在硬件实现上执行相同指令和边界用例",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "H9",
+      "H10"
+    ]
+  },
+  {
+    "id": "R1",
+    "title": "RTL 的 FPGA 适配",
+    "detail": "将已集成 RTL 对接板级时钟、存储资源与接口 IP；不改变计算 ISA 语义",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "R0",
+      "H11"
+    ]
+  },
+  {
+    "id": "R2",
+    "title": "FPGA 构建与基础点亮",
+    "detail": "完成 FPGA 综合、实现与下载；验证复位、MMIO、命令队列和 DMA 通路",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "R1"
+    ]
+  },
+  {
+    "id": "R3",
+    "title": "FPGA 原型功能对照验证",
+    "detail": "在 FPGA 上运行编译器生成的算子/小图命令，覆盖计算、搬运及同步；结果对照功能 C-model",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "R2",
+      "H6",
+      "C9"
+    ]
+  },
+  {
+    "id": "H12",
+    "title": "ASIC 物理实现与签核",
+    "detail": "综合、时序/功耗/面积收敛及版图签核；可与 FPGA 原型验证并行",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "H11"
+    ]
+  },
+  {
+    "id": "H13",
+    "title": "流片与封装",
+    "detail": "ASIC 物理签核与 FPGA 关键功能对照验证均通过后，进入制造及封装",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "H12",
+      "R3"
+    ]
+  },
+  {
+    "id": "H14",
+    "title": "实硅点亮",
+    "detail": "寄存器、DMA、计算指令及中断在真实芯片上通过",
+    "lane": "rtl",
+    "poc": false,
+    "deps": [
+      "H13"
+    ]
+  },
+  {
+    "id": "D0",
+    "title": "UMD API 定义",
+    "detail": "buffer、queue、submit、event 的用户态抽象",
+    "lane": "driver",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "D1",
+    "title": "KMD ABI 定义",
+    "detail": "ioctl、内存对象、队列、安全与中断的内核侧接口",
+    "lane": "driver",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "D2",
+    "title": "UMD Mock 与单测",
+    "detail": "假设备响应、参数检查、提交及等待；不依赖硬件",
+    "lane": "driver",
+    "poc": true,
+    "deps": [
+      "D0"
+    ]
+  },
+  {
+    "id": "D3",
+    "title": "KMD Mock 与单测",
+    "detail": "模拟队列、地址映射、完成事件；不依赖 gem5",
+    "lane": "driver",
+    "poc": true,
+    "deps": [
+      "D1"
+    ]
+  },
+  {
+    "id": "D5",
+    "title": "设备寄存器适配",
+    "detail": "KMD 对接 MMIO、命令队列、DMA 与中断",
+    "lane": "driver",
+    "poc": true,
+    "deps": [
+      "D1",
+      "H2"
+    ]
+  },
+  {
+    "id": "D6",
+    "title": "驱动接入 gem5 设备",
+    "detail": "UMD/KMD 经 gem5 设备提交手写 ISA 命令，验证 API→ABI、访存、同步与回收",
+    "lane": "driver",
+    "poc": true,
+    "deps": [
+      "D2",
+      "D3",
+      "D5",
+      "G6"
+    ]
+  },
+  {
+    "id": "P0",
+    "title": "POC 功能验收",
+    "detail": "ISA / 驱动 / 小图结果及依赖正确；gem5 可定位资源瓶颈并反馈编译规划；无整模、无 RTL / FPGA",
+    "lane": "driver",
+    "poc": true,
+    "deps": [
+      "H8",
+      "D6",
+      "C10",
+      "G3",
+      "G5",
+      "C15"
+    ]
+  },
+  {
+    "id": "D7",
+    "title": "产品化 KMD / UMD",
+    "detail": "对接真实设备的队列、DMA、中断及资源管理；与 FPGA RTL 适配可并行",
+    "lane": "driver",
+    "poc": false,
+    "deps": [
+      "D6",
+      "H11"
+    ]
+  },
+  {
+    "id": "D8",
+    "title": "部署运行时",
+    "detail": "模型加载、多请求管理与真实设备接口",
+    "lane": "driver",
+    "poc": false,
+    "deps": [
+      "D7"
+    ]
+  },
+  {
+    "id": "P1",
+    "title": "整体验收",
+    "detail": "实硅整模功能与冻结的最终指标均通过",
+    "lane": "driver",
+    "poc": false,
+    "deps": [
+      "C14",
+      "D8",
+      "H14"
+    ]
+  },
+  {
+    "id": "C0",
+    "title": "PyTorch 导出图接入",
+    "detail": "读取 ExportedProgram，处理图签名、参数与形状约束",
+    "lane": "compiler",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "C1",
+    "title": "高层计算图 IR",
+    "detail": "定义与硬件无关的张量、算子、控制及状态语义",
+    "lane": "compiler",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "C2",
+    "title": "导出图 → 高层 IR",
+    "detail": "ATen 算子映射、输入输出与约束保真",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "C0",
+      "C1"
+    ]
+  },
+  {
+    "id": "C3",
+    "title": "硬件无关 IR 优化",
+    "detail": "常量传播、规范化、消冗与语义保持变换",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "C1"
+    ]
+  },
+  {
+    "id": "C4",
+    "title": "高层 IR 参考执行",
+    "detail": "手写 IR 的逐算子对照；先验证前端与优化",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "C1"
+    ]
+  },
+  {
+    "id": "C5",
+    "title": "后端调度 IR 骨架",
+    "detail": "先定义与具体指令编码解耦的 tile、buffer、搬运、同步及显式依赖表示",
+    "lane": "compiler",
+    "poc": true,
+    "deps": []
+  },
+  {
+    "id": "C6",
+    "title": "高层 IR → 目标 IR",
+    "detail": "以手写高层 IR 启动合法化与算子拆解；此处才读取硬件能力描述，PyTorch 接入可并行",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "C3",
+      "C5",
+      "H0"
+    ]
+  },
+  {
+    "id": "C7",
+    "title": "Tile 与 SRAM 规划",
+    "detail": "结合微架构资源约束进行布局与生命周期规划",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "C6",
+      "H3"
+    ]
+  },
+  {
+    "id": "C8",
+    "title": "数据流命令 DAG",
+    "detail": "在抽象计算/搬运/同步命令上分析 RAW/WAR/WAW 与资源约束，重叠 DMA 和计算；暂不绑定 ISA 编码",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "C7"
+    ]
+  },
+  {
+    "id": "G7",
+    "title": "编译计划的 gem5 回放",
+    "detail": "将编译器 tile / DMA / 计算依赖计划回放为抽象事务，验证资源与同步语义；不等待 ISA 解码、MMIO 或驱动",
+    "lane": "hardware",
+    "poc": true,
+    "deps": [
+      "C8",
+      "G4"
+    ]
+  },
+  {
+    "id": "C9",
+    "title": "ISA 命令生成",
+    "detail": "将抽象命令 DAG 映射、编码为 ISA 设备指令；只在这里与 ISA 命令语义汇合",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "C8",
+      "H1"
+    ]
+  },
+  {
+    "id": "C10",
+    "title": "小图与依赖正确性",
+    "detail": "PyTorch 导出小图经高层 IR、优化、降级与驱动/gem5 执行，对照参考值；测试异步交错与依赖正确性",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "C2",
+      "C3",
+      "C4",
+      "C9",
+      "D6"
+    ]
+  },
+  {
+    "id": "C15",
+    "title": "编译规划反馈验证",
+    "detail": "使用 gem5 时间线核对 tile / buffer 生存期、DMA-计算重叠与阻塞原因；修改规划后以小算子回归验证",
+    "lane": "compiler",
+    "poc": true,
+    "deps": [
+      "G7",
+      "C7"
+    ]
+  },
+  {
+    "id": "C11",
+    "title": "整模算子覆盖",
+    "detail": "完整模型导出、动态图约束、量化与 KV 路径",
+    "lane": "compiler",
+    "poc": false,
+    "deps": [
+      "C2",
+      "C3"
+    ]
+  },
+  {
+    "id": "C12",
+    "title": "全模型编译优化",
+    "detail": "全图降级、融合、存储与命令调度优化",
+    "lane": "compiler",
+    "poc": false,
+    "deps": [
+      "C11",
+      "C9"
+    ]
+  },
+  {
+    "id": "C13",
+    "title": "完整模型推理验证",
+    "detail": "Prefill → 首 token → 连续 Decode；仅在完整项目阶段",
+    "lane": "compiler",
+    "poc": false,
+    "deps": [
+      "C12",
+      "D6",
+      "G6"
+    ]
+  },
+  {
+    "id": "C14",
+    "title": "实硅完整模型验证",
+    "detail": "通过产品驱动在真实芯片运行完整模型",
+    "lane": "compiler",
+    "poc": false,
+    "deps": [
+      "C13",
+      "D7",
+      "H14"
+    ]
+  }
+]
+</script>
+<script>
+(() => {
+  'use strict';
+  const KEY='llm-asic-dag-edit-v5';
+  const original=JSON.parse(document.getElementById('dag-data').textContent);
+  let nodes=load(), mode='full', selected=null, zoom=.8, layout=null, drag=null;
+  const lanes=[
+    {id:'hardware',name:'硬件层 / ISA / gem5',sub:'设备 / ISA · C-model · gem5 时序 / 观测'},
+    {id:'driver',name:'KMD / UMD 驱动',sub:'用户态 API · 内核 ABI · 模拟设备'},
+    {id:'compiler',name:'PyTorch / AI 编译器',sub:'导出图 · 高层 IR · 目标 IR · 命令 DAG'},
+    {id:'rtl',name:'RTL / FPGA 原型验证',sub:'RTL 实现 · 板级验证 · ASIC 流片'}
+  ];
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(x)&&x.length) return x}catch{}return structuredClone(original)}
+  function persist(){localStorage.setItem(KEY,JSON.stringify(nodes))}
+  function toast(s){const el=$('toast');el.textContent=s;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove('show'),2900)}
+  function successors(id){return nodes.filter(n=>n.deps.includes(id))}
+  function topo(data){
+    const map=new Map(data.map(n=>[n.id,n]));if(map.size!==data.length) throw Error('节点 ID 不得重复');
+    for(const n of data){if(!n.id||!/^[A-Za-z][A-Za-z0-9_-]*$/.test(n.id))throw Error('节点 ID 应由字母、数字、下划线组成，并以字母开头');if(!lanes.some(l=>l.id===n.lane))throw Error(n.id+' 的泳道无效');
+      for(const id of n.deps){if(!map.has(id))throw Error(n.id+' 的前置节点 '+id+' 不存在');if(id===n.id)throw Error(n.id+' 不能依赖自己');if(n.poc&&!map.get(id).poc)throw Error('POC 节点 '+n.id+' 不能依赖非 POC 节点 '+id)}
+    }
+    const state=new Map(),level=new Map();
+    function visit(id){if(state.get(id)===1)throw Error('存在环：'+id+' 回到了自身的依赖链');if(state.get(id)===2)return level.get(id);
+      state.set(id,1);const n=map.get(id);const lv=n.deps.length?1+Math.max(...n.deps.map(visit)):0;state.set(id,2);level.set(id,lv);return lv}
+    data.forEach(n=>visit(n.id));return level;
+  }
+  const nodeW=270,nodeH=86,colW=380,left=90,top=94,rowGap=104;
+  function compute(){
+    const levels=topo(nodes), maxLevel=Math.max(0,...levels.values());
+    const pos=new Map(),levelRects=[];let y=top;
+    for(let lv=0;lv<=maxLevel;lv++){
+      let slots=1;
+      for(const lane of lanes) slots=Math.max(slots,nodes.filter(n=>n.lane===lane.id&&levels.get(n.id)===lv).length);
+      const h=56+slots*rowGap;levelRects.push({lv,y,h});
+      lanes.forEach((lane,j)=>nodes.filter(n=>n.lane===lane.id&&levels.get(n.id)===lv).forEach((n,i)=>pos.set(n.id,{x:left+j*colW+(n.dx||0),y:y+32+i*rowGap+(n.dy||0),lv})));
+      y+=h;
+    }
+    const width=left+lanes.length*colW+28,height=y+24;
+    const laneRects=lanes.map((lane,j)=>({...lane,x:left-30+j*colW,w:colW-16}));
+    return {levels,maxLevel,laneRects,levelRects,pos,width,height};
+  }
+  function render(){
+    try{layout=compute()}catch(e){toast(e.message);return}
+    const {width,height,laneRects,levelRects,pos}=layout;
+    const canvas=$('canvas');canvas.style.width=width+'px';canvas.style.height=height+'px';$('edges').setAttribute('width',width);$('edges').setAttribute('height',height);
+    $('frame').style.width=Math.ceil(width*zoom)+'px';$('frame').style.height=Math.ceil(height*zoom)+'px';canvas.style.transform=`scale(${zoom})`;
+    $('lanes').innerHTML=laneRects.map((l,i)=>`<div class="lanebg" style="left:${l.x}px;width:${l.w}px;height:${height}px"></div><div class="lane-label" style="left:${l.x+30}px;top:17px"><div class="lane-kicker">0${i+1} / ${esc(l.id)}</div><b>${esc(l.name)}</b><span>${esc(l.sub)}</span></div>`).join('');
+    $('stages').innerHTML=levelRects.map(l=>`<div class="stage" style="top:${l.y+9}px">${String(l.lv).padStart(2,'0')} / 依赖层 · 同层任务可并行</div>`).join('');
+    const paths=[];
+    nodes.forEach(n=>n.deps.forEach(d=>{
+      const a=pos.get(d),b=pos.get(n.id);if(!a||!b)return;
+      const sameLane=nodes.find(v=>v.id===d)?.lane===n.lane;
+      let dpath;
+      if(sameLane){
+        const x1=a.x+nodeW/2,y1=a.y+nodeH,x2=b.x+nodeW/2,y2=b.y;
+        dpath=`M${x1},${y1} C${x1},${y1+32} ${x2},${y2-32} ${x2},${y2}`;
+      }else{
+        const dir=b.x>a.x?1:-1,x1=a.x+(dir>0?nodeW:0),y1=a.y+nodeH/2;
+        const x2=b.x+(dir>0?0:nodeW),y2=b.y+nodeH/2;
+        const bend=Math.max(54,Math.min(175,Math.abs(x2-x1)*.42));
+        dpath=`M${x1},${y1} C${x1+dir*bend},${y1+16} ${x2-dir*bend},${y2-16} ${x2},${y2}`;
+      }
+      const src=nodes.find(v=>v.id===d);let cls='edge';if(n.poc&&src.poc)cls+=' poc-edge';if(mode==='poc'&&!(n.poc&&src.poc))cls+=' disabled';
+      if(selected){if(selected===n.id||selected===d)cls+=' hot';else cls+=' faded'}
+      paths.push(`<path class="${cls}" d="${dpath}" marker-end="url(#${cls.includes('hot')?'hotArrow':cls.includes('poc-edge')?'pocArrow':'arrow'})"/>`)
+    }));
+    $('edges').innerHTML=`<defs><marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#718c96"/></marker><marker id="pocArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#c89468"/></marker><marker id="hotArrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#ffd39d"/></marker></defs>`+paths.join('');
+    const focus=selected?new Set([selected,...(nodes.find(n=>n.id===selected)?.deps||[]),...successors(selected).map(n=>n.id)]):null;
+    $('cards').innerHTML=nodes.map(n=>{const p=pos.get(n.id);const cls=['card',n.poc?'poc':'',mode==='poc'&&!n.poc?'dim':'',selected===n.id?'selected':'',focus&&!focus.has(n.id)?'focus-muted':'',focus&&focus.has(n.id)&&selected!==n.id?'related':''].filter(Boolean).join(' ');
+      return `<button class="${cls}" data-id="${esc(n.id)}" style="left:${p.x}px;top:${p.y}px" title="${esc(n.detail)}"><span class="card-head"><span class="card-id">${esc(n.id)}</span><span class="card-badge">${n.poc?'POC':'FULL'}</span></span><span class="card-title">${esc(n.title)}</span><span class="card-desc">${esc(n.detail)}</span></button>`}).join('');
+    $('cards').querySelectorAll('.card').forEach(el=>{el.addEventListener('click',()=>{if(drag?.moved)return;select(el.dataset.id)});el.addEventListener('pointerdown',startDrag)});
+    $('zoomLabel').textContent=Math.round(zoom*100)+'%';$('fullBtn').classList.toggle('active',mode==='full');$('pocBtn').classList.toggle('active',mode==='poc');$('fullBtn').setAttribute('aria-pressed',String(mode==='full'));$('pocBtn').setAttribute('aria-pressed',String(mode==='poc'));
+    $('modeNote').innerHTML=mode==='poc'?`POC 范围：<b>${nodes.filter(n=>n.poc).length} 个高亮节点</b>。RTL / FPGA / 整模已灰显；高层 IR 可与硬件、驱动并行。`:`完整视图：<b>${nodes.length} 个节点 / ${nodes.reduce((v,n)=>v+n.deps.length,0)} 条依赖</b>。四列并行；橙色描边为 POC，灰蓝色为后续工程。`;
+    inspector();
+  }
+  function startDrag(e){if(e.button!==0)return;const id=e.currentTarget.dataset.id,n=nodes.find(v=>v.id===id);drag={id,x:e.clientX,y:e.clientY,dx:n.dx||0,dy:n.dy||0,moved:false};e.currentTarget.setPointerCapture(e.pointerId);
+    const el=e.currentTarget;const move=ev=>{if(!drag)return;const mx=(ev.clientX-drag.x)/zoom,my=(ev.clientY-drag.y)/zoom;if(Math.hypot(mx,my)<4&&!drag.moved)return;drag.moved=true;el.classList.add('dragging');el.style.left=layout.pos.get(id).x+mx+'px';el.style.top=layout.pos.get(id).y+my+'px'};
+    const end=ev=>{el.removeEventListener('pointermove',move);el.removeEventListener('pointerup',end);el.removeEventListener('pointercancel',end);if(drag?.moved){n.dx=Math.round(drag.dx+(ev.clientX-drag.x)/zoom);n.dy=Math.round(drag.dy+(ev.clientY-drag.y)/zoom);persist();selected=id;setTimeout(()=>{drag=null;render()},0)}else drag=null};
+    el.addEventListener('pointermove',move);el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end)}
+  function select(id){selected=id;render();const p=layout?.pos.get(id),v=$('viewport');if(!p)return;const x=p.x*zoom,y=p.y*zoom;if(x<v.scrollLeft+40||x+nodeW*zoom>v.scrollLeft+v.clientWidth-30||y<v.scrollTop+40||y+nodeH*zoom>v.scrollTop+v.clientHeight-30){v.scrollTo({left:Math.max(0,x-v.clientWidth*.35),top:Math.max(0,y-v.clientHeight*.35),behavior:'smooth'})}}
+  function inspector(){
+    const n=nodes.find(v=>v.id===selected);$('inspectorTitle').textContent=n?'编辑 '+n.id:'节点编辑器';
+    if(!n){$('inspectorBody').innerHTML=`<div class="stats"><div class="stat"><b>${nodes.length}</b><span class="stat-label">节点</span></div><div class="stat"><b>${nodes.filter(v=>v.poc).length}</b><span class="stat-label">POC</span></div><div class="stat"><b>${nodes.reduce((x,v)=>x+v.deps.length,0)}</b><span class="stat-label">依赖边</span></div></div><div class="empty"><div class="graphic">↗</div><strong>点击任意节点，查看依赖并编辑</strong>上游是开始它之前必须具备的功能；下游是直接依赖它的工作。拖动节点可以微调位置。<br><br>切换到「POC 高亮」，非 POC 的节点与连线只会灰掉，不会被删除。</div><div class="footnote">本图 POC 包含抽象原语 C-model、gem5 时序 / 访存观测、ISA/驱动接入及编译器小图与规划反馈验证。<b>RTL / FPGA 与完整模型端到端推理均不属于 POC。</b><br><br>编辑自动保存在此浏览器；点击「导出当前 HTML」可将修改写进可移交的单文件。</div>`;return}
+    const up=n.deps,down=successors(n.id).map(v=>v.id);
+    $('inspectorBody').innerHTML=`<div class="stats"><div class="stat"><b>${String(layout.levels.get(n.id)).padStart(2,'0')}</b><span class="stat-label">依赖层</span></div><div class="stat"><b>${up.length}</b><span class="stat-label">直接前置</span></div><div class="stat"><b>${down.length}</b><span class="stat-label">直接后置</span></div></div>
+      <div class="field"><span class="field-label">节点 ID</span><input class="input" id="editId" value="${esc(n.id)}" ><div class="smallhelp">修改 ID 会同步更新所有引用此节点的依赖。</div></div>
+      <div class="field"><span class="field-label">节点名称</span><input class="input" id="editTitle" value="${esc(n.title)}"></div>
+      <div class="field"><span class="field-label">功能与验收描述</span><textarea class="input" id="editDetail">${esc(n.detail)}</textarea></div>
+      <div class="field"><span class="field-label">所在泳道</span><select class="input" id="editLane">${lanes.map(l=>`<option value="${l.id}" ${n.lane===l.id?'selected':''}>${esc(l.name)}</option>`).join('')}</select></div>
+      <div class="field"><label class="checkline"><input type="checkbox" id="editPoc" ${n.poc?'checked':''}><span><b>POC 阶段必须做</b><br>打开后，在 POC 模式高亮；不能依赖灰色节点。</span></label></div>
+      <div class="field"><span class="field-label">前置依赖 ID（逗号分隔）</span><input class="input" id="editDeps" value="${esc(up.join(', '))}"><div class="smallhelp">保存时检查：引用存在、无环、POC 范围依赖闭合。</div></div>
+      <div class="field"><span class="field-label">直接前置</span><div class="dep-list">${up.length?up.map(id=>`<button class="dep" data-jump="${esc(id)}">← ${esc(id)}</button>`).join(''):'<span class="dep none">无</span>'}</div></div>
+      <div class="field"><span class="field-label">直接后置</span><div class="dep-list">${down.length?down.map(id=>`<button class="dep" data-jump="${esc(id)}">${esc(id)} →</button>`).join(''):'<span class="dep none">无</span>'}</div></div>
+      <div id="formError" class="error" role="alert"></div><div class="form-actions"><button class="tool primary" id="saveNode">保存修改</button><button class="tool danger" id="deleteNode">删除节点</button></div>
+      <div class="footnote">四列代表并行工作流，纵向依赖层由前置关系自动计算。拖动卡片可微调位置。</div>`;
+    $('saveNode').onclick=saveNode;$('deleteNode').onclick=deleteNode;$('inspectorBody').querySelectorAll('[data-jump]').forEach(el=>el.onclick=()=>select(el.dataset.jump));
+  }
+  function error(s){const el=$('formError');el.textContent=s;el.classList.add('show')}
+  function saveNode(){const old=selected;const newId=$('editId').value.trim();const next=structuredClone(nodes);const row=next.find(n=>n.id===old);row.id=newId;row.title=$('editTitle').value.trim();row.detail=$('editDetail').value.trim();row.lane=$('editLane').value;row.poc=$('editPoc').checked;row.deps=[...new Set($('editDeps').value.split(/[,，\s]+/).map(s=>s.trim()).filter(Boolean))];
+    if(!row.title)return error('请填写节点名称');if(!row.detail)return error('请填写功能与验收描述');if(newId!==old)next.forEach(v=>{v.deps=v.deps.map(d=>d===old?newId:d)});
+    try{topo(next)}catch(e){return error(e.message)}nodes=next;selected=newId;persist();render();toast('已保存，DAG 无环且 POC 依赖闭合')}
+  function deleteNode(){const down=successors(selected);if(down.length)return error('先从后置节点移除对 '+selected+' 的依赖：'+down.map(n=>n.id).join('、'));
+    if(!confirm('确定删除节点 '+selected+'？'))return;nodes=nodes.filter(n=>n.id!==selected);selected=null;persist();render();toast('节点已删除')}
+  function fit(){const v=$('viewport');if(!layout)return;zoom=Math.max(.16,Math.min(1.1,(v.clientWidth-30)/layout.width));render();v.scrollTo({left:0,top:0})}
+  function exportHtml(){const clone=document.documentElement.cloneNode(true);clone.querySelector('#dag-data').textContent='\n'+JSON.stringify(nodes,null,2).replace(/</g,'\\u003c')+'\n';clone.querySelector('#cards').innerHTML='';clone.querySelector('#lanes').innerHTML='';clone.querySelector('#stages').innerHTML='';clone.querySelector('#edges').innerHTML='';clone.querySelector('#inspectorBody').innerHTML='';clone.querySelectorAll('script')[1].textContent=clone.querySelectorAll('script')[1].textContent.replace("llm-asic-dag-edit-v5",'llm-asic-dag-export-'+Date.now());const html='<!doctype html>\n'+clone.outerHTML;const blob=new Blob([html],{type:'text/html;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='llm_asic_project_dag_edited.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),3000);toast('已导出可独立打开的 HTML')}
+  $('fullBtn').onclick=()=>{mode='full';render()};$('pocBtn').onclick=()=>{mode='poc';selected=null;render()};$('fitBtn').onclick=fit;
+  $('zoomIn').onclick=()=>{zoom=Math.min(1.6,Math.round((zoom+.1)*10)/10);render()};$('zoomOut').onclick=()=>{zoom=Math.max(.3,Math.round((zoom-.1)*10)/10);render()};
+  $('exportBtn').onclick=exportHtml;
+  $('addBtn').onclick=()=>{const id='N'+(1+Math.max(0,...nodes.filter(n=>/^N\d+$/.test(n.id)).map(n=>Number(n.id.slice(1)))));const lane=nodes.find(n=>n.id===selected)?.lane||'hardware';const candidate={id,title:'新节点',detail:'双击右侧字段编辑功能和验收方式',lane,poc:false,deps:selected?[selected]:[]};nodes.push(candidate);selected=id;persist();render();toast('已添加 '+id+'，请编辑名称与依赖')};
+  $('viewport').addEventListener('wheel',e=>{if(!e.ctrlKey&&!e.metaKey)return;e.preventDefault();zoom=Math.min(1.6,Math.max(.3,zoom+(e.deltaY<0?.1:-.1)));render()},{passive:false});
+  window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){selected=null;render()}});
+  try{topo(nodes)}catch(e){nodes=structuredClone(original);localStorage.removeItem(KEY)}
+  if(location.hash==='#poc')mode='poc';
+  render();fit();
+})();
+</script>
+</body>
+</html>

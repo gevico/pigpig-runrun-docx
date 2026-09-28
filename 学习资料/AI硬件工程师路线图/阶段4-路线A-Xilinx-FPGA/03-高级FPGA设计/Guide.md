@@ -26,7 +26,7 @@ dateCreated: 2026-09-27T12:30:02.000Z
 
 **目标岗位：** 资深 FPGA 工程师 · FPGA 时序收敛工程师 · 硬件加速工程师 · FPGA 系统架构师
 
-**前置要求：** [Xilinx FPGA 开发](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)、能轻松阅读时序报告，以及至少一个经过板级验证的 FPGA 项目。
+**前置要求：** [Xilinx FPGA 开发](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)、能轻松阅读时序报告，以及至少一个经过板级验证的 FPGA 项目。
 
 **后续内容：** [高层次综合](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/04-高层次综合HLS/Guide)、[runtime 与驱动开发](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/05-运行时与驱动开发/Guide)，以及 [AI 芯片设计](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/06-方向F-AI芯片设计/Guide)。
 
@@ -203,7 +203,7 @@ The design is functionally correct, timing-clean, physically realistic, debuggab
 
 **Role targets:** Senior FPGA Engineer · FPGA Timing Closure Engineer · Hardware Acceleration Engineer · FPGA Systems Architect
 
-**Prerequisites:** [Xilinx FPGA Development](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide), comfort reading timing reports, and at least one board-validated FPGA project.
+**Prerequisites:** [Xilinx FPGA Development](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide), comfort reading timing reports, and at least one board-validated FPGA project.
 
 **What comes after:** [High-Level Synthesis](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/04-高层次综合HLS/Guide), [Runtime and Driver Development](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/05-运行时与驱动开发/Guide), and [AI Chip Design](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/06-方向F-AI芯片设计/Guide).
 

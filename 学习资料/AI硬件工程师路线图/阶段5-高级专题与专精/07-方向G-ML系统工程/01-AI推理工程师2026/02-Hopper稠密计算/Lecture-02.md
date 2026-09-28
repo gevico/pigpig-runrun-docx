@@ -2557,8 +2557,8 @@ with te.fp8_autocast(enabled=True, fp8_recipe=r): l(x)
 
 交叉引用：
 
-* [阶段 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference → 01 Blackwell Architecture](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/01-Blackwell-B200-Qwen推理/01-Blackwell-Architecture) — Blackwell 将 WGMMA 扩展为 UMMA（universal MMA），并加入每 32 元素块的原生 MXFP8 硬件缩放
-* [阶段 5 → GPU Infrastructure → CUDA-Advanced-Optimization → 05 Warp Specialization](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/02-CUDA高级优化/05-Warp-Specialization) — matmul kernel 之外的 warp specialization 模式
+* [阶段 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference → 01 Blackwell Architecture](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/02-Blackwell-B200-Qwen推理/01-Blackwell-Architecture) — Blackwell 将 WGMMA 扩展为 UMMA（universal MMA），并加入每 32 元素块的原生 MXFP8 硬件缩放
+* [阶段 5 → GPU Infrastructure → CUDA-Advanced-Optimization → 05 Warp Specialization](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/03-CUDA高级优化/05-Warp-Specialization) — matmul kernel 之外的 warp specialization 模式
 * [阶段 5 → MLSys Deep Dives → Lecture 02 — The Kernel-Language Explosion](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/05-MLSys深度探索/Lecture-02) — Triton / CuTe DSL / ThunderKittens 全景概览，以及这些抽象如何构建在 WGMMA 之上
 
 ---
@@ -2602,8 +2602,8 @@ with te.fp8_autocast(enabled=True, fp8_recipe=r): l(x)
 
 Cross-references:
 
-* [Phase 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference → 01 Blackwell Architecture](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/01-Blackwell-B200-Qwen推理/01-Blackwell-Architecture) — Blackwell extends WGMMA to UMMA (universal MMA) and adds native MXFP8 hardware scaling per 32-element block
-* [Phase 5 → GPU Infrastructure → CUDA-Advanced-Optimization → 05 Warp Specialization](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/02-CUDA高级优化/05-Warp-Specialization) — warp specialization patterns beyond the matmul kernel
+* [Phase 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference → 01 Blackwell Architecture](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/02-Blackwell-B200-Qwen推理/01-Blackwell-Architecture) — Blackwell extends WGMMA to UMMA (universal MMA) and adds native MXFP8 hardware scaling per 32-element block
+* [Phase 5 → GPU Infrastructure → CUDA-Advanced-Optimization → 05 Warp Specialization](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/03-CUDA高级优化/05-Warp-Specialization) — warp specialization patterns beyond the matmul kernel
 * [Phase 5 → MLSys Deep Dives → Lecture 02 — The Kernel-Language Explosion](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/05-MLSys深度探索/Lecture-02) — Triton / CuTe DSL / ThunderKittens landscape view, and how these abstractions sit on top of WGMMA
 
 ---

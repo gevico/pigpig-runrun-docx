@@ -28,7 +28,7 @@ dateCreated: 2026-09-27T12:30:00.000Z
 
 **前置要求：** [阶段 1 — 数字基础](/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide)
 
-**后续内容：** [阶段 3 — 人工智能](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide)，然后是阶段 4 的其中一条路线：[Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)、[NVIDIA Jetson](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) 或 [ML 编译器](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
+**后续内容：** [阶段 3 — 人工智能](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide)，然后是阶段 4 的其中一条路线：[Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)、[NVIDIA Jetson](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) 或 [ML 编译器](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
 
 ---
 
@@ -119,7 +119,7 @@ AI 硬件并非孤立存在。它被装入系统出货，而这些系统必须�
 
 **Prerequisites:** [Phase 1 — Digital Foundations](/学习资料/AI硬件工程师路线图/阶段1-基础知识/Guide)
 
-**What comes after:** [Phase 3 — Artificial Intelligence](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide), then one of the Phase 4 tracks: [Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide), [NVIDIA Jetson](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide), or [ML Compiler](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
+**What comes after:** [Phase 3 — Artificial Intelligence](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide), then one of the Phase 4 tracks: [Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide), [NVIDIA Jetson](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide), or [ML Compiler](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
 
 ---
 
@@ -190,7 +190,7 @@ You are ready to continue when you can:
 
 ## 下一步
 
-→ [**阶段 3 — 人工智能**](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide) · [**阶段 4 方向 A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) · [**阶段 4 方向 B — NVIDIA Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) · [**阶段 4 方向 C — ML 编译器**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
+→ [**阶段 3 — 人工智能**](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide) · [**阶段 4 方向 A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) · [**阶段 4 方向 B — NVIDIA Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) · [**阶段 4 方向 C — ML 编译器**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
 
 
 <details>
@@ -198,7 +198,7 @@ You are ready to continue when you can:
 
 **Next**
 
-→ [**Phase 3 — Artificial Intelligence**](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide) · [**Phase 4 Track A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) · [**Phase 4 Track B — NVIDIA Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) · [**Phase 4 Track C — ML Compiler**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
+→ [**Phase 3 — Artificial Intelligence**](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide) · [**Phase 4 Track A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) · [**Phase 4 Track B — NVIDIA Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) · [**Phase 4 Track C — ML Compiler**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
 
 </details>
 

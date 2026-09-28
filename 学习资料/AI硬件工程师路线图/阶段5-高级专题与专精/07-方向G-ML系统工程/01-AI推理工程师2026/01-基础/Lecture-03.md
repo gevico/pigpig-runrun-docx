@@ -579,8 +579,8 @@ Pass criterion: the chart goes in your benchmark report. Anyone reading it under
 
 交叉引用：
 
-* [阶段 5 → GPU 基础设施 → Blackwell-B200-Qwen-Inference → 01 Blackwell 架构](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/01-Blackwell-B200-Qwen推理/01-Blackwell-Architecture)
-* [阶段 5 → GPU 基础设施 → CUDA 高级优化 → 04 kernel 融合](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/02-CUDA高级优化/04-Kernel-Fusion)
+* [阶段 5 → GPU 基础设施 → Blackwell-B200-Qwen-Inference → 01 Blackwell 架构](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/02-Blackwell-B200-Qwen推理/01-Blackwell-Architecture)
+* [阶段 5 → GPU 基础设施 → CUDA 高级优化 → 04 kernel 融合](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/03-CUDA高级优化/04-Kernel-Fusion)
 
 ---
 
@@ -611,8 +611,8 @@ GPU 峰值数据来自 NVIDIA 公布的 H100、H200、B200 SXM 数据手册。�
 
 Cross-references:
 
-* [Phase 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference → 01 Blackwell Architecture](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/01-Blackwell-B200-Qwen推理/01-Blackwell-Architecture)
-* [Phase 5 → GPU Infrastructure → CUDA Advanced Optimization → 04 Kernel Fusion](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/02-CUDA高级优化/04-Kernel-Fusion)
+* [Phase 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference → 01 Blackwell Architecture](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/02-Blackwell-B200-Qwen推理/01-Blackwell-Architecture)
+* [Phase 5 → GPU Infrastructure → CUDA Advanced Optimization → 04 Kernel Fusion](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/03-CUDA高级优化/04-Kernel-Fusion)
 
 ---
 

@@ -28,7 +28,7 @@ dateCreated: 2026-09-27T12:29:59.000Z
 
 **前置要求：** 熟悉基本命令行工具，并具备可用的开发环境
 
-**后续内容：** [阶段 2 — 嵌入式系统](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide)、[阶段 3 — 人工智能](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide)，然后是阶段 4 的其中一条轨道：[Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)、[NVIDIA Jetson](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) 或 [ML Compiler](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
+**后续内容：** [阶段 2 — 嵌入式系统](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide)、[阶段 3 — 人工智能](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide)，然后是阶段 4 的其中一条轨道：[Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)、[NVIDIA Jetson](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) 或 [ML Compiler](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
 
 ---
 
@@ -122,7 +122,7 @@ dateCreated: 2026-09-27T12:29:59.000Z
 
 **Prerequisites:** comfort with basic command-line tooling and a working development environment
 
-**What comes after:** [Phase 2 — Embedded Systems](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide), [Phase 3 — Artificial Intelligence](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide), then one of the Phase 4 tracks: [Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide), [NVIDIA Jetson](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide), or [ML Compiler](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
+**What comes after:** [Phase 2 — Embedded Systems](/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide), [Phase 3 — Artificial Intelligence](/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide), then one of the Phase 4 tracks: [Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide), [NVIDIA Jetson](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide), or [ML Compiler](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
 
 ---
 

@@ -25,7 +25,7 @@ dateCreated: 2026-09-27T12:30:15.000Z
   <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide"><span class="home-rail__n">02</span><span class="home-rail__t">嵌入式系统</span></a>
   <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide"><span class="home-rail__n">03</span><span class="home-rail__t">人工智能</span></a>
   <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide"><span class="home-rail__n">04</span><span class="home-rail__t">部署 &amp; 编译</span></a>
-  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/Guide"><span class="home-rail__n">05</span><span class="home-rail__t">专精方向</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/Guide"><span class="home-rail__n">05</span><span class="home-rail__t">专精方向</span></a>
   <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段6-面试准备/README"><span class="home-rail__n">06</span><span class="home-rail__t">面试准备</span></a>
 </div>
 </div>
@@ -77,7 +77,7 @@ dateCreated: 2026-09-27T12:30:15.000Z
   <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段2-嵌入式系统/Guide"><span class="home-rail__n">02</span><span class="home-rail__t">Embedded Systems</span></a>
   <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段3-人工智能/Guide"><span class="home-rail__n">03</span><span class="home-rail__t">Artificial Intelligence</span></a>
   <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide"><span class="home-rail__n">04</span><span class="home-rail__t">Deployment &amp; Compilation</span></a>
-  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/Guide"><span class="home-rail__n">05</span><span class="home-rail__t">Specialization</span></a>
+  <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/Guide"><span class="home-rail__n">05</span><span class="home-rail__t">Specialization</span></a>
   <a class="home-rail__step" href="/学习资料/AI硬件工程师路线图/阶段6-面试准备/README"><span class="home-rail__n">06</span><span class="home-rail__t">Interview Prep</span></a>
 </div>
 </div>
@@ -422,7 +422,7 @@ That last bullet is the goal. The first six exist to make it real.
 
 | 方向 | 重点 | 支柱 |
 |-------|-------|--------|
-| [**A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) | Vivado、Zynq MPSoC、HLS、驱动开发、视频流水线 | 硬件 |
+| [**A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) | Vivado、Zynq MPSoC、HLS、驱动开发、视频流水线 | 硬件 |
 | [**B — NVIDIA Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) | Orin 平台、定制载板、L4T、OTA、TensorRT/DLA（深度学习加速器） | 硬件 + 推理 |
 | [**C — DL 推理优化**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide) | MLIR、TVM、Triton、kernel 工程、量化、runtime | 推理 |
 
@@ -483,7 +483,7 @@ Five phases. The first four are foundation; the fifth is where the three pillars
 
 | Track | Focus | Pillar |
 |-------|-------|--------|
-| [**A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) | Vivado, Zynq MPSoC, HLS, driver dev, video pipeline | Hardware |
+| [**A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) | Vivado, Zynq MPSoC, HLS, driver dev, video pipeline | Hardware |
 | [**B — NVIDIA Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) | Orin platform, custom carrier, L4T, OTA, TensorRT/DLA | Hardware + Inference |
 | [**C — DL Inference Optimization**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide) | MLIR, TVM, Triton, kernel engineering, quantization, runtimes | Inference |
 
@@ -491,12 +491,12 @@ You don't have to do all three. But to land at chip design, you want enough of *
 
 </details>
 
-### [阶段 5 — 专业化与收敛](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/Guide)
+### [阶段 5 — 专业化与收敛](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/Guide)
 *三大支柱在此汇聚。专业化方向，加上芯片设计这一终点。*
 
 | 方向 | 你将专精的内容 | 支柱 |
 |-------|---------------------------|-----------|
-| [**A — GPU 基础设施**](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/Guide) | 多 GPU、NVLink、NCCL、AMD ROCm/HIP、MI300X | 推理 |
+| [**A — GPU 基础设施**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/Guide) | 多 GPU、NVLink、NCCL、AMD ROCm/HIP、MI300X | 推理 |
 | [**B — 高性能计算（CUDA-X）**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/02-方向B-高性能计算/Guide) | cuBLAS、cuDNN、NVSHMEM、40+ 个库 | 推理 |
 | [**C — 边缘 AI**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/Guide) | Holoscan、[边缘 LLM 推理内幕](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01)、[**Qwen 推理优化（6 讲系列）**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/README)、AI 驱动的无线 | 推理 |
 | [**D — 机器人**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/04-方向D-机器人/Guide) | ROS 2、Nav2、运动规划、集群 | 硬件 + 推理 |
@@ -514,12 +514,12 @@ You don't have to do all three. But to land at chip design, you want enough of *
 <details>
 <summary>English original</summary>
 
-**[Phase 5 — Specialization & Convergence](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/Guide)**
+**[Phase 5 — Specialization & Convergence](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/Guide)**
 *The three pillars converge here. Specialization tracks plus the chip-design endpoint.*
 
 | Track | What you'll specialize in | Pillar(s) |
 |-------|---------------------------|-----------|
-| [**A — GPU Infrastructure**](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/Guide) | Multi-GPU, NVLink, NCCL, AMD ROCm/HIP, MI300X | Inference |
+| [**A — GPU Infrastructure**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/Guide) | Multi-GPU, NVLink, NCCL, AMD ROCm/HIP, MI300X | Inference |
 | [**B — HPC (CUDA-X)**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/02-方向B-高性能计算/Guide) | cuBLAS, cuDNN, NVSHMEM, 40+ libraries | Inference |
 | [**C — Edge AI**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/Guide) | Holoscan, [Edge LLM Inference Internals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01), [**Qwen Inference Optimization (6-lecture series)**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/README), AI-driven wireless | Inference |
 | [**D — Robotics**](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/04-方向D-机器人/Guide) | ROS 2, Nav2, motion planning, swarm | Hardware + Inference |

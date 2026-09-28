@@ -890,7 +890,7 @@ Pass criterion: the report can be reproduced by another engineer from public con
 交叉引用：
 
 * [第 2 部分 → 第 01 讲 — 70B 级稠密模型的解剖](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/02-Hopper稠密计算/Lecture-01) — 用于稠密与 MoE 的直接对比
-* [阶段 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 04 MoE Fundamentals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/06-长上下文MoE基础训练/04-MoE-Fundamentals) — MoE 的训练侧视角
+* [阶段 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 04 MoE Fundamentals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/07-长上下文MoE基础训练/04-MoE-Fundamentals) — MoE 的训练侧视角
 
 ---
 
@@ -925,7 +925,7 @@ Pass criterion: the report can be reproduced by another engineer from public con
 Cross-references:
 
 * [Part 2 → Lecture 01 — Anatomy of a 70B-class dense model](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/02-Hopper稠密计算/Lecture-01) — for direct dense-vs-MoE comparison
-* [Phase 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 04 MoE Fundamentals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/06-长上下文MoE基础训练/04-MoE-Fundamentals) — training-side perspective on MoE
+* [Phase 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 04 MoE Fundamentals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/07-长上下文MoE基础训练/04-MoE-Fundamentals) — training-side perspective on MoE
 
 ---
 

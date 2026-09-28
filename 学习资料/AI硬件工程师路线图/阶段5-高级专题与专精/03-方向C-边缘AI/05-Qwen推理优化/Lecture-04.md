@@ -729,7 +729,7 @@ Brief because the user didn't ask, but it changes the playbook:
 * **[YaRN 论文](https://arxiv.org/abs/2309.00071):** 上下文扩展的数学推导。
 * **[Qwen2.5 技术报告](https://arxiv.org/abs/2412.15115):** 原始发布版，含配置与 benchmark。
 * **[vLLM-ROCm](https://github.com/ROCm/vllm):** AMD 路径。
-* **[阶段 5 — GPU 基础设施 — NCCL 深度解析](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/07-NCCL深度探索/README):** 关于集合通信层的配套深度解析。
+* **[阶段 5 — GPU 基础设施 — NCCL 深度解析](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/08-NCCL深度探索/README):** 关于集合通信层的配套深度解析。
 
 
 <details>
@@ -760,7 +760,7 @@ Brief because the user didn't ask, but it changes the playbook:
 * **[YaRN paper](https://arxiv.org/abs/2309.00071):** The context-extension math.
 * **[Qwen2.5 technical report](https://arxiv.org/abs/2412.15115):** Original release with config and benchmarks.
 * **[vLLM-ROCm](https://github.com/ROCm/vllm):** AMD path.
-* **[Phase 5 — GPU Infrastructure — NCCL Deep Dive](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/07-NCCL深度探索/README):** The companion deep dive on the collective layer.
+* **[Phase 5 — GPU Infrastructure — NCCL Deep Dive](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/08-NCCL深度探索/README):** The companion deep dive on the collective layer.
 
 </details>
 

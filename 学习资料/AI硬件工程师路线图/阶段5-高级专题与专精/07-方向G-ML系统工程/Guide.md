@@ -26,7 +26,7 @@ dateCreated: 2026-09-27T12:30:13.000Z
 
 **岗位目标：** ML Systems Engineer · AI Infrastructure Engineer · Inference Systems Engineer · Training Systems Engineer · GPU Runtime Engineer · Edge AI Runtime Engineer
 
-**前置要求：** [操作系统](/学习资料/AI硬件工程师路线图/阶段1-基础知识/03-操作系统/Guide)、[C++ 与并行计算](/学习资料/AI硬件工程师路线图/阶段1-基础知识/04-C++与并行计算/Guide)、[神经网络](/学习资料/AI硬件工程师路线图/阶段3-人工智能/01-神经网络/Guide)、[深度学习框架](/学习资料/AI硬件工程师路线图/阶段3-人工智能/02-深度学习框架/Guide)、一条阶段 4 部署路径，以及足以运行和调试 GPU benchmark 的 [GPU 基础设施](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/Guide)。
+**前置要求：** [操作系统](/学习资料/AI硬件工程师路线图/阶段1-基础知识/03-操作系统/Guide)、[C++ 与并行计算](/学习资料/AI硬件工程师路线图/阶段1-基础知识/04-C++与并行计算/Guide)、[神经网络](/学习资料/AI硬件工程师路线图/阶段3-人工智能/01-神经网络/Guide)、[深度学习框架](/学习资料/AI硬件工程师路线图/阶段3-人工智能/02-深度学习框架/Guide)、一条阶段 4 部署路径，以及足以运行和调试 GPU benchmark 的 [GPU 基础设施](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/Guide)。
 
 **后续内容：** 一个公开的系统产物：推理 runtime、分布式训练 runbook、CUDA/Triton kernel benchmark 套件、调度器原型、编译器/runtime demo，或带可复现测量的边缘 MLSys 案例研究。
 
@@ -105,7 +105,7 @@ MLSys 这门学科所做的，就是找出这些约束、测量它们，并改�
 
 **Role targets:** ML Systems Engineer · AI Infrastructure Engineer · Inference Systems Engineer · Training Systems Engineer · GPU Runtime Engineer · Edge AI Runtime Engineer
 
-**Prerequisites:** [Operating Systems](/学习资料/AI硬件工程师路线图/阶段1-基础知识/03-操作系统/Guide), [C++ and Parallel Computing](/学习资料/AI硬件工程师路线图/阶段1-基础知识/04-C++与并行计算/Guide), [Neural Networks](/学习资料/AI硬件工程师路线图/阶段3-人工智能/01-神经网络/Guide), [Deep Learning Frameworks](/学习资料/AI硬件工程师路线图/阶段3-人工智能/02-深度学习框架/Guide), one Phase 4 deployment path, and enough [GPU Infrastructure](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/Guide) to run and debug GPU benchmarks.
+**Prerequisites:** [Operating Systems](/学习资料/AI硬件工程师路线图/阶段1-基础知识/03-操作系统/Guide), [C++ and Parallel Computing](/学习资料/AI硬件工程师路线图/阶段1-基础知识/04-C++与并行计算/Guide), [Neural Networks](/学习资料/AI硬件工程师路线图/阶段3-人工智能/01-神经网络/Guide), [Deep Learning Frameworks](/学习资料/AI硬件工程师路线图/阶段3-人工智能/02-深度学习框架/Guide), one Phase 4 deployment path, and enough [GPU Infrastructure](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/Guide) to run and debug GPU benchmarks.
 
 **What comes after:** a public systems artifact: inference runtime, distributed training runbook, CUDA/Triton kernel benchmark suite, scheduler prototype, compiler/runtime demo, or edge MLSys case study with reproducible measurements.
 

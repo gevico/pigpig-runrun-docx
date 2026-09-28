@@ -38,7 +38,7 @@ dateCreated: 2026-09-27T12:30:08.000Z
 
 ## 如何使用本方向
 
-1. **先完成 [阶段 5A — GPU 基础设施](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/Guide)** — 涵盖 NVIDIA/AMD GPU 集群、多 GPU 组网、Slurm/K8s、分布式训练。
+1. **先完成 [阶段 5A — GPU 基础设施](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/Guide)** — 涵盖 NVIDIA/AMD GPU 集群、多 GPU 组网、Slurm/K8s、分布式训练。
 2. **然后 [CUDA-X Libraries](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/02-方向B-高性能计算/01-CUDA-X库/Guide)** — 每一个 GPU 加速库的完整参考。按类别（数学、DL、数据、视觉、通信）组织，配有基于角色的学习路径与动手项目。
 
 ## 与其他方向的关系
@@ -85,7 +85,7 @@ High Performance Computing goes beyond single-GPU programming and cluster setup 
 
 **How to use this track**
 
-1. **Complete [Phase 5A — GPU Infrastructure](/学习资料/AI硬件工程师路线图/阶段5-高级主题与专项/01-路线A-GPU基础设施/Guide)** first — covers Nvidia/AMD GPU clusters, multi-GPU networking, Slurm/K8s, distributed training.
+1. **Complete [Phase 5A — GPU Infrastructure](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/Guide)** first — covers Nvidia/AMD GPU clusters, multi-GPU networking, Slurm/K8s, distributed training.
 2. **Then [CUDA-X Libraries](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/02-方向B-高性能计算/01-CUDA-X库/Guide)** — the comprehensive reference for every GPU-accelerated library. Organized by category (math, DL, data, vision, communication) with role-based learning paths and hands-on projects.
 
 **Relationship to other tracks**

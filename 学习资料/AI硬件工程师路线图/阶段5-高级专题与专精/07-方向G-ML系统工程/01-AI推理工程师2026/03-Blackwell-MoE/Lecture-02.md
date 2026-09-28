@@ -599,7 +599,7 @@ Pass criterion: you see ~1.8× FP4 over FP8 and ~3-4× FP4 over BF16 on the FFN 
 
 交叉引用：
 
-* [Phase 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/01-Blackwell-B200-Qwen推理/README) — Blackwell + Qwen 课程，讲得更深入
+* [Phase 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/02-Blackwell-B200-Qwen推理/README) — Blackwell + Qwen 课程，讲得更深入
 * [Part 1 → Lecture 03 — roofline（性能上界模型）](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/01-基础/Lecture-03) — 用于 Blackwell 的 ridge point
 
 ---
@@ -631,7 +631,7 @@ Blackwell SKU 已锁定：B200 SXM (192 GB)、B300 SXM (288 GB)、GB200 superchi
 
 Cross-references:
 
-* [Phase 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/01-Blackwell-B200-Qwen推理/README) — Blackwell + Qwen courses going deeper
+* [Phase 5 → GPU Infrastructure → Blackwell-B200-Qwen-Inference](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/02-Blackwell-B200-Qwen推理/README) — Blackwell + Qwen courses going deeper
 * [Part 1 → Lecture 03 — Roofline](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/01-基础/Lecture-03) — for Blackwell ridge points
 
 ---

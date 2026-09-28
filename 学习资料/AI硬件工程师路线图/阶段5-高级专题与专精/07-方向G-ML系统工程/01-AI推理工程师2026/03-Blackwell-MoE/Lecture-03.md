@@ -674,7 +674,7 @@ Pass criterion: you can defend EP=4 vs EP=8 for a chat product at concurrency 64
 Cross-references：
 
 * [Part 2 → Lecture 04 — Tensor parallelism](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/02-Hopper稠密计算/Lecture-04) — 用于 TP 与 EP 的对比
-* [Phase 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 05 MoE Systems & Infrastructure](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/06-长上下文MoE基础训练/05-MoE-Systems-Infrastructure)
+* [Phase 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 05 MoE Systems & Infrastructure](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/07-长上下文MoE基础训练/05-MoE-Systems-Infrastructure)
 
 ---
 
@@ -708,7 +708,7 @@ NCCL 2.30+、DeepEP 最新版、SGLang 0.5+ MoE 路径、vLLM 0.22+ V1 MoE 支�
 Cross-references:
 
 * [Part 2 → Lecture 04 — Tensor parallelism](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/02-Hopper稠密计算/Lecture-04) — for TP-vs-EP comparison
-* [Phase 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 05 MoE Systems & Infrastructure](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/06-长上下文MoE基础训练/05-MoE-Systems-Infrastructure)
+* [Phase 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 05 MoE Systems & Infrastructure](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/07-长上下文MoE基础训练/05-MoE-Systems-Infrastructure)
 
 ---
 

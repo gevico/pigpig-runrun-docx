@@ -25,7 +25,7 @@ dateCreated: 2026-09-27T12:30:02.000Z
 
 **目标角色：** HLS 工程师 · FPGA 加速工程师 · ML 编译器/硬件协同设计工程师 · AI 加速器原型工程师
 
-**前置要求：** [Xilinx FPGA 开发](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)、[高级 FPGA 设计](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/03-高级FPGA设计/Guide)、C/C++，以及基本性能剖析。
+**前置要求：** [Xilinx FPGA 开发](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)、[高级 FPGA 设计](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/03-高级FPGA设计/Guide)、C/C++，以及基本性能剖析。
 
 **后续内容：** [Runtime 与驱动开发](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/05-运行时与驱动开发/Guide)、[ML 编译器与图优化](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)，以及 [AI 芯片设计](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/06-方向F-AI芯片设计/Guide)。
 
@@ -204,7 +204,7 @@ What hardware did this C/C++ imply, and is that hardware better than the CPU/GPU
 
 **Role targets:** HLS Engineer · FPGA Acceleration Engineer · ML Compiler/Hardware Co-design Engineer · AI Accelerator Prototyping Engineer
 
-**Prerequisites:** [Xilinx FPGA Development](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide), [Advanced FPGA Design](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/03-高级FPGA设计/Guide), C/C++, and basic performance profiling.
+**Prerequisites:** [Xilinx FPGA Development](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide), [Advanced FPGA Design](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/03-高级FPGA设计/Guide), C/C++, and basic performance profiling.
 
 **What comes after:** [Runtime and Driver Development](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/05-运行时与驱动开发/Guide), [ML Compiler and Graph Optimization](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide), and [AI Chip Design](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/06-方向F-AI芯片设计/Guide).
 

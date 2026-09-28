@@ -548,7 +548,7 @@ The hardware engineer's job is to bring the candidate inside the budget at the l
 | 你有了 fp16 vs INT4 的 BFCL 式类别表 | 反馈回 [Qwen 推理优化，第 2 讲](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-02) 以挑选满足你预算的量化方案 |
 | 你有了 BFCL 式 harness | 同样的形态可为具身策略的 [VLA 动作精度一致性 harness](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/04-方向D-机器人/05-VLA优化与动作对齐测试/Lecture-02) 把关 |
 | 你需要把 harness 接进 CI | 见 [MLSys Stage 0 测量规范](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/Guide) —— 同样的契约，不同的指标 |
-| 你需要长上下文多轮精度一致性 | 与 [长上下文 MoE 基础训练](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/06-长上下文MoE基础训练/07-Long-Context-Evaluation) 的评估模式结合 |
+| 你需要长上下文多轮精度一致性 | 与 [长上下文 MoE 基础训练](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/07-长上下文MoE基础训练/07-Long-Context-Evaluation) 的评估模式结合 |
 
 ---
 
@@ -590,7 +590,7 @@ Pass criterion for the lab: another engineer can clone your repo, run `python ga
 | You have a BFCL-style category table for fp16 vs INT4 | feed back into [Qwen Inference Optimization, Lecture 2](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-02) to pick the quantization that meets your budget |
 | You have a BFCL-style harness | the same shape gates the [VLA action-parity harness](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/04-方向D-机器人/05-VLA优化与动作对齐测试/Lecture-02) for embodied policies |
 | You need to wire the harness into CI | see the [MLSys Stage 0 measurement discipline](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/Guide) — same contract, different metrics |
-| You need long-context multi-turn parity | combine with the [Long-Context MoE Foundation Training](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/06-长上下文MoE基础训练/07-Long-Context-Evaluation) evaluation patterns |
+| You need long-context multi-turn parity | combine with the [Long-Context MoE Foundation Training](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/07-长上下文MoE基础训练/07-Long-Context-Evaluation) evaluation patterns |
 
 ---
 

@@ -10,7 +10,7 @@ dateCreated: 2026-09-27T12:30:02.000Z
 
 # 项目：FPGA 上的 1080p → 4K 无线视频
 
-**上级：** [阶段 4 方向 A — Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)
+**上级：** [阶段 4 方向 A — Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)
 
 **涉及层级：** L3（runtime/驱动）、L4（固件）、L5（硬件架构）、L6（RTL/HLS）
 
@@ -93,7 +93,7 @@ dateCreated: 2026-09-27T12:30:02.000Z
 
 **Project: 1080p → 4K Wireless Video on FPGA**
 
-**Parent:** [Phase 4 Track A — Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)
+**Parent:** [Phase 4 Track A — Xilinx FPGA](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide)
 
 **Layers touched:** L3 (runtime/driver), L4 (firmware), L5 (hardware architecture), L6 (RTL/HLS)
 

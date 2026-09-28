@@ -637,7 +637,7 @@ The systems engineering doesn't fundamentally change. The constants in the roofl
 * **[StreamingLLM —— attention sinks](https://arxiv.org/abs/2309.17453)：** 长时间运行会话的 KV 管理。
 * **[阶段 5 —— Qwen 推理优化系列](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/README)：** 本系列的其他讲次。
 * **[阶段 5 —— 边缘 LLM 推理内幕](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01)：** 本系列所依托的 roofline（性能上界模型）基础讲。
-* **[阶段 5 —— NCCL 深入剖析](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/07-NCCL深度探索/README)：** 72B 路径的多 GPU 集合通信层。
+* **[阶段 5 —— NCCL 深入剖析](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/08-NCCL深度探索/README)：** 72B 路径的多 GPU 集合通信层。
 
 
 <details>
@@ -684,7 +684,7 @@ The systems engineering doesn't fundamentally change. The constants in the roofl
 * **[StreamingLLM — attention sinks](https://arxiv.org/abs/2309.17453):** Long-running session KV management.
 * **[Phase 5 — Qwen Inference Optimization series](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/README):** Other lectures in this series.
 * **[Phase 5 — Edge LLM Inference Internals](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/03-边缘LLM推理内部机制/Lecture-01):** The foundational roofline lecture this series builds on.
-* **[Phase 5 — NCCL Deep Dive](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/07-NCCL深度探索/README):** Multi-GPU collective layer for the 72B path.
+* **[Phase 5 — NCCL Deep Dive](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/08-NCCL深度探索/README):** Multi-GPU collective layer for the 72B path.
 
 </details>
 

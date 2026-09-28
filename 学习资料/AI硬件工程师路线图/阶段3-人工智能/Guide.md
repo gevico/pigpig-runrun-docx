@@ -341,7 +341,7 @@ The exact policy depends on the product. Some systems block harmful or illegal r
 
 ## 下一步
 
-→ [**阶段 4 方向 A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) · [**阶段 4 方向 B — Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) · [**阶段 4 方向 C — ML Compiler**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
+→ [**阶段 4 方向 A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) · [**阶段 4 方向 B — Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) · [**阶段 4 方向 C — ML Compiler**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
 
 
 <details>
@@ -380,7 +380,7 @@ You are ready for Phase 4 when you can:
 
 **Next**
 
-→ [**Phase 4 Track A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) · [**Phase 4 Track B — Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) · [**Phase 4 Track C — ML Compiler**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
+→ [**Phase 4 Track A — Xilinx FPGA**](/学习资料/AI硬件工程师路线图/阶段4-路线A-Xilinx-FPGA/01-Xilinx-FPGA开发/Guide) · [**Phase 4 Track B — Jetson**](/学习资料/AI硬件工程师路线图/阶段4-路线B-Nvidia-Jetson/01-Nvidia-Jetson平台/Guide) · [**Phase 4 Track C — ML Compiler**](/学习资料/AI硬件工程师路线图/阶段4-路线C-深度学习推理优化/Guide)
 
 </details>
 

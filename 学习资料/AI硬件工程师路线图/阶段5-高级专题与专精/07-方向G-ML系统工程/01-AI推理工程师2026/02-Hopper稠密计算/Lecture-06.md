@@ -743,7 +743,7 @@ Expected:      max concurrent users at 128K context; per-GPU throughput lower th
 交叉引用：
 
 * [第 1 部分 → 第 02 讲 — KV cache 数学](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/01-基础/Lecture-02)
-* [阶段 5 → GPU 基础设施 → Long-Context-MoE-Foundation-Training → 07 长上下文评估](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/06-长上下文MoE基础训练/07-Long-Context-Evaluation)
+* [阶段 5 → GPU 基础设施 → Long-Context-MoE-Foundation-Training → 07 长上下文评估](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/07-长上下文MoE基础训练/07-Long-Context-Evaluation)
 
 ---
 
@@ -806,7 +806,7 @@ Pass criterion: you can hand the report to another engineer and they can pick a 
 Cross-references:
 
 * [Part 1 → Lecture 02 — KV cache math](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/01-基础/Lecture-02)
-* [Phase 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 07 Long-Context Evaluation](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/01-Nvidia-GPU/01-HPC环境搭建/06-长上下文MoE基础训练/07-Long-Context-Evaluation)
+* [Phase 5 → GPU Infrastructure → Long-Context-MoE-Foundation-Training → 07 Long-Context Evaluation](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/01-方向A-GPU基础设施/04-Nvidia-GPU/01-HPC环境搭建/07-长上下文MoE基础训练/07-Long-Context-Evaluation)
 
 ---
 
