@@ -8,6 +8,7 @@
 
 ## 目录
 
-1. [AI 硬件工程师路线图](/学习资料/AI硬件工程师路线图/README) — 上游 [`ai-hpc/ai-hardware-engineer-roadmap`](https://github.com/ai-hpc/ai-hardware-engineer-roadmap)（MIT License）（已经翻译并搬运了 60%）
-2. 香山 lab
-3. 一生一芯
+1. [AI 硬件工程师路线图](/学习资料/AI硬件工程师路线图/README) — 上游 [ai-hpc/ai-hardware-engineer-roadmap](https://github.com/ai-hpc/ai-hardware-engineer-roadmap)（MIT License，已翻译并搬运 60%）
+2. [香山 lab](https://github.com/OpenXiangShan/XiangShanLab)
+3. [一生一芯](https://ysyx.oscc.cc/)
+4. [gem5 官方文档](https://www.gem5.org/documentation/)（含教程）
