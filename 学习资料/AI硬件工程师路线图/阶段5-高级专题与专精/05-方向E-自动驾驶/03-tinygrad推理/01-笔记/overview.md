@@ -1,11 +1,11 @@
 ---
-title: tinygrad: 极简深度学习框架
-description: tinygrad: 极简深度学习框架
+title: 'tinygrad: 极简深度学习框架'
+description: 'tinygrad: 极简深度学习框架'
 published: true
-date: 2026-09-30T10:40:02.000Z
-tags: 学习资料
+date: 2026-09-27T05:38:39.000Z
+tags: '学习资料'
 editor: markdown
-dateCreated: 2026-09-30T10:40:02.000Z
+dateCreated: 2026-09-27T05:38:39.000Z
 ---
 
 # tinygrad: 极简深度学习框架

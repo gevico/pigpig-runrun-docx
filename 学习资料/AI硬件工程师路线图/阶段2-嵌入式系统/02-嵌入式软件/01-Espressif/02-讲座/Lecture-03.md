@@ -1,11 +1,11 @@
 ---
-title: Lecture 3 - What is really under the Arduino layer: ESP-IDF, FreeRTOS, and core architecture
-description: Lecture 3 - What is really under the Arduino layer: ESP-IDF, FreeRTOS, and core architecture
+title: 'Lecture 3 - What is really under the Arduino layer: ESP-IDF, FreeRTOS, and core architecture'
+description: 'Lecture 3 - What is really under the Arduino layer: ESP-IDF, FreeRTOS, and core architecture'
 published: true
-date: 2026-09-30T10:39:47.000Z
-tags: 学习资料
+date: 2026-09-27T05:38:39.000Z
+tags: '学习资料'
 editor: markdown
-dateCreated: 2026-09-30T10:39:47.000Z
+dateCreated: 2026-09-27T05:38:39.000Z
 ---
 
 # Lecture 3 - What is really under the Arduino layer: ESP-IDF, FreeRTOS, and core architecture

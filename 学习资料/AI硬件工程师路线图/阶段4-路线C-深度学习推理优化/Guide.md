@@ -1,11 +1,11 @@
 ---
-title: 阶段 4 — 方向 C: DL 推理优化 (6–12 个月)
-description: 阶段 4 — 方向 C: DL 推理优化 (6–12 个月)
+title: '阶段 4 — 方向 C: DL 推理优化 (6–12 个月)'
+description: '阶段 4 — 方向 C: DL 推理优化 (6–12 个月)'
 published: true
-date: 2026-09-30T10:39:57.000Z
-tags: 学习资料
+date: 2026-09-27T05:38:39.000Z
+tags: '学习资料'
 editor: markdown
-dateCreated: 2026-09-30T10:39:57.000Z
+dateCreated: 2026-09-27T05:38:39.000Z
 ---
 
 # 阶段 4 — 方向 C: DL 推理优化 (6–12 个月)

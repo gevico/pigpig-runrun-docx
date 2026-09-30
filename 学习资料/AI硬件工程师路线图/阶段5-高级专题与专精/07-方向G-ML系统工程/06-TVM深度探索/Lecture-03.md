@@ -1,11 +1,11 @@
 ---
-title: Lecture 03 - Auto-Tuning: AutoTVM → Ansor → MetaSchedule, the Learning-Based Compiler
-description: Lecture 03 - Auto-Tuning: AutoTVM → Ansor → MetaSchedule, the Learning-Based Compiler
+title: 'Lecture 03 - Auto-Tuning: AutoTVM → Ansor → MetaSchedule, the Learning-Based Compiler'
+description: 'Lecture 03 - Auto-Tuning: AutoTVM → Ansor → MetaSchedule, the Learning-Based Compiler'
 published: true
-date: 2026-09-30T10:40:07.000Z
-tags: 学习资料
+date: 2026-09-27T05:38:39.000Z
+tags: '学习资料'
 editor: markdown
-dateCreated: 2026-09-30T10:40:07.000Z
+dateCreated: 2026-09-27T05:38:39.000Z
 ---
 
 # Lecture 03 - Auto-Tuning: AutoTVM → Ansor → MetaSchedule, the Learning-Based Compiler

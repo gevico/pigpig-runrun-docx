@@ -1,11 +1,11 @@
 ---
-title: Lecture 1: 面向实时控制的 VLA 优化
-description: Lecture 1: 面向实时控制的 VLA 优化
+title: 'Lecture 1: 面向实时控制的 VLA 优化'
+description: 'Lecture 1: 面向实时控制的 VLA 优化'
 published: true
-date: 2026-09-30T10:40:02.000Z
-tags: 学习资料
+date: 2026-09-27T05:38:39.000Z
+tags: '学习资料'
 editor: markdown
-dateCreated: 2026-09-30T10:40:02.000Z
+dateCreated: 2026-09-27T05:38:39.000Z
 ---
 
 # Lecture 1: 面向实时控制的 VLA 优化

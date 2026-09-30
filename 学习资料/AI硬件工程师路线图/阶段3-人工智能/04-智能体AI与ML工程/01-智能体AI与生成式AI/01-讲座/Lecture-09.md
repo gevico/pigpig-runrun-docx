@@ -1,11 +1,11 @@
 ---
-title: Lecture 09 - Structured Tools Beat Computer Use: Interface Hierarchy for Agents
-description: Lecture 09 - Structured Tools Beat Computer Use: Interface Hierarchy for Agents
+title: 'Lecture 09 - Structured Tools Beat Computer Use: Interface Hierarchy for Agents'
+description: 'Lecture 09 - Structured Tools Beat Computer Use: Interface Hierarchy for Agents'
 published: true
-date: 2026-09-30T10:39:51.000Z
-tags: 学习资料
+date: 2026-09-27T05:38:39.000Z
+tags: '学习资料'
 editor: markdown
-dateCreated: 2026-09-30T10:39:51.000Z
+dateCreated: 2026-09-27T05:38:39.000Z
 ---
 
 # Lecture 09 - Structured Tools Beat Computer Use: Interface Hierarchy for Agents
