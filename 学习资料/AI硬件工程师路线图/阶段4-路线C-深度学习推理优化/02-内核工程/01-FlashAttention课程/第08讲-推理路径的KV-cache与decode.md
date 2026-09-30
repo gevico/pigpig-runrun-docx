@@ -2,10 +2,10 @@
 title: 第 8 讲 —— 推理路径：KV Cache、Decode（逐 token 生成阶段）、RoPE、GQA、分页 KV
 description: 第 8 讲 —— 推理路径：KV Cache、Decode（逐 token 生成阶段）、RoPE、GQA、分页 KV
 published: true
-date: 2026-09-27T12:30:05.000Z
+date: 2026-09-30T10:39:57.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:05.000Z
+dateCreated: 2026-09-30T10:39:57.000Z
 ---
 
 # 第 8 讲 —— 推理路径：KV Cache、Decode（逐 token 生成阶段）、RoPE、GQA、分页 KV

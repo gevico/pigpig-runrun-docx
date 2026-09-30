@@ -2,10 +2,10 @@
 title: 07 — 万亿参数规模下的 NCCL
 description: 07 — 万亿参数规模下的 NCCL
 published: true
-date: 2026-09-27T12:30:08.000Z
+date: 2026-09-30T10:40:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:08.000Z
+dateCreated: 2026-09-30T10:40:00.000Z
 ---
 
 # 07 — 万亿参数规模下的 NCCL

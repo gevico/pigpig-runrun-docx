@@ -2,10 +2,10 @@
 title: 第 1 部分 · 第 02 讲 — Transformer 执行：从 token 到比特
 description: 第 1 部分 · 第 02 讲 — Transformer 执行：从 token 到比特
 published: true
-date: 2026-09-27T12:30:10.000Z
+date: 2026-09-30T10:40:03.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:10.000Z
+dateCreated: 2026-09-30T10:40:03.000Z
 ---
 
 # 第 1 部分 · 第 02 讲 — Transformer 执行：从 token 到比特

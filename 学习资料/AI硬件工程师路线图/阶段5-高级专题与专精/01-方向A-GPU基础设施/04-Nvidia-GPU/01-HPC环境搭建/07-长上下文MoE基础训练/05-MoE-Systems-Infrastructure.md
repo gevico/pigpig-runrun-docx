@@ -2,10 +2,10 @@
 title: 模块 05 — MoE（混合专家模型）系统与基础设施
 description: 模块 05 — MoE（混合专家模型）系统与基础设施
 published: true
-date: 2026-09-27T12:30:08.000Z
+date: 2026-09-30T10:40:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:08.000Z
+dateCreated: 2026-09-30T10:40:00.000Z
 ---
 
 # 模块 05 — MoE（混合专家模型）系统与基础设施

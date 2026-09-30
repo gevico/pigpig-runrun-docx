@@ -2,10 +2,10 @@
 title: 多目标跟踪：匈牙利算法 + 卡尔曼滤波
 description: 多目标跟踪：匈牙利算法 + 卡尔曼滤波
 published: true
-date: 2026-09-27T12:30:01.000Z
+date: 2026-09-30T10:39:50.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:01.000Z
+dateCreated: 2026-09-30T10:39:50.000Z
 ---
 
 # 多目标跟踪：匈牙利算法 + 卡尔曼滤波

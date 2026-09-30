@@ -2,10 +2,10 @@
 title: Lauterbach TRACE32® Debug（自动驾驶 — 高级工具链）
 description: Lauterbach TRACE32® Debug（自动驾驶 — 高级工具链）
 published: true
-date: 2026-09-27T12:30:10.000Z
+date: 2026-09-30T10:40:03.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:10.000Z
+dateCreated: 2026-09-30T10:40:03.000Z
 ---
 
 # Lauterbach TRACE32® Debug（自动驾驶 — 高级工具链）

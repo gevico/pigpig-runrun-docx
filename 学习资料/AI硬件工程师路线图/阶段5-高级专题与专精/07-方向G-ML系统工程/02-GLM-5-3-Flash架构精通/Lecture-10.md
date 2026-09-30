@@ -2,10 +2,10 @@
 title: Module 10 — Kernel Roofline（性能上界模型）与推理服务决策
 description: Module 10 — Kernel Roofline（性能上界模型）与推理服务决策
 published: true
-date: 2026-09-27T12:30:13.000Z
+date: 2026-09-30T10:40:05.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:13.000Z
+dateCreated: 2026-09-30T10:40:05.000Z
 ---
 
 # Module 10 — Kernel Roofline（性能上界模型）与推理服务决策

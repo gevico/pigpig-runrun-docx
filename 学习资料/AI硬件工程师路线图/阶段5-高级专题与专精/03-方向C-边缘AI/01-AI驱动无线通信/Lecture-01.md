@@ -2,10 +2,10 @@
 title: 第 1 讲：AI 驱动的无线通信 —— 神经 PHY、智能无线电与可学习的频谱
 description: 第 1 讲：AI 驱动的无线通信 —— 神经 PHY、智能无线电与可学习的频谱
 published: true
-date: 2026-09-27T12:30:08.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:08.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # 第 1 讲：AI 驱动的无线通信 —— 神经 PHY、智能无线电与可学习的频谱

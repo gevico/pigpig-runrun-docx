@@ -2,10 +2,10 @@
 title: Part 3 · Lecture 05 —— 生产环境 MoE 推理服务：MTP 推测、受限 decode、成本模型
 description: Part 3 · Lecture 05 —— 生产环境 MoE 推理服务：MTP 推测、受限 decode、成本模型
 published: true
-date: 2026-09-27T12:30:11.000Z
+date: 2026-09-30T10:40:04.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:11.000Z
+dateCreated: 2026-09-30T10:40:04.000Z
 ---
 
 # Part 3 · Lecture 05 —— 生产环境 MoE 推理服务：MTP 推测、受限 decode、成本模型
@@ -288,27 +288,27 @@ Structured output (tool calls, JSON, code) requires the model to emit **specific
 
 ### 3.1 XGrammar vs Outlines
 
-| 库 | 方案 | 所在位置 |
+| 库 | 做法 | 所在位置 |
 |---------|----------|----------------|
-| XGrammar | 把 grammar 编译成 FSM，在 logit 层施加 | SGLang（原生）、vLLM（集成） |
-| Outlines | regex / Pydantic，复杂 grammar 下更慢 | vLLM、llama.cpp |
+| XGrammar | 把语法编译成 FSM，在 logit 层应用 | SGLang（原生）、vLLM（集成） |
+| Outlines | 正则 / Pydantic，对复杂语法较慢 | vLLM、llama.cpp |
 
-**XGrammar 是 2026 年年中最快的生产级选项**。SGLang 原生集成它。
+**XGrammar 是 2026 年年中最快的生产级选项**。SGLang 原生自带。
 
 ### 3.2 MoE FP4 下的 BFCL 精度一致性
 
-[BFCL 评估课程](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/02-智能体工具调度评估BFCL/Lecture-01)框架对 MoE 推理的适用性与对稠密模型完全相同。在 MoE FP4 下，工具调用准确率就是决定 FP4 能否出货的精度一致性关口。
+[BFCL 评估讲座](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/02-智能体工具调度评估BFCL/Lecture-01)框架对 MoE 推理的适用方式与对 dense 完全一致。在 MoE FP4 下，工具调用准确率就是决定 FP4 能否发布的精度一致性门槛。
 
 对于 DeepSeek V3.1：
 
-| 精度 | BFCL（简单） | BFCL（多轮） | Δ vs BF16 |
+| 精度 | BFCL（简单） | BFCL（多轮） | 相对 BF16 的 Δ |
 |-----------|---------------|-------------------|-----------|
 | BF16 参考 | 88.5 | 79.2 | — |
 | FP8 | 88.1 | 78.7 | -0.4 / -0.5 |
 | FP4 | 87.0 | 77.4 | -1.5 / -1.8 |
-| FP4 + grammar 约束解码 | 88.2 | 78.9 | -0.3 / -0.3 |
+| FP4 + 语法约束解码 | 88.2 | 78.9 | -0.3 / -0.3 |
 
-Grammar 约束解码**能找回结构化输出工作负载上大部分的 FP4 精度一致性损失**。这就是 FP4 下 agent 产品的 recipe。
+语法约束解码**在结构化输出工作负载上挽回了 FP4 大部分精度一致性损失**。这就是 FP4 下 agent 产品的 recipe。
 
 ### 3.3 配置
 
@@ -335,7 +335,7 @@ response = client.chat.completions.create(
 )
 ```
 
-XGrammar 在 logit 采样层生效。对格式良好的 grammar，吞吐代价极小（比无约束解码慢约 5%）。
+XGrammar 在 logit 采样层生效。对于格式良好的语法，吞吐代价极小（比无约束解码慢约 5%）。
 
 ---
 
@@ -382,7 +382,7 @@ Expected $/MTok:    ~$1.1-1.2 raw replica cost (8× B200 @ ~$5.50/GPU-hr)
 
 ## 5. 成本模型
 
-推导 `$/MTok` 是**最终的退出标准交付物**。
+推导 `$/MTok` 是**最终的 exit-criterion 交付物**。
 
 ### 5.1 公式
 
@@ -392,22 +392,22 @@ $/MTok = (replica_cost_per_hour × 10^6) / (3600 × output_tokens_per_sec)
 
 输入：
 
-* **replica_cost_per_hour** — GPU 成本 × 一个副本中的 GPU 数量 + 摊销的基础设施（网络、存储、调度器）。
-* **output_tokens_per_sec** — 在工作负载典型并发度下测得的吞吐。
+* **replica_cost_per_hour** — GPU 成本 × 一个副本中的 GPU 数量 + 摊销的基础设施成本（网络、存储、调度器）。
+* **output_tokens_per_sec** — 工作负载典型并发下实测的吞吐。
 
 ### 5.2 GB200 NVL72 成本模型
 
-2026 年云上价格的近似值：
+2026 年云上价格的大致水平：
 
-| GPU 型号 | $/hour（单 GPU） |
+| GPU 类别 | $/hour（单块 GPU） |
 |-----------|------------------|
 | H100 SXM | ~$2.50 |
 | H200 SXM | ~$3.50 |
 | B200 SXM | ~$5.50 |
 | B300 SXM | ~$7.00 |
-| GB200（每颗 Blackwell GPU） | ~$5.50（与超大规模厂商的 B200 SXM 相近） |
+| GB200（每块 Blackwell GPU） | ~$5.50（在超大规模云上与 B200 SXM 相近） |
 
-DeepSeek V3.1 的 16-GPU 副本：
+DeepSeek V3.1 的 16 卡副本：
 
 * 硬件：16 × $5.50 = $88/hour
 * 网络 + 调度器：~$2/hour
@@ -421,9 +421,9 @@ $/MTok = ($90 × 10^6) / (3600 × 13,000)
        ≈ $1.92 per million tokens
 ```
 
-现在做个对比：DeepSeek V3.1 API 的公布费率（$/MTok) is ~$0.30 输入和 ~$1.10 output (varies by provider) — **below** this raw single-replica estimate. That gap tells you real deployments run at much higher utilization and batching than this example assumes, on top of provider-scale economics (prefix caching, traffic mixing across replicas, committed-hardware pricing). The $1.92 是教学锚点，而非优化后集群的真实水平。
+现在来对比：DeepSeek V3.1 API 公布的价格（$/MTok) is ~$0.30 输入与 ~$1.10 输出，随供应商而异）——**低于**这个单副本裸算的估算值。这一差距说明，真实部署的利用率和批处理规模远高于本例的假设，此外还有供应商规模的经济性（prefix caching、跨副本的流量混合、承诺用量硬件定价）。这个 $1.92 只是教学锚点，并非优化后集群的真实水平。
 
-**推理工程师的辩护要点：** 展示满利用率下的原始 $/MTok。产品团队会再乘上开销。
+**推理工程师的辩护要点：**给出满利用率下的裸 $/MTok。产品团队会再乘上开销。
 
 
 <details>

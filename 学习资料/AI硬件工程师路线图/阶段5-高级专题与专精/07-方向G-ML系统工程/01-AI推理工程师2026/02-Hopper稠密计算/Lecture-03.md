@@ -2,10 +2,10 @@
 title: 第 2 部分 · Lecture 03 —— 量化 Llama 3.3 70B 与 Qwen 2.5 72B
 description: 第 2 部分 · Lecture 03 —— 量化 Llama 3.3 70B 与 Qwen 2.5 72B
 published: true
-date: 2026-09-27T12:30:11.000Z
+date: 2026-09-30T10:40:03.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:11.000Z
+dateCreated: 2026-09-30T10:40:03.000Z
 ---
 
 # 第 2 部分 · Lecture 03 —— 量化 Llama 3.3 70B 与 Qwen 2.5 72B

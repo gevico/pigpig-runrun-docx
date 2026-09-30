@@ -2,10 +2,10 @@
 title: 第 03 讲 — PDL Runtime 栈：Jetson 上的 LiteRT、llama.cpp、MLC-LLM 与 TensorRT-LLM
 description: 第 03 讲 — PDL Runtime 栈：Jetson 上的 LiteRT、llama.cpp、MLC-LLM 与 TensorRT-LLM
 published: true
-date: 2026-09-27T12:30:09.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:09.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # 第 03 讲 — PDL Runtime 栈：Jetson 上的 LiteRT、llama.cpp、MLC-LLM 与 TensorRT-LLM

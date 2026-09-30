@@ -2,10 +2,10 @@
 title: Module 03 —— 长上下文的位置编码
 description: Module 03 —— 长上下文的位置编码
 published: true
-date: 2026-09-27T12:30:08.000Z
+date: 2026-09-30T10:40:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:08.000Z
+dateCreated: 2026-09-30T10:40:00.000Z
 ---
 
 # Module 03 —— 长上下文的位置编码

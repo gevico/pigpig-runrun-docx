@@ -2,10 +2,10 @@
 title: 03 — PyTorch、DeepSpeed 与 Megatron 中的 NCCL
 description: 03 — PyTorch、DeepSpeed 与 Megatron 中的 NCCL
 published: true
-date: 2026-09-27T12:30:08.000Z
+date: 2026-09-30T10:40:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:08.000Z
+dateCreated: 2026-09-30T10:40:00.000Z
 ---
 
 # 03 — PyTorch、DeepSpeed 与 Megatron 中的 NCCL

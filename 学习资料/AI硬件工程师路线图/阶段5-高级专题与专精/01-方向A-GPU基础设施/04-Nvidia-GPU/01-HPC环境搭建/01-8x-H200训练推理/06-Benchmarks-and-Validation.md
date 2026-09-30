@@ -2,10 +2,10 @@
 title: 06 — 8x H200 上的 benchmark 与验证
 description: 06 — 8x H200 上的 benchmark 与验证
 published: true
-date: 2026-09-27T12:30:06.000Z
+date: 2026-09-30T10:39:58.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:06.000Z
+dateCreated: 2026-09-30T10:39:58.000Z
 ---
 
 # 06 — 8x H200 上的 benchmark 与验证

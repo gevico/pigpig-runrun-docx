@@ -2,10 +2,10 @@
 title: 第 02 讲 - TensorIR 与调度空间：把计算定义变成映射到硬件的 kernel
 description: 第 02 讲 - TensorIR 与调度空间：把计算定义变成映射到硬件的 kernel
 published: true
-date: 2026-09-27T12:30:14.000Z
+date: 2026-09-30T10:40:07.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:14.000Z
+dateCreated: 2026-09-30T10:40:07.000Z
 ---
 
 # 第 02 讲 - TensorIR 与调度空间：把计算定义变成映射到硬件的 kernel

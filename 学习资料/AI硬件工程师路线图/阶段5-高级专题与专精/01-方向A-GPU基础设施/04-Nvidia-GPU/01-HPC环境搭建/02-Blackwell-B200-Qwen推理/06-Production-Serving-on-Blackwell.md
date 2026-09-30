@@ -2,10 +2,10 @@
 title: 第 6 章：Qwen 在 Blackwell 上的生产推理服务
 description: 第 6 章：Qwen 在 Blackwell 上的生产推理服务
 published: true
-date: 2026-09-27T12:30:06.000Z
+date: 2026-09-30T10:39:58.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:06.000Z
+dateCreated: 2026-09-30T10:39:58.000Z
 ---
 
 # 第 6 章：Qwen 在 Blackwell 上的生产推理服务

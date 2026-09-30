@@ -2,10 +2,10 @@
 title: 第 2 讲 — 在线 softmax 与数值正确性
 description: 第 2 讲 — 在线 softmax 与数值正确性
 published: true
-date: 2026-09-27T12:30:05.000Z
+date: 2026-09-30T10:39:57.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:05.000Z
+dateCreated: 2026-09-30T10:39:57.000Z
 ---
 
 # 第 2 讲 — 在线 softmax 与数值正确性

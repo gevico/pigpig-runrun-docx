@@ -2,10 +2,10 @@
 title: Orin Nano 8GB — 内存架构深度剖析
 description: Orin Nano 8GB — 内存架构深度剖析
 published: true
-date: 2026-09-27T12:30:02.000Z
+date: 2026-09-30T10:39:55.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:02.000Z
+dateCreated: 2026-09-30T10:39:55.000Z
 ---
 
 # Orin Nano 8GB — 内存架构深度剖析

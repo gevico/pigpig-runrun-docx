@@ -2,10 +2,10 @@
 title: 第 2 讲：把 Qwen3-4B 量化到 Q4 —— AWQ、GPTQ、K-Quants 与每权重字节数的取舍
 description: 第 2 讲：把 Qwen3-4B 量化到 Q4 —— AWQ、GPTQ、K-Quants 与每权重字节数的取舍
 published: true
-date: 2026-09-27T12:30:09.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:09.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # 第 2 讲：把 Qwen3-4B 量化到 Q4 —— AWQ、GPTQ、K-Quants 与每权重字节数的取舍

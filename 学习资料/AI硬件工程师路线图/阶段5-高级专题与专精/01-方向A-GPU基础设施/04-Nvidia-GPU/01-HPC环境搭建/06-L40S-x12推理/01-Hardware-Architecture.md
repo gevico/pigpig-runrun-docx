@@ -2,10 +2,10 @@
 title: 01 — L40S 硬件架构
 description: 01 — L40S 硬件架构
 published: true
-date: 2026-09-27T12:30:07.000Z
+date: 2026-09-30T10:39:59.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:07.000Z
+dateCreated: 2026-09-30T10:39:59.000Z
 ---
 
 # 01 — L40S 硬件架构

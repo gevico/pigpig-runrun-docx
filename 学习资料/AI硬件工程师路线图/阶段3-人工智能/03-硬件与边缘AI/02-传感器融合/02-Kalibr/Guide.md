@@ -2,10 +2,10 @@
 title: Kalibr — 面向自动驾驶汽车的多传感器校准
 description: Kalibr — 面向自动驾驶汽车的多传感器校准
 published: true
-date: 2026-09-27T12:30:00.000Z
+date: 2026-09-30T10:39:50.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:00.000Z
+dateCreated: 2026-09-30T10:39:50.000Z
 ---
 
 # Kalibr — 面向自动驾驶汽车的多传感器校准

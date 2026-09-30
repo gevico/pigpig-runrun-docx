@@ -2,10 +2,10 @@
 title: 使用 Unsloth 微调 Qwen3.5-4B-Base
 description: 使用 Unsloth 微调 Qwen3.5-4B-Base
 published: true
-date: 2026-09-27T12:30:02.000Z
+date: 2026-09-30T10:39:54.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:02.000Z
+dateCreated: 2026-09-30T10:39:54.000Z
 ---
 
 # 使用 Unsloth 微调 Qwen3.5-4B-Base

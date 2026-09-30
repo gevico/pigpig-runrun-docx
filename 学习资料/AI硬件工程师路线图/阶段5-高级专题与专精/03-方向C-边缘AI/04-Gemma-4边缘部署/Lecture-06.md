@@ -2,10 +2,10 @@
 title: Lecture 06——用 Gemma 4 E2B 进行多 token 预测：官方 MTP drafter
 description: Lecture 06——用 Gemma 4 E2B 进行多 token 预测：官方 MTP drafter
 published: true
-date: 2026-09-27T12:30:09.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:09.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # Lecture 06——用 Gemma 4 E2B 进行多 token 预测：官方 MTP drafter

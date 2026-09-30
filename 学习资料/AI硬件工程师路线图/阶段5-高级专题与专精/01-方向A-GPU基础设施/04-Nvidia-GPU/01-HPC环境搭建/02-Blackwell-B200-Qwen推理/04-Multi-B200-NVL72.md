@@ -2,10 +2,10 @@
 title: 第 4 章：Multi-B200、GB200 Superchip 与 NVL72
 description: 第 4 章：Multi-B200、GB200 Superchip 与 NVL72
 published: true
-date: 2026-09-27T12:30:06.000Z
+date: 2026-09-30T10:39:58.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:06.000Z
+dateCreated: 2026-09-30T10:39:58.000Z
 ---
 
 # 第 4 章：Multi-B200、GB200 Superchip 与 NVL72

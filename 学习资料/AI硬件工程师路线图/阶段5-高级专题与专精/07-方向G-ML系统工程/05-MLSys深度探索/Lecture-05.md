@@ -2,10 +2,10 @@
 title: 第 05 讲 - 作为系统产物的 2026 前沿：Qwen3、Nemotron Ultra、MiMo、DeepSeek 与 MoE
 description: 第 05 讲 - 作为系统产物的 2026 前沿：Qwen3、Nemotron Ultra、MiMo、DeepSeek 与 MoE
 published: true
-date: 2026-09-27T12:30:14.000Z
+date: 2026-09-30T10:40:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:14.000Z
+dateCreated: 2026-09-30T10:40:06.000Z
 ---
 
 # 第 05 讲 - 作为系统产物的 2026 前沿：Qwen3、Nemotron Ultra、MiMo、DeepSeek 与 MoE

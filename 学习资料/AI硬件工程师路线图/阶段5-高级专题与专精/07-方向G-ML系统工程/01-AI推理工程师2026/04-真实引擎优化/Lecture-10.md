@@ -2,10 +2,10 @@
 title: Part 4 · 第 10 讲 — Silently Wrong：推理引擎独有的失效模式
 description: Part 4 · 第 10 讲 — Silently Wrong：推理引擎独有的失效模式
 published: true
-date: 2026-09-27T12:30:12.000Z
+date: 2026-09-30T10:40:04.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:12.000Z
+dateCreated: 2026-09-30T10:40:04.000Z
 ---
 
 # Part 4 · 第 10 讲 — Silently Wrong：推理引擎独有的失效模式

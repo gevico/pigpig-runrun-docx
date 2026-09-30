@@ -2,10 +2,10 @@
 title: 第 05 讲 - 交付：runtime、microTVM，以及使用 MLC-LLM 的大语言模型
 description: 第 05 讲 - 交付：runtime、microTVM，以及使用 MLC-LLM 的大语言模型
 published: true
-date: 2026-09-27T12:30:14.000Z
+date: 2026-09-30T10:40:07.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:14.000Z
+dateCreated: 2026-09-30T10:40:07.000Z
 ---
 
 # 第 05 讲 - 交付：runtime、microTVM，以及使用 MLC-LLM 的大语言模型

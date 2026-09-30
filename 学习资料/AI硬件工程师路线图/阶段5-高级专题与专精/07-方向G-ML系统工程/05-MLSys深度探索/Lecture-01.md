@@ -2,43 +2,43 @@
 title: 第 01 讲 - MLSys 作为经济价值层
 description: 第 01 讲 - MLSys 作为经济价值层
 published: true
-date: 2026-09-27T12:30:14.000Z
+date: 2026-09-30T10:40:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:14.000Z
+dateCreated: 2026-09-30T10:40:06.000Z
 ---
 
 # 第 01 讲 - MLSys 作为经济价值层
 
-**合集：** [MLSys Deep Dives](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/05-MLSys深度探索/README) | **上一篇：** [← MLSys Deep Dives index](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/05-MLSys深度探索/README) | **下一篇：** [Lecture 02](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/05-MLSys深度探索/Lecture-02)
+**合集：** [MLSys Deep Dives](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/05-MLSys深度探索/README) | **上一讲：** [← MLSys Deep Dives 索引](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/05-MLSys深度探索/README) | **下一讲：** [第 02 讲](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/05-MLSys深度探索/Lecture-02)
 
 ---
 
-在任何 kernel、编译器或架构之前，有一个数字支配着整门课程：**一个 token 的成本**。MLSys 工程师所做的一切——每个融合 kernel、每种量化方案、每个投机解码 head、每个混合架构 layer——都是为了推动那个数字。所以从这里开始，因为如果你不能把一项技术连接到 token 成本，就无法排序优先级、捍卫，甚至识别真正重要的工作。
+在任何 kernel、编译器或架构之前，有一个数字统御着整个课程：**token 的成本**。MLSys 工程师做的每一件事 —— 每个融合 kernel、每种量化方案、每个投机解码头、每个混合架构 layer —— 都是为了改变这个数字。因此就从这里开始，因为如果无法把一项技术与 token 的成本关联起来，你就无法排定优先级、无法为其辩护，甚至无法识别真正重要的工作。
 
-本讲构建其他六讲所悬挂的脊柱：**为何系统工作现在就是产品**、度量它的指标，以及把 kernel 加速比变成美元数字的那个方程。
+本讲搭建其余六讲所依附的脊柱：**为什么系统工作现在是产品**、衡量它的指标，以及把 kernel 加速比变成美元数字的那一个方程。
 
 ---
 
 ## 学习目标
 
-到本讲结束时，你应该能够：
+学完本讲后，你应该能够：
 
-1. 量化 2023–2026 年推理成本的崩塌，并解释其驱动因素（是系统，不是硅）。
-2. 将 **每 token 价格** 分解为硬件和 MLSys 因素，并说出每个课程主题所拉动的杠杆。
-3. 正确使用指标栈：**tokens/s、TTFT、TPOT、TOK/$、TCO/Mtok、perf/watt**——并说明哪个是用户的、哪个是运营方的。
-4. 读懂 perf/$ benchmark（SemiAnalysis 风格），并解释为何印出来的吞吐数字是教学锚点，而非部署真相。
-5. 根据 GPU 租赁成本和 tokens/s 做一个粗略的 **$/Mtok** 估算，并展示 2× 系统收益如何将其减半。
+1. 量化 2023–2026 年推理成本的暴跌，并解释其驱动因素（是系统，而非硅片）。
+2. 将 **每 token 价格** 拆解为硬件与 MLSys 因素，并指出每个课程主题拉动的是哪根杠杆。
+3. 正确使用指标栈：**tokens/s、首 token 时延、TPOT、TOK/$、TCO/Mtok、perf/watt** —— 并说明哪个属于用户、哪个属于运营方。
+4. 读懂 perf/$ benchmark（SemiAnalysis 风格），并解释为什么印出来的吞吐数字只是教学锚点，而非部署真相。
+5. 根据 GPU 租赁成本与 tokens/s，粗略计算 **$/Mtok**，并说明系统侧 2× 收益如何使其减半。
 
 ---
 
-## 1. 崩塌
+## 1. 暴跌
 
-2022 年 11 月，GPT-3.5 级别的智能成本大约为**每百万 $20 per million tokens**. By late 2024 the same capability was available near **$0.07**——约**两年内便宜 280×**。GPT-4 级别输入从 **$30/Mtok** at launch (March 2023) to **$2.50**（GPT-4o，2024）降至前沿级别质量的 **~$0.10** (nano-class, 2025) — over **99%**. DeepSeek-V3 arrived in December 2024 at roughly **$0.14/Mtok**——约为 GPT-4 发布价格的百分之一。
+2022 年 11 月，GPT-3.5 级智能的成本约为 **每百万 $20 per million tokens**. By late 2024 the same capability was available near **$0.07** —— 约 **两年内便宜 280×**。GPT-4 级输入价格从 **$30/Mtok** at launch (March 2023) to **$2.50**（GPT-4o，2024）降至 **~$0.10**（nano 级，2025）—— 降幅超过 **99%**。DeepSeek-V3 于 2024 年 12 月面世，以约 **$0.14/Mtok** 提供前沿级质量 —— 约为 GPT-4 发布价的百分之一。
 
-Epoch AI 更严谨的版本，将 *能力* 固定：为保持固定 benchmark 分数，价格下降**每年 9× 到 900×，中位数约 50×/年**，而对 2024 年以来最便宜的模型下降更快（中位数约 200×/年）。下降是**不均匀的**——便宜、常见的任务下降最快；困难推理的前沿下降较慢。
+Epoch AI 的严格版本，在固定 *能力* 的前提下：为保持固定的 benchmark 分数，价格每年下降 **9× 到 900×，中位数约 50×/年**，而对 2024 年以来最便宜的模型，下降更快（中位数约 200×/年）。这些下降**并不均衡** —— 廉价、常见的任务下降最快；困难推理的前沿下降较慢。
 
-这里是对你职业重要的部分：**其中几乎没有来自更便宜的硬件。** 一块 H100 并没有便宜 280×。崩塌来自 MLSys——
+以下是与你职业生涯相关的部分：**其中几乎没有一项来自更便宜的硬件。** H100 并没有便宜 280×。这场暴跌来自 MLSys ——
 
 ```text
    FlashAttention & better kernels    → more tokens/s per GPU
@@ -49,11 +49,11 @@ Epoch AI 更严谨的版本，将 *能力* 固定：为保持固定 benchmark �
    compiler fusion & scheduling       → less wasted memory traffic
 ```
 
-其中每一个都是本课程的一讲。崩塌 *就是* 这个领域。当有人问 MLSys 工程师做什么时，诚实的回答是：**智能便宜了 280× 的原因就是我们，而我们还没做完。**
+其中每一项都是本课程的一讲。这场暴跌 *就是* 这个领域。当有人问 MLSys 工程师做什么时，诚实的答案是：**智能之所以便宜 280×，原因在我们，而且我们还没做完。**
 
 ---
 
-## 2. 唯一的方程
+## 2. 那个方程
 
 把推理经济学剥离到核心，得到：
 
@@ -66,19 +66,19 @@ Epoch AI 更严谨的版本，将 *能力* 固定：为保持固定 benchmark �
                               + power + utilization        ← MLSys lives here too
 ```
 
-降低 token 价格有两种方法：让机器更便宜（硬件、电力、融资——大多不是你的工作），或让机器产出**更多 tokens/s**（kernel、编译器、架构、decode（逐 token 生成阶段）算法——*完全*是你的工作）。分母就是 MLSys 工程师的整个世界。
+降低 token 价格有两种方式：让机器更便宜（硬件、电力、融资 —— 大多不是你的职责），或者让机器产出 **更多 tokens/s**（kernel、编译器、架构、decode（逐 token 生成阶段）算法 —— *完全* 是你的职责）。分母就是 MLSys 工程师的整个世界。
 
-这就是课程如此排序的原因。每个 layer 都是做大分母的不同方式：
+这就是课程如此排序的原因。每个 layer 都是增大分母的不同方式：
 
-| Layer | 课程讲次 | 如何做大 tokens/s |
+| layer | 课程讲次 | 如何提升 tokens/s |
 |---|---|---|
-| **Kernel** | 02 | 更快的 GEMM（矩阵-矩阵乘）/attention kernel 用更少时间完成相同工作 |
+| **Kernel** | 02 | 更快的 GEMM/attention kernel 用更少时间完成同样的工作 |
 | **编译器 / runtime** | 03 | 融合减少内存流量；megakernel 减少启动开销 |
-| **架构** | 04–05 | SSM（状态空间模型）/MLA 缩小 KV cache；MoE（混合专家模型）减少每 token 计算量 |
-| **推理算法** | 06 | 投机解码每次内存 pass 产出多个 token |
-| **硬件 / 部署** | 07 | 在合适的批上，于合适的硅上用合适的精度 |
+| **架构** | 04–05 | SSM/MLA 缩小 KV cache；MoE（混合专家模型）减少每 token 计算量 |
+| **推理算法** | 06 | 投机解码每次内存遍历输出多个 token |
+| **硬件 / 部署** | 07 | 在合适的 batch 下，用合适的精度跑在合适的硅片上 |
 
-背下这个方程。本课程每次介绍一项技术时，把它定位到方程上。你无法放上去的技术，就是你还未理解的技术。
+记住这个方程。本课程每引入一项技术，都把它定位到方程上。无法在方程上定位的技术，就是你尚未理解的技术。
 
 ---
 
@@ -418,32 +418,32 @@ Deliverable: one baseline cost-model row, and the annotated equation. Keep both;
 
 </details>
 
-## 核心要点
+## 关键要点
 
-- 2023–2026 年，推理成本下降约 **280×**（GPT-3.5 级）和 **>99%**（GPT-4 级），在能力不变的前提下**中位数约 50×/年**——驱动力是 **MLSys，而非更便宜的芯片**。
-- 核心公式：**price/token = (energy + capital) / tokens-per-second**。硬件决定分子；**MLSys 把分母做大**，这就是全部工作。
-- 指标分为**面向用户**（TTFT、TPOT、tokens/s、p99）与**面向运营**（TOK/$、TCO/Mtok、perf/watt）两类。目标是 **SLO 前沿**：在延迟约束下取最大吞吐——从来不是单一数字。
-- **prefill（首字前的整段计算）是算力受限；decode（逐 token 生成阶段）是带宽受限。** 多数加速手段针对 decode，因为长时间生成的时间和成本都在这里。
-- **带宽上限**——`tokens/s ≤ HBM bandwidth ÷ bytes streamed per token`——可由数据手册预测 batch-1 的 decode 速度。量化压缩字节数；批处理共享这些字节；推测让每个流产出更多 token；MoE（混合专家模型）只流式加载激活的专家。整门课程都在攻这一个比值。
-- 读 perf/$ benchmark（SemiAnalysis InferenceMAX/InferenceX）要看 **TCO/Mtok**，并把任何印出来的吞吐当作有日期的教学锚点，而非部署事实。
-- 一旦能力走向商品化，**服务成本就是差异化所在**——所以每一次系统层面的胜利都直接、复利式地转化为经济价值。这正是 MLSys 即产品的原因。
+- 2023–2026 年间，推理成本下降约 **280×**（GPT-3.5 级）和 **>99%**（GPT-4 级），在能力固定的前提下中位数约 **50×/年**——驱动力是 **MLSys，而非更便宜的硅**。
+- 支配方程：**price/token = (energy + capital) / tokens-per-second**。硬件决定分子；**MLSys 做大分母**，这就是全部工作。
+- 指标分为**面向用户**（TTFT、TPOT、tokens/s、p99）和**面向运维**（TOK/$、TCO/Mtok、perf/watt）。目标是 **SLO 前沿**：在延迟约束下最大化吞吐——绝不是单一数字。
+- **prefill（首字前的整段计算）是算力受限；decode（逐 token 生成阶段）是带宽受限。** 多数加速针对 decode，因为长生成的时间与成本都在这里。
+- **带宽天花板**——`tokens/s ≤ HBM bandwidth ÷ bytes streamed per token`——能从数据手册预测 batch-1 decode 速度。量化缩小字节数；批处理共享字节；投机每个流发出更多 token；MoE（混合专家模型）只流式加载激活的专家。整门课都是在攻击这一个比值。
+- 读 perf/$ benchmark（SemiAnalysis InferenceMAX/InferenceX）要看 **TCO/Mtok**，并把任何印出来的吞吐当作有时效的教学锚点，而非部署真相。
+- 一旦能力商品化，**服务成本就是差异化所在**——所以每一项系统层面的胜利都是即时且复利的经济价值。这就是 MLSys 即产品的原因。
 
 ---
 
 ## 参考文献
 
-- Epoch AI，“LLM inference price trends”（中位数约 50×/年）：[https://epoch.ai/data-insights/llm-inference-price-trends](https://epoch.ai/data-insights/llm-inference-price-trends)
-- Token cost / AI price index（GPT-3.5 约 280×，GPT-4 >99%）：[https://tokencost.app/blog/ai-price-index](https://tokencost.app/blog/ai-price-index)
-- SemiAnalysis，“InferenceMAX — open-source inference benchmarking”：[https://newsletter.semianalysis.com/p/inferencemax-open-source-inference](https://newsletter.semianalysis.com/p/inferencemax-open-source-inference)
+- Epoch AI, "LLM inference price trends"（中位数约 50×/年）：[https://epoch.ai/data-insights/llm-inference-price-trends](https://epoch.ai/data-insights/llm-inference-price-trends)
+- Token 成本 / AI 价格指数（GPT-3.5 约 280×，GPT-4 >99%）：[https://tokencost.app/blog/ai-price-index](https://tokencost.app/blog/ai-price-index)
+- SemiAnalysis, "InferenceMAX — open-source inference benchmarking"：[https://newsletter.semianalysis.com/p/inferencemax-open-source-inference](https://newsletter.semianalysis.com/p/inferencemax-open-source-inference)
 - SemiAnalysis InferenceX TCO 计算器：[https://inferencex.semianalysis.com/calculator](https://inferencex.semianalysis.com/calculator)
-- Introl，“Inference unit economics — true cost per million tokens”：[https://introl.com/blog/inference-unit-economics-true-cost-per-million-tokens-guide](https://introl.com/blog/inference-unit-economics-true-cost-per-million-tokens-guide)
-- *AI Inference Engineer 2026*——本课程的生产推理栈配套读物。
+- Introl, "Inference unit economics — true cost per million tokens"：[https://introl.com/blog/inference-unit-economics-true-cost-per-million-tokens-guide](https://introl.com/blog/inference-unit-economics-true-cost-per-million-tokens-guide)
+- *AI Inference Engineer 2026*——本课程配套的生产推理栈读物。
 
 ---
 
 ## 数据截至
 
-2026-06。成本数据：GPT-3.5 级约 280×（2022-11→2024-10），GPT-4 级 >99%（2023→2025），DeepSeek-V3 约 $0.14/Mtok (Dec 2024), Epoch median ~50×/yr. `$/Mtok` worked example uses an illustrative $2.50/GPU-hr——**部署时请用 InferenceMAX/InferenceX 核实实时 GPU 租用价格与 tokens/s**；这些数字每月都在变。
+2026-06。成本数据：GPT-3.5 级约 280×（2022 年 11 月→2024 年 10 月），GPT-4 级 >99%（2023→2025），DeepSeek-V3 约 $0.14/Mtok（2024 年 12 月），Epoch 中位数约 50×/年。`$/Mtok` 的算例采用示例性的 $2.50/GPU-hr——**部署时请通过 InferenceMAX/InferenceX 核实实时 GPU 租用价格与 tokens/s**；这些数字每月都在变。
 
 ---
 

@@ -2,10 +2,10 @@
 title: GPUDirect Storage (GDS) — 深入剖析
 description: GPUDirect Storage (GDS) — 深入剖析
 published: true
-date: 2026-09-27T12:30:07.000Z
+date: 2026-09-30T10:39:59.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:07.000Z
+dateCreated: 2026-09-30T10:39:59.000Z
 ---
 
 # GPUDirect Storage (GDS) — 深入剖析

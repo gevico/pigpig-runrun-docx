@@ -2,10 +2,10 @@
 title: 第 1 讲：边缘大语言模型推理内部机制 —— GEMV（矩阵-向量乘）Decode（逐 token 生成阶段）、QKV 投影与内存带宽墙
 description: 第 1 讲：边缘大语言模型推理内部机制 —— GEMV（矩阵-向量乘）Decode（逐 token 生成阶段）、QKV 投影与内存带宽墙
 published: true
-date: 2026-09-27T12:30:09.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:09.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # 第 1 讲：边缘大语言模型推理内部机制 —— GEMV（矩阵-向量乘）Decode（逐 token 生成阶段）、QKV 投影与内存带宽墙

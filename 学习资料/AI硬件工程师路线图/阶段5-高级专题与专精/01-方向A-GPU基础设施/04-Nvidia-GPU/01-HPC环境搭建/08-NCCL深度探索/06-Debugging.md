@@ -2,10 +2,10 @@
 title: 06 — 生产环境中的 NCCL 故障调试
 description: 06 — 生产环境中的 NCCL 故障调试
 published: true
-date: 2026-09-27T12:30:08.000Z
+date: 2026-09-30T10:40:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:08.000Z
+dateCreated: 2026-09-30T10:40:00.000Z
 ---
 
 # 06 — 生产环境中的 NCCL 故障调试

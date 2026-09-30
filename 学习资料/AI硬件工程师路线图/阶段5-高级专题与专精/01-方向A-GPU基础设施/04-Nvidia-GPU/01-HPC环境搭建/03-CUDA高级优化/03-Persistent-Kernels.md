@@ -2,10 +2,10 @@
 title: 03 — 持久化 kernel
 description: 03 — 持久化 kernel
 published: true
-date: 2026-09-27T12:30:06.000Z
+date: 2026-09-30T10:39:59.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:06.000Z
+dateCreated: 2026-09-30T10:39:59.000Z
 ---
 
 # 03 — 持久化 kernel

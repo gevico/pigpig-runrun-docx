@@ -2,10 +2,10 @@
 title: 第 02 讲 — 量化与格式转换：让 Gemma 4 用到正确的位宽
 description: 第 02 讲 — 量化与格式转换：让 Gemma 4 用到正确的位宽
 published: true
-date: 2026-09-27T12:30:09.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:09.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # 第 02 讲 — 量化与格式转换：让 Gemma 4 用到正确的位宽

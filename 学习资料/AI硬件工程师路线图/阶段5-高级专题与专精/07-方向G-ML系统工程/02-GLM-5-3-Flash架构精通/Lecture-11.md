@@ -2,10 +2,10 @@
 title: 模块 11——正确性即架构精通
 description: 模块 11——正确性即架构精通
 published: true
-date: 2026-09-27T12:30:13.000Z
+date: 2026-09-30T10:40:05.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:13.000Z
+dateCreated: 2026-09-30T10:40:05.000Z
 ---
 
 # 模块 11——正确性即架构精通

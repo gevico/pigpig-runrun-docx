@@ -2,10 +2,10 @@
 title: 第 1 章：面向 Transformer 推理的 Blackwell B200 架构
 description: 第 1 章：面向 Transformer 推理的 Blackwell B200 架构
 published: true
-date: 2026-09-27T12:30:06.000Z
+date: 2026-09-30T10:39:58.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:06.000Z
+dateCreated: 2026-09-30T10:39:58.000Z
 ---
 
 # 第 1 章：面向 Transformer 推理的 Blackwell B200 架构

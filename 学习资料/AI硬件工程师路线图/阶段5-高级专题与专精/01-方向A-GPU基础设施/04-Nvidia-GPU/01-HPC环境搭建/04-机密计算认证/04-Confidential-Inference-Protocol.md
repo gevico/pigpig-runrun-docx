@@ -2,10 +2,10 @@
 title: 04 — 机密推理：模型身份与端到端协议
 description: 04 — 机密推理：模型身份与端到端协议
 published: true
-date: 2026-09-27T12:30:07.000Z
+date: 2026-09-30T10:39:59.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:07.000Z
+dateCreated: 2026-09-30T10:39:59.000Z
 ---
 
 # 04 — 机密推理：模型身份与端到端协议

@@ -2,10 +2,10 @@
 title: 第 01 讲 — 为什么在边缘用 Gemma 4：架构、竞争定位与关键数字
 description: 第 01 讲 — 为什么在边缘用 Gemma 4：架构、竞争定位与关键数字
 published: true
-date: 2026-09-27T12:30:09.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:09.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # 第 01 讲 — 为什么在边缘用 Gemma 4：架构、竞争定位与关键数字

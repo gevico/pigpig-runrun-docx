@@ -2,10 +2,10 @@
 title: Part 2 · 第 07 讲 —— 通信层内部：NCCL、自定义 All-Reduce 与 vLLM 通信器栈
 description: Part 2 · 第 07 讲 —— 通信层内部：NCCL、自定义 All-Reduce 与 vLLM 通信器栈
 published: true
-date: 2026-09-27T12:30:11.000Z
+date: 2026-09-30T10:40:04.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:11.000Z
+dateCreated: 2026-09-30T10:40:04.000Z
 ---
 
 # Part 2 · 第 07 讲 —— 通信层内部：NCCL、自定义 All-Reduce 与 vLLM 通信器栈

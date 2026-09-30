@@ -2,10 +2,10 @@
 title: 嵌入式系统的产品设计
 description: 嵌入式系统的产品设计
 published: true
-date: 2026-09-27T12:30:00.000Z
+date: 2026-09-30T10:39:49.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:00.000Z
+dateCreated: 2026-09-30T10:39:49.000Z
 ---
 
 # 嵌入式系统的产品设计

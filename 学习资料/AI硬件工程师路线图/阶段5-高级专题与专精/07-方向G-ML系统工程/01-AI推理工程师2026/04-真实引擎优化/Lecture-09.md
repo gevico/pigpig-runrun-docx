@@ -2,10 +2,10 @@
 title: Part 4 · Lecture 09 — 你遗忘的阶段：批处理 prefill
 description: Part 4 · Lecture 09 — 你遗忘的阶段：批处理 prefill
 published: true
-date: 2026-09-27T12:30:12.000Z
+date: 2026-09-30T10:40:04.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:12.000Z
+dateCreated: 2026-09-30T10:40:04.000Z
 ---
 
 # Part 4 · Lecture 09 — 你遗忘的阶段：批处理 prefill

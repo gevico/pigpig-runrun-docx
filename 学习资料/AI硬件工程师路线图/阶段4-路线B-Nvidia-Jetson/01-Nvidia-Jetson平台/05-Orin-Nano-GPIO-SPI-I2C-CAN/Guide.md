@@ -2,10 +2,10 @@
 title: Jetson Orin Nano 8GB -- GPIO、SPI、I2C、CAN 与外设 I/O 深度解析指南
 description: Jetson Orin Nano 8GB -- GPIO、SPI、I2C、CAN 与外设 I/O 深度解析指南
 published: true
-date: 2026-09-27T12:30:02.000Z
+date: 2026-09-30T10:39:55.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:02.000Z
+dateCreated: 2026-09-30T10:39:55.000Z
 ---
 
 # Jetson Orin Nano 8GB -- GPIO、SPI、I2C、CAN 与外设 I/O 深度解析指南

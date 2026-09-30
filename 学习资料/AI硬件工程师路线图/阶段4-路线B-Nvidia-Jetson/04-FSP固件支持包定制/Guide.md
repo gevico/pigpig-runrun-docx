@@ -2,10 +2,10 @@
 title: FSP（Firmware Support Package）与 SPE 固件
 description: FSP（Firmware Support Package）与 SPE 固件
 published: true
-date: 2026-09-27T12:30:03.000Z
+date: 2026-09-30T10:39:56.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:03.000Z
+dateCreated: 2026-09-30T10:39:56.000Z
 ---
 
 # FSP（Firmware Support Package）与 SPE 固件

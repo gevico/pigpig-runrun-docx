@@ -2,10 +2,10 @@
 title: 模块 07 — 层敏感度：为什么 Q/K 会崩，而 O 与 MLP 能幸存
 description: 模块 07 — 层敏感度：为什么 Q/K 会崩，而 O 与 MLP 能幸存
 published: true
-date: 2026-09-27T12:30:13.000Z
+date: 2026-09-30T10:40:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:13.000Z
+dateCreated: 2026-09-30T10:40:06.000Z
 ---
 
 # 模块 07 — 层敏感度：为什么 Q/K 会崩，而 O 与 MLP 能幸存

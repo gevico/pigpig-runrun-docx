@@ -2,10 +2,10 @@
 title: Lecture 2 - HomePod 2018 lessons: great sound is not enough
 description: Lecture 2 - HomePod 2018 lessons: great sound is not enough
 published: true
-date: 2026-09-27T12:30:00.000Z
+date: 2026-09-30T10:39:49.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:00.000Z
+dateCreated: 2026-09-30T10:39:49.000Z
 ---
 
 # Lecture 2 - HomePod 2018 lessons: great sound is not enough

@@ -2,10 +2,10 @@
 title: 02 — 硬件搭建与参考配置
 description: 02 — 硬件搭建与参考配置
 published: true
-date: 2026-09-27T12:30:07.000Z
+date: 2026-09-30T10:39:59.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:07.000Z
+dateCreated: 2026-09-30T10:39:59.000Z
 ---
 
 # 02 — 硬件搭建与参考配置

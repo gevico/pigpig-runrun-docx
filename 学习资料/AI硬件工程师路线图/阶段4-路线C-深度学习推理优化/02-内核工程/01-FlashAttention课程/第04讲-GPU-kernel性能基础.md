@@ -2,10 +2,10 @@
 title: 第 4 讲 — GPU Kernel 性能基础
 description: 第 4 讲 — GPU Kernel 性能基础
 published: true
-date: 2026-09-27T12:30:05.000Z
+date: 2026-09-30T10:39:57.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:05.000Z
+dateCreated: 2026-09-30T10:39:57.000Z
 ---
 
 # 第 4 讲 — GPU Kernel 性能基础

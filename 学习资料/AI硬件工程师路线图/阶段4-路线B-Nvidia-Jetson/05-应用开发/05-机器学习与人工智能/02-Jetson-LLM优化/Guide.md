@@ -2,10 +2,10 @@
 title: Jetson 上的大语言模型优化 —— 从云端技术到边缘现实
 description: Jetson 上的大语言模型优化 —— 从云端技术到边缘现实
 published: true
-date: 2026-09-27T12:30:04.000Z
+date: 2026-09-30T10:39:56.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:04.000Z
+dateCreated: 2026-09-30T10:39:56.000Z
 ---
 
 # Jetson 上的大语言模型优化 —— 从云端技术到边缘现实

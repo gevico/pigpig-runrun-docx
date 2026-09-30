@@ -2,10 +2,10 @@
 title: 阶段 5 — 路线 F：AI 芯片设计（18-36 个月）
 description: 阶段 5 — 路线 F：AI 芯片设计（18-36 个月）
 published: true
-date: 2026-09-27T12:30:10.000Z
+date: 2026-09-30T10:40:03.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:10.000Z
+dateCreated: 2026-09-30T10:40:03.000Z
 ---
 
 # 阶段 5 — 路线 F：AI 芯片设计（18-36 个月）

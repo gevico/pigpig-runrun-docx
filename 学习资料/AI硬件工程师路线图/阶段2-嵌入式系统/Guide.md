@@ -2,10 +2,10 @@
 title: 阶段 2：嵌入式系统
 description: 阶段 2：嵌入式系统
 published: true
-date: 2026-09-27T12:30:00.000Z
+date: 2026-09-30T10:39:49.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:00.000Z
+dateCreated: 2026-09-30T10:39:49.000Z
 ---
 
 # 阶段 2：嵌入式系统

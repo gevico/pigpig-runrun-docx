@@ -2,10 +2,10 @@
 title: 第 01 讲 - TVM 栈与编译流程：Relax、TensorIR 与统一的 IRModule
 description: 第 01 讲 - TVM 栈与编译流程：Relax、TensorIR 与统一的 IRModule
 published: true
-date: 2026-09-27T12:30:14.000Z
+date: 2026-09-30T10:40:07.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:14.000Z
+dateCreated: 2026-09-30T10:40:07.000Z
 ---
 
 # 第 01 讲 - TVM 栈与编译流程：Relax、TensorIR 与统一的 IRModule

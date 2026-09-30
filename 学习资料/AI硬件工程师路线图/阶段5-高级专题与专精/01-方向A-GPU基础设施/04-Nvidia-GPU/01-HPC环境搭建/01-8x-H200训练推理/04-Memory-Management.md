@@ -2,10 +2,10 @@
 title: 04 — 8x H200 上的内存管理
 description: 04 — 8x H200 上的内存管理
 published: true
-date: 2026-09-27T12:30:06.000Z
+date: 2026-09-30T10:39:58.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:06.000Z
+dateCreated: 2026-09-30T10:39:58.000Z
 ---
 
 # 04 — 8x H200 上的内存管理

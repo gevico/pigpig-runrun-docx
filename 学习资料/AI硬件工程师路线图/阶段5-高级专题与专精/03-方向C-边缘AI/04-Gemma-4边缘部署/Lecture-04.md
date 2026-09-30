@@ -2,10 +2,10 @@
 title: 第 04 讲 — 面向 Gemma 4 的投机解码：draft-verify、self-draft 与边缘接受长度问题
 description: 第 04 讲 — 面向 Gemma 4 的投机解码：draft-verify、self-draft 与边缘接受长度问题
 published: true
-date: 2026-09-27T12:30:09.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:09.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # 第 04 讲 — 面向 Gemma 4 的投机解码：draft-verify、self-draft 与边缘接受长度问题

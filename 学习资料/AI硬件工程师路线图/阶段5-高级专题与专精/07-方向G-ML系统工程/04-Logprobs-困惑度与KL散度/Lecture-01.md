@@ -2,10 +2,10 @@
 title: Lecture 01 - Logprobs：语言模型实际输出什么
 description: Lecture 01 - Logprobs：语言模型实际输出什么
 published: true
-date: 2026-09-27T12:30:13.000Z
+date: 2026-09-30T10:40:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:13.000Z
+dateCreated: 2026-09-30T10:40:06.000Z
 ---
 
 # Lecture 01 - Logprobs：语言模型实际输出什么

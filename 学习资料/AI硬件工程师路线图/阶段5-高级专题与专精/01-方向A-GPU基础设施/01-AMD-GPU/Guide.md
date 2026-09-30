@@ -2,10 +2,10 @@
 title: 面向 HPC（高性能计算）与 AI 的 AMD GPU
 description: 面向 HPC（高性能计算）与 AI 的 AMD GPU
 published: true
-date: 2026-09-27T12:30:05.000Z
+date: 2026-09-30T10:39:58.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:05.000Z
+dateCreated: 2026-09-30T10:39:58.000Z
 ---
 
 # 面向 HPC（高性能计算）与 AI 的 AMD GPU

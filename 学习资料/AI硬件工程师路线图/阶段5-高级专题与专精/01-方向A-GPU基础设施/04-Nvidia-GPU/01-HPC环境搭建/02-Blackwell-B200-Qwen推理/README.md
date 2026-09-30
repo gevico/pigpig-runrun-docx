@@ -2,10 +2,10 @@
 title: 面向 Qwen Transformer 推理的 Blackwell B200
 description: 面向 Qwen Transformer 推理的 Blackwell B200
 published: true
-date: 2026-09-27T12:30:06.000Z
+date: 2026-09-30T10:39:58.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:06.000Z
+dateCreated: 2026-09-30T10:39:58.000Z
 ---
 
 # 面向 Qwen Transformer 推理的 Blackwell B200

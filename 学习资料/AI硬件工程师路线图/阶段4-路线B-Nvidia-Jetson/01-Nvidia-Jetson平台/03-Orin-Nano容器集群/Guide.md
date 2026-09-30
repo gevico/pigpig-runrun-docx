@@ -2,10 +2,10 @@
 title: Jetson Orin Nano 的容器化部署、集群管理与 DevOps
 description: Jetson Orin Nano 的容器化部署、集群管理与 DevOps
 published: true
-date: 2026-09-27T12:30:02.000Z
+date: 2026-09-30T10:39:54.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:02.000Z
+dateCreated: 2026-09-30T10:39:54.000Z
 ---
 
 # Jetson Orin Nano 的容器化部署、集群管理与 DevOps

@@ -2,10 +2,10 @@
 title: Tinygrad 运算参考
 description: Tinygrad 运算参考
 published: true
-date: 2026-09-27T12:30:10.000Z
+date: 2026-09-30T10:40:02.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:10.000Z
+dateCreated: 2026-09-30T10:40:02.000Z
 ---
 
 # Tinygrad 运算参考

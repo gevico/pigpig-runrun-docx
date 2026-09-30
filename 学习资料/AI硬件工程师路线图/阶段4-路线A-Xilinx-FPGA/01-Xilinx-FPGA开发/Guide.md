@@ -2,10 +2,10 @@
 title: 1. Xilinx FPGA 开发
 description: 1. Xilinx FPGA 开发
 published: true
-date: 2026-09-27T12:30:02.000Z
+date: 2026-09-30T10:39:54.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:02.000Z
+dateCreated: 2026-09-30T10:39:54.000Z
 ---
 
 # 1. Xilinx FPGA 开发

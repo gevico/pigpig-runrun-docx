@@ -2,10 +2,10 @@
 title: Part 3 · Lecture 04 — 分离式 Prefill / Decode：Mooncake、Splitwise、DistServe
 description: Part 3 · Lecture 04 — 分离式 Prefill / Decode：Mooncake、Splitwise、DistServe
 published: true
-date: 2026-09-27T12:30:11.000Z
+date: 2026-09-30T10:40:04.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:11.000Z
+dateCreated: 2026-09-30T10:40:04.000Z
 ---
 
 # Part 3 · Lecture 04 — 分离式 Prefill / Decode：Mooncake、Splitwise、DistServe

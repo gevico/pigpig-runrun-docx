@@ -2,10 +2,10 @@
 title: 02 — NCCL 算法与如何实现 900 GB/s
 description: 02 — NCCL 算法与如何实现 900 GB/s
 published: true
-date: 2026-09-27T12:30:08.000Z
+date: 2026-09-30T10:40:00.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:08.000Z
+dateCreated: 2026-09-30T10:40:00.000Z
 ---
 
 # 02 — NCCL 算法与如何实现 900 GB/s

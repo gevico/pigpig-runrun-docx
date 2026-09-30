@@ -2,10 +2,10 @@
 title: Jetson 上的 Gemma 4 — 边缘部署、PDL 与物理 AI
 description: Jetson 上的 Gemma 4 — 边缘部署、PDL 与物理 AI
 published: true
-date: 2026-09-27T12:30:09.000Z
+date: 2026-09-30T10:40:01.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:09.000Z
+dateCreated: 2026-09-30T10:40:01.000Z
 ---
 
 # Jetson 上的 Gemma 4 — 边缘部署、PDL 与物理 AI

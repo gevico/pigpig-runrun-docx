@@ -2,10 +2,10 @@
 title: 模块 07 — mHC：流形约束残差流
 description: 模块 07 — mHC：流形约束残差流
 published: true
-date: 2026-09-27T12:30:12.000Z
+date: 2026-09-30T10:40:05.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:12.000Z
+dateCreated: 2026-09-30T10:40:05.000Z
 ---
 
 # 模块 07 — mHC：流形约束残差流

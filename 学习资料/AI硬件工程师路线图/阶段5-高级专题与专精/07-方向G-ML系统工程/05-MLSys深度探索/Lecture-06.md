@@ -2,10 +2,10 @@
 title: Lecture 06 - 让 decode 变快：投机解码、DFlash 与 Flash Kernel
 description: Lecture 06 - 让 decode 变快：投机解码、DFlash 与 Flash Kernel
 published: true
-date: 2026-09-27T12:30:14.000Z
+date: 2026-09-30T10:40:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:14.000Z
+dateCreated: 2026-09-30T10:40:06.000Z
 ---
 
 # Lecture 06 - 让 decode 变快：投机解码、DFlash 与 Flash Kernel

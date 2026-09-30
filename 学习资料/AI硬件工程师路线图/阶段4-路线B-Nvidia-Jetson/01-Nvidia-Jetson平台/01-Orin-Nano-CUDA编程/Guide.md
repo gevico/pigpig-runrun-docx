@@ -2,10 +2,10 @@
 title: Orin Nano 8GB -- CUDA Programming Deep Dive
 description: Orin Nano 8GB -- CUDA Programming Deep Dive
 published: true
-date: 2026-09-27T12:30:02.000Z
+date: 2026-09-30T10:39:54.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:02.000Z
+dateCreated: 2026-09-30T10:39:54.000Z
 ---
 
 # Orin Nano 8GB -- CUDA Programming Deep Dive

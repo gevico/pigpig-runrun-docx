@@ -2,10 +2,10 @@
 title: 05 — 推理 runtime 与部署目标
 description: 05 — 推理 runtime 与部署目标
 published: true
-date: 2026-09-27T12:30:05.000Z
+date: 2026-09-30T10:39:57.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:05.000Z
+dateCreated: 2026-09-30T10:39:57.000Z
 ---
 
 # 05 — 推理 runtime 与部署目标

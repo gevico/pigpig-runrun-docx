@@ -2,10 +2,10 @@
 title: tinygrad — 可改造的编译器框架
 description: tinygrad — 可改造的编译器框架
 published: true
-date: 2026-09-27T12:30:00.000Z
+date: 2026-09-30T10:39:49.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:00.000Z
+dateCreated: 2026-09-30T10:39:49.000Z
 ---
 
 # tinygrad — 可改造的编译器框架

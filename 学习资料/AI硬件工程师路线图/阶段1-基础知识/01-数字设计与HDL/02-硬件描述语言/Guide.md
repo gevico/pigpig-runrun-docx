@@ -2,10 +2,10 @@
 title: 硬件描述语言 — Verilog 聚焦
 description: 硬件描述语言 — Verilog 聚焦
 published: true
-date: 2026-09-27T12:29:58.000Z
+date: 2026-09-30T10:39:44.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:29:58.000Z
+dateCreated: 2026-09-30T10:39:44.000Z
 ---
 
 # 硬件描述语言 — Verilog 聚焦

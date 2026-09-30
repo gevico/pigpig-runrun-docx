@@ -2,10 +2,10 @@
 title: 第 2 部分 · 第 01 讲 — 70B 级稠密模型剖析：Llama 3.3 70B vs Qwen 2.5 72B
 description: 第 2 部分 · 第 01 讲 — 70B 级稠密模型剖析：Llama 3.3 70B vs Qwen 2.5 72B
 published: true
-date: 2026-09-27T12:30:11.000Z
+date: 2026-09-30T10:40:03.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:11.000Z
+dateCreated: 2026-09-30T10:40:03.000Z
 ---
 
 # 第 2 部分 · 第 01 讲 — 70B 级稠密模型剖析：Llama 3.3 70B vs Qwen 2.5 72B
@@ -784,65 +784,65 @@ For Llama 3.3 70B at 32K context, FP8 weights + FP8 KV on 2× H100 NVL is the co
 
 ### 6.4 Tokenizer 驱动的成本差异
 
-对于纯英文聊天产品，两个模型具有 **几乎相同的 $/MTok** at the same recipe. For a Chinese-language product Qwen 2.5 72B emits **~25% fewer tokens** for the same response — meaning the *effective* $/MTok 约低 25%。在许多产品语境下，这是两者之间**最大的工程差异**。
+对纯英文聊天产品，两个模型在相同 recipe 下的 **$/MTok 几乎完全相同**。对中文产品，Qwen 2.5 72B 对同一回复生成的 token 少 **~25%** ——意味着*有效* $/MTok 低约 25%。在很多产品场景下，这是两者之间**最大的工程差异**。
 
 ---
 
-## Lab — 从磁盘推导两种配置并生成并排成本报告
+## Lab —— 从磁盘推导出两份 config 并产出并排成本报告
 
-目标：在你的 benchmark 仓库中生成一份含并排成本数字的 Markdown 报告。
+目标：在你的 benchmark 仓库中产出一份含并排成本数字的 Markdown 报告。
 
-1. 从官方 Hugging Face 仓库**下载两个 `config.json` 文件**。
-2. **以编程方式计算：**
+1. 从官方 Hugging Face 仓库**下载两份 `config.json` 文件**。
+2. **以程序方式计算：**
    * FP16、FP8、INT4 下的每层权重内存。
-   * 参数总数（验证与 70B / 72B 标签相符）。
+   * 参数总数（校验是否与 70B / 72B 标签一致）。
    * FP16、FP8、INT4 下每 token 的 KV 字节数。
    * Embedding + LM head 内存。
 3. **渲染一张对比表**，涵盖两个模型、全部三种精度。
-4. **预测**四种场景下的 HBM 总量：(batch=1, ctx=4K) / (batch=1, ctx=128K) / (batch=16, ctx=4K) / (batch=16, ctx=32K)。
-5. **判定**每种场景强制要求何种硬件 × 精度 recipe。逐一写下推理过程。
+4. **预测**四种场景下的总 HBM：(batch=1, ctx=4K) / (batch=1, ctx=128K) / (batch=16, ctx=4K) / (batch=16, ctx=32K)。
+5. **判断**每种场景会强制要求哪种硬件 × 精度 recipe。写下每种场景的推理依据。
 
-通过标准：另一位工程师依据相同配置能复现你的报告，且预测值与实测数字相符（Lecture 02 将在真实 H100/H200 上验证）。
+通过标准：另一位工程师能依据相同 config 复现你的报告，且预测值与实测数字吻合（Lecture 02 将在真实 H100/H200 上验证）。
 
 ---
 
 ## 自检
 
-1. W8A8 Llama-3-70B 异常（arXiv:2408.15301）已有充分记载。同一异常是否可能适用于 Qwen 2.5 72B？基于你如今对两者架构相似性的了解，说明是或否的理由。
-2. 同事提议在 4× H100 80G 上为英文聊天产品部署 Qwen 2.5 72B FP16。不做实测：能放得下吗？给出 KV cache + 权重内存的计算。
-3. 对于 4× H100 上的中文聊天产品，你会选 Llama 3.3 70B INT4 还是 Qwen 2.5 72B INT4？用两句话从 tokenizer 效率角度论证。
-4. 两个模型共享相同的 KV head 结构（8 KV heads × head_dim 128）。在 batch=64、context=8K、FP8 KV 下，仅 KV cache 你至少要预留多少 HBM？
-5. 原版 Qwen 2.5 72B 的是 `hidden_size=8192`，并非某些二手资料引用的 12288。对于从非一手来源阅读产品规格的推理工程师，这一点的教训是什么？
+1. W8A8 Llama-3-70B 异常（arXiv:2408.15301）已有充分记录。同一异常是否可能适用于 Qwen 2.5 72B？基于你目前对二者架构相似性的了解，为什么适用或不适用？
+2. 同事提议在 4× H100 80G 上以 FP16 部署 Qwen 2.5 72B，用于英文聊天产品。不实际运行的情况下：能装下吗？给出 KV cache + 权重内存的算式。
+3. 对 4× H100 上的中文聊天产品，你会选 Llama 3.3 70B INT4 还是 Qwen 2.5 72B INT4？用两句话结合 tokenizer 效率说明理由。
+4. 两个模型共享相同的 KV head 结构（8 个 KV head × head_dim 128）。在 batch=64、context=8K、FP8 KV 下，你为 KV cache 单独预留的最小 HBM 是多少？
+5. 原版 Qwen 2.5 72B 的 `hidden_size=8192`，并非某些二手来源所引用的 12288。对于从非一手来源读取产品规格的推理工程师，这个教训是什么？
 
 ---
 
-## 参考资料
+## 参考文献
 
-* Llama 3.3 70B 模型卡 — [huggingface.co/meta-llama/Llama-3.3-70B-Instruct](https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct)
-* Qwen 2.5 72B 模型卡 — [huggingface.co/Qwen/Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct)
-* Qwen 2.5 技术报告 — [arXiv:2412.15115](https://arxiv.org/abs/2412.15115)
-* "The Uniqueness of LLaMA3-70B Series with Per-Channel Quantization" — [arXiv:2408.15301](https://arxiv.org/abs/2408.15301)
-* GQA 论文 — [arXiv:2305.13245](https://arxiv.org/abs/2305.13245)
-* RoPE 论文 — [arXiv:2104.09864](https://arxiv.org/abs/2104.09864)
-* YaRN — [arXiv:2309.00071](https://arxiv.org/abs/2309.00071) — Qwen 2.5 采用的上下文扩展方法（32K 原生 → 推理时 128K）；Llama 3.1/3.3 则改用 Meta 的 `"rope_type": "llama3"` 频率缩放 + 长上下文持续预训练
+* Llama 3.3 70B 模型卡 —— [huggingface.co/meta-llama/Llama-3.3-70B-Instruct](https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct)
+* Qwen 2.5 72B 模型卡 —— [huggingface.co/Qwen/Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct)
+* Qwen 2.5 技术报告 —— [arXiv:2412.15115](https://arxiv.org/abs/2412.15115)
+* "The Uniqueness of LLaMA3-70B Series with Per-Channel Quantization" —— [arXiv:2408.15301](https://arxiv.org/abs/2408.15301)
+* GQA 论文 —— [arXiv:2305.13245](https://arxiv.org/abs/2305.13245)
+* RoPE 论文 —— [arXiv:2104.09864](https://arxiv.org/abs/2104.09864)
+* YaRN —— [arXiv:2309.00071](https://arxiv.org/abs/2309.00071) —— Qwen 2.5 采用的上下文扩展方法（原生 32K → 推理时 128K）；Llama 3.1/3.3 则改用 Meta 的 `"rope_type": "llama3"` 频率缩放 + 长上下文继续预训练
 
 交叉引用：
 
-* [Part 1 → Lecture 02 — Transformer 执行](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/01-基础/Lecture-02)
-* [阶段 5 → 边缘 AI → Qwen 推理优化 → Lecture 01 — 架构深入剖析](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-01) — Qwen 4B/72B 并排对比（侧重点不同，材料相关）
+* [Part 1 → Lecture 02 —— Transformer 执行](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/01-基础/Lecture-02)
+* [阶段 5 → 边缘 AI → Qwen 推理优化 → Lecture 01 —— 架构深度剖析](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/03-方向C-边缘AI/05-Qwen推理优化/Lecture-01) —— Qwen 4B/72B 并排对比（侧重点不同，材料相关）
 
 ---
 
-## 截至 2026-06
+## 截至 2026-06 有效
 
-配置固定在撰写时官方 Hugging Face 模型卡所载内容。若 Meta 或 Alibaba 发布任一模型的 v2 / 点版本且带有架构变更，请刷新。
+Config 锁定自撰写时的官方 Hugging Face 模型卡。若 Meta 或阿里巴巴发布任一模型的 v2 / 小版本更新且带有架构变更，请刷新。
 
 ---
 
 ## 下一步
 
-* 下一篇：[Lecture 02 — Hopper 硬件故事](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/02-Hopper稠密计算/Lecture-02)
-* 上级：[Part 2 — Dense at Hopper](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/02-Hopper稠密计算/README)
+* 下一步：[Lecture 02 —— Hopper 硬件故事](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/02-Hopper稠密计算/Lecture-02)
+* 上级：[Part 2 —— Hopper 上的稠密模型](/学习资料/AI硬件工程师路线图/阶段5-高级专题与专精/07-方向G-ML系统工程/01-AI推理工程师2026/02-Hopper稠密计算/README)
 
 
 <details>

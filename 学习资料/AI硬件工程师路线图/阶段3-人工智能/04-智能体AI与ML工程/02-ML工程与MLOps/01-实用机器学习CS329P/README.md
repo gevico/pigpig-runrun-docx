@@ -2,10 +2,10 @@
 title: Practical Machine Learning — 改编自 Stanford CS329P
 description: Practical Machine Learning — 改编自 Stanford CS329P
 published: true
-date: 2026-09-27T12:30:02.000Z
+date: 2026-09-30T10:39:54.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:02.000Z
+dateCreated: 2026-09-30T10:39:54.000Z
 ---
 
 # Practical Machine Learning — 改编自 Stanford CS329P

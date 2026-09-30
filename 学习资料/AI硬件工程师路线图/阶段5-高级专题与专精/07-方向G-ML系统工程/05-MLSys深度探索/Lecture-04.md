@@ -2,10 +2,10 @@
 title: 第 04 讲 - 超越稠密 Transformer：Mamba、SSM 与混合浪潮
 description: 第 04 讲 - 超越稠密 Transformer：Mamba、SSM 与混合浪潮
 published: true
-date: 2026-09-27T12:30:14.000Z
+date: 2026-09-30T10:40:06.000Z
 tags: 学习资料
 editor: markdown
-dateCreated: 2026-09-27T12:30:14.000Z
+dateCreated: 2026-09-30T10:40:06.000Z
 ---
 
 # 第 04 讲 - 超越稠密 Transformer：Mamba、SSM 与混合浪潮
