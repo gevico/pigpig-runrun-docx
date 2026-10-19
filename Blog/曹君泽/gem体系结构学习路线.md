@@ -2,7 +2,7 @@
 title: Gem5体系结构学习路线
 description: Gem5体系结构学习路线
 published: true
-date: 2026-10-11T11:45:16.926Z
+date: 2026-10-19T01:55:20.362Z
 tags: 
 editor: markdown
 dateCreated: 2026-10-11T09:57:17.662Z
@@ -83,7 +83,7 @@ https://www.gem5.org/documentation/learning_gem5/introduction/
 
 基于 Stage 0 的 gem5 基础工程，实现一个简化的 **RV32I 单周期 CPU**。
 
-![alt text](image-1.png) 这是一个简单的单周期CPU框图，可以作为参考。
+![cpu数据通路图.png](/cpu数据通路图.png)这是一个简单的单周期CPU框图，可以作为参考。
 
 
 要求至少包含：
